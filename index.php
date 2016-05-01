@@ -24,7 +24,7 @@ $u = new utils;
 			</div>
 		</div>
 	</div>
-	<script src="jquery/jquery-1.12.3.min.js"></script>	
+	<script src="http://code.jquery.com/jquery-1.12.3.min.js"></script>	
 	<script src="js-cache.php"></script>
 </body>
 </html>
