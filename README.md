@@ -2,8 +2,6 @@
 A flexible CSS and JS modular framework.
 ## PHP
 The framework uses a little PHP to maximise page performance. It combines and caches the CSS and JS to maximise performance. There are also a few basic classes and includes to provide utilities such as image compression.
-This would be done using the following image code :
-        <img src="<?php $u->data_uri('img/mick.png'); ?>" />
 Efforts have been made to avoid developers from being tied into the framework. Developrs can grab code from the web and use them within the framework.
 ## jQuery
 The framework uses jQuery. It may be best to load this from a CDN during development and then a local version on launch.
