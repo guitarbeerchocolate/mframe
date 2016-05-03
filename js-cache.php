@@ -5,14 +5,16 @@ function compressJS($buffer)
 	$buffer = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $buffer);
 	return $buffer;
 }
-$get_js = array('js/custom.js');
+$moduledir = 'modules';
+require_once 'classes/utils.class.php';
+$u = new utils;
 ob_start("compressJS");
-foreach($get_js as $js)
+foreach($u->getModuleFiles($moduledir,'js') as $js)
 {
 	$jss = trim($js);
 	if(file_exists($jss))
 	{
-		echo "/*" . $jss . "*/";
+		echo "/*".$jss."*/";
 		echo file_get_contents($jss);
 	}
 }

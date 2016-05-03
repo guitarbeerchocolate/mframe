@@ -212,6 +212,50 @@ class utils
 			return $s;
 		}
 	}
+	function getModuleFiles($moduleDir = 'modules', $ext = 'css')
+	{
+		$fileArr = array();
+		$moduleDirArr = $this->getModuleDirs($moduleDir);
+		foreach($moduleDirArr as $module)
+		{
+			if($handle = opendir($module))
+			{
+		    	while(false !== ($entry = readdir($handle)))
+		    	{
+		        	if(($entry != ".") && ($entry != "..") && (pathinfo($entry, PATHINFO_EXTENSION) == $ext))
+		        	{
+		        		array_push($fileArr, $module.'/'.$entry);
+		        	}
+		    	}
+		    	closedir($handle);
+			}
+		}
+		if($ext == 'css')
+		{
+			array_push($fileArr, 'custom.css');
+		}
+		else
+		{
+			array_push($fileArr, 'custom.js');
+		}
+		return $fileArr;
+	}
+	function getModuleDirs($moduleDir)
+	{
+		$moduleDirArr = array();
+		if($handle = opendir($moduleDir))
+		{
+	    	while(false !== ($entry = readdir($handle)))
+	    	{
+	        	if($entry != "." && $entry != "..")
+	        	{
+	        		array_push($moduleDirArr, $moduleDir.'/'.$entry);
+	        	}
+	    	}
+	    	closedir($handle);
+		}
+		return $moduleDirArr;
+	}
 	function __destruct()
 	{
 	

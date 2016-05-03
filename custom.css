@@ -1,0 +1,17 @@
+body
+{
+	font-family:sans-serif;
+}
+nav > ul
+{
+    list-style:none;
+  	display:block;
+  	margin-left:0;
+    padding-left: 0;
+}
+ 
+nav > ul > li
+{
+    float:left;
+    margin-right:1.5em;
+}
