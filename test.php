@@ -16,19 +16,25 @@ header("Content-type: text/html");
 ?>
 </head>
 <body>
+	<nav>
+		<div class="container_12">
+			<div class="navbar">
+				<ul>
+			        <li><a href="#">Articles</a></li>
+			        <li><a href="#">Topics</a></li>
+			        <li><a href="#">About</a></li>
+			        <li><a href="#">Editors</a></li>
+			        <li class="nav-right"><a href="#">Contact</a></li>
+				</ul>
+			</div>
+		</div><!-- .container_12 -->
+	</nav>
 	<div class="container_12">
-		<nav class="grid_12">
-    		<ul>
-		        <li>Articles</li>
-		        <li>Topics</li>
-		        <li>About</li>
-		        <li>Editors</li>
-		        <li>Contact</li>
-    		</ul>
-    	</nav>
 	    <div class="clear"></div>
 	    <header class="grid_12">
 	    	<h1>Hello world</h1>
+	    	<h2>From here</h2>
+	    	<h3></h3>
 	    </header>
 	    <div class="clear"></div>
 	    <article class="grid_6">

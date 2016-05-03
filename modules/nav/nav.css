@@ -1,0 +1,40 @@
+nav
+{
+	background-color:#333;
+}
+
+.navbar > ul
+{
+    list-style-type:none;
+    margin:0;
+    padding:0;
+}
+
+.navbar > ul > li
+{
+    float:left;
+}
+
+.navbar > ul > li.nav-right
+{
+	float:right;
+}
+
+.navbar > ul > li > a
+{
+    display:block;
+    color:white;
+    text-align:center;
+    padding:1em;
+    text-decoration:none;
+}
+
+.navbar > ul > li > a:hover:not(.active)
+{
+    background-color:#111;
+}
+
+.navbar > ul > li > a.active
+{
+    background-color:#4CAF50;
+}
