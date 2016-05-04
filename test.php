@@ -11,23 +11,21 @@ $u = new utils;
 	<meta name="viewport" content="width=device-width, initial-scale=1">	
 	<title>mframe template test page</title>
 	<link rel="stylesheet" href="css-cache.php" />
+	<script src="modules/responsive-nav/responsive-nav.js"></script>
 <?php
 header("Content-type: text/html");
 ?>
 </head>
 <body>
-	<nav>
-		<div class="container_12">
-			<div class="navbar">
-				<ul>
-			        <li><a href="#">Articles</a></li>
-			        <li><a href="#">Topics</a></li>
-			        <li><a href="#">About</a></li>
-			        <li><a href="#">Editors</a></li>
-			        <li class="nav-right"><a href="#">Contact</a></li>
-				</ul>
-			</div>
-		</div><!-- .container_12 -->
+	<nav class="nav">
+		<ul>
+			<li class="mobile">Menu</li>
+	        <li><a href="#">Articles</a></li>
+	        <li><a href="#">Topics</a></li>
+	        <li><a href="#">About</a></li>
+	        <li><a href="#">Editors</a></li>
+	        <li><a href="#">Contact</a></li>
+		</ul>
 	</nav>
 	<div class="container_12">
 	    <div class="clear"></div>

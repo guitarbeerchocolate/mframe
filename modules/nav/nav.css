@@ -1,40 +1,121 @@
-nav
+/* nav */
+.nav
 {
-	background-color:#333;
+	margin:1.25em 0; /* 20/16 */
+}
+.nav ul
+{
+	margin: 0;
+	padding: 0;
+}
+.nav li
+{
+	margin: 0 0.3125em 0.625em 0; /* 5/16 */ /* 10/16 */
+	padding: 0;
+	list-style: none;
+	display: inline-block;
+	*display:inline; /* ie7 */
+}
+.nav a
+{
+	padding: 0.1875em 0.75em; /* 3/16 */ /* 12/16 */
+	text-decoration: none;	
+	line-height: 100%;
+}
+.nav a:hover
+{
+	/*color: #000;*/
+}
+.nav .current a
+{
+	/*background: #999;*/
+	/*color: #fff;*/
 }
 
-.navbar > ul
+/* right nav */
+.nav.right ul
 {
-    list-style-type:none;
-    margin:0;
-    padding:0;
+	text-align: right;
 }
 
-.navbar > ul > li
+/* center nav */
+.nav.center ul
 {
-    float:left;
+	text-align: center;
 }
 
-.navbar > ul > li.nav-right
+.nav > ul > li.mobile
 {
-	float:right;
+	display:none;
 }
 
-.navbar > ul > li > a
+@media screen and (max-width: 600px)
 {
-    display:block;
-    color:white;
-    text-align:center;
-    padding:1em;
-    text-decoration:none;
-}
+	.nav
+	{
+		position:relative;
+		min-height: 2.5em; /* 40/16 */
+	}	
+	.nav ul
+	{
+		width: 11.25em; /* 180/16 */
+		padding: 0.3125em 0; /* 5/16 */
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	.nav > ul > li.mobile
+	{
+		display:block;
+		text-align:center;
+	}
+	.nav li
+	{
+		display: none; /* hide all <li> items */
+		margin: 0;
+	}
+	.nav .current
+	{
+		display: block; /* show only current <li> item */
+	}
+	.nav a
+	{
+		display: block;
+		padding: 0.3125em 0.3125em 0.3125em 2em; /* 5/16 */ /* 5/16 */ /* 5/16 */ /* 32/16 */
+		text-align:center;
+	}
+	.nav .current a
+	{
+		background: none;
+		color: #666;
+	}
 
-.navbar > ul > li > a:hover:not(.active)
-{
-    background-color:#111;
-}
+	/* on nav hover */
+	.nav ul:hover
+	{
+		background-image:none;
+	}
+	.nav ul:hover li
+	{
+		display: block;
+		margin: 0 0 0.3125em; /* 5/16 */
+	}
+	.nav ul:hover .current
+	{
+		background: url(icon-check.png) no-repeat 10px 7px;
+	}
 
-.navbar > ul > li > a.active
-{
-    background-color:#4CAF50;
+	/* right nav */
+	.nav.right ul
+	{
+		left: auto;
+		right: 0;
+	}
+
+	/* center nav */
+	.nav.center ul
+	{
+		left: 50%;
+		margin-left: -5.625em; /* 90/16 */
+	}
 }
