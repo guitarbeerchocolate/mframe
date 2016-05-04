@@ -11,37 +11,37 @@ $u = new utils;
 	<meta name="viewport" content="width=device-width, initial-scale=1">	
 	<title>mframe template test page</title>
 	<link rel="stylesheet" href="css-cache.php" />
-	<script src="modules/responsive-nav/responsive-nav.js"></script>
 <?php
 header("Content-type: text/html");
 ?>
 </head>
 <body>
-	<nav class="nav">
-		<ul>
-			<li class="mobile">Menu</li>
-	        <li><a href="#">Articles</a></li>
-	        <li><a href="#">Topics</a></li>
-	        <li><a href="#">About</a></li>
-	        <li><a href="#">Editors</a></li>
-	        <li><a href="#">Contact</a></li>
-		</ul>
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="navbar-header">				
+				<a class="navbar-brand" href="#">Brand</a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Articles</a></li>
+			        <li><a href="#">Topics</a></li>
+			        <li><a href="#">About</a></li>
+			        <li><a href="#">Editors</a></li>
+			        <li><a href="#">Contact</a></li>
+				</ul>
+			</div>
+		</div>
 	</nav>
-	<div class="container_12">
-	    <div class="clear"></div>
-	    <header class="grid_12">
-	    	<h1>Hello world</h1>
-	    	<h2>From here</h2>
-	    	<h3></h3>
-	    </header>
-	    <div class="clear"></div>
-	    <article class="grid_6">
-	        <p>The beginning of the best article in the history of humanity.</p>
-        </article>
-        <aside class="grid_6">
-        	<img src="<?php $u->data_uri('img/mick.png'); ?>" />
-            <p>Here is some additional information.</p>
-        </aside>
+	<div class="container">
+		<div class="row">
+			<div class="col-6">           
+				<p>The beginning of the best article in the history of humanity.</p>
+			</div>
+			<div class="col-6">
+				<img src="<?php $u->data_uri('img/mick.png'); ?>" />
+				<p>Here is some additional information.</p>
+			</div>
+		</div>
 	</div>
 	<script src="http://code.jquery.com/jquery-1.12.3.min.js"></script>	
 	<script src="js-cache.php"></script>
