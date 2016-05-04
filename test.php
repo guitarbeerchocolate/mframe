@@ -33,6 +33,11 @@ header("Content-type: text/html");
 		</div>
 	</nav>
 	<div class="container">
+		<div class="row" id="alert">
+			<div class="alert-content col-12">
+				
+			</div>
+		</div>
 		<div class="row">
 			<article class="col-6">           
 				<p>The beginning of the best article in the history of humanity.</p>

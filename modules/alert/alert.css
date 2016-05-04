@@ -1,0 +1,12 @@
+#alert
+{
+	display:none;
+	margin-bottom:1em;
+}
+#alert > .alert-content
+{
+	background:#1fe1bf;
+	color:white;
+	padding:1em;
+	text-align:center;
+}
