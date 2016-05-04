@@ -34,13 +34,13 @@ header("Content-type: text/html");
 	</nav>
 	<div class="container">
 		<div class="row">
-			<div class="col-6">           
+			<article class="col-6">           
 				<p>The beginning of the best article in the history of humanity.</p>
-			</div>
-			<div class="col-6">
-				<img src="<?php $u->data_uri('img/mick.png'); ?>" />
-				<p>Here is some additional information.</p>
-			</div>
+			</article>
+			<aside class="col-6">
+				<img src="<?php $u->data_uri('img/mick.png'); ?>" id="mickpic" />
+				<p>Odit officiis voluptatem magni fugiat consequatur a iste. Omnis facilis quibusdam qui saepe culpa dolore at alias. Harum perferendis temporibus consequatur et sapiente totam ut. Vel consequatur id aperiam molestias.</p>
+			</aside>
 		</div>
 	</div>
 	<script src="http://code.jquery.com/jquery-1.12.3.min.js"></script>	
