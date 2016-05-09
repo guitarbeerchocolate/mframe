@@ -1,5 +1,6 @@
 <?php
 // include_once 'includes/top-cache.php';
+include_once 'includes/showerrors.inc.php';
 require_once 'classes/utils.class.php';
 $u = new utils;
 ?>
