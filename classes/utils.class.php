@@ -167,8 +167,11 @@ class utils
             'odt' => 'application/vnd.oasis.opendocument.text',
             'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
         );
+		$fnameArr = array();
+		$fnameArr = explode('.',$filename);
+		$lastItem = array_pop($fnameArr);
+        $ext = strtolower($lastItem);
 
-        $ext = strtolower(array_pop(explode('.',$filename)));
         if(array_key_exists($ext, $mime_types))
         {
             return $mime_types[$ext];
