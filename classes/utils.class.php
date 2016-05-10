@@ -183,10 +183,9 @@ class utils
     }    
     function data_uri($file)
 	{
-		$mime = $this->get_mime_type($file);
-		$myBase = $this->rootPath();
-		$contents = file_get_contents($myBase.$file);		
-		$base64 = base64_encode($contents);		
+		$mime = $this->get_mime_type($file);		
+		$contents = file_get_contents($file);		
+		$base64 = base64_encode($contents);				
 		echo "data:$mime;base64,$base64";
 	}
 	function rootPath()
