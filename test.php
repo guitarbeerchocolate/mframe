@@ -42,6 +42,8 @@ header("Content-type: text/html");
 		<div class="row">
 			<article class="col-6">           
 				<p>The beginning of the best article in the history of humanity.</p>
+				<i class="fa fa-delicious fa-5x"></i>
+				<span class="glyphicon glyphicon-home"></span>
 			</article>
 			<aside class="col-6">
 				<img src="<?php $u->data_uri('img/mick.png'); ?>" id="mickpic" />
