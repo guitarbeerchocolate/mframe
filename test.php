@@ -9,37 +9,28 @@ $u = new utils;
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<?php
+	include_once 'includes/meta.inc.php';
+	?>	
 	<title>mframe template test page</title>
+	<?php
+	include_once 'includes/icons.inc.php';
+	?>
 	<link rel="stylesheet" href="css-cache.php" />
 <?php
 header("Content-type: text/html");
 ?>
 </head>
 <body>
-	<nav class="navbar navbar-default">
+	<?php
+	include_once 'includes/googletracker.inc.php';
+	include_once 'includes/navigation.inc.php';
+	include_once 'includes/alert.inc.php';
+	include_once 'includes/header.inc.php';
+	?>
+	<div class="row">
 		<div class="container">
-			<div class="navbar-header">				
-				<a class="navbar-brand" href="#">Brand</a>
-			</div>
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Articles</a></li>
-			        <li><a href="#">Topics</a></li>
-			        <li><a href="#">About</a></li>
-			        <li><a href="#">Editors</a></li>
-			        <li><a href="#">Contact</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<div class="container">
-		<div class="row" id="alert">
-			<div class="alert-content col-12">
-				
-			</div>
-		</div>
-		<div class="row">
 			<article class="col-6">           
 				<p>The beginning of the best article in the history of humanity.</p>
 				<i class="fa fa-delicious fa-5x"></i>
@@ -49,8 +40,11 @@ header("Content-type: text/html");
 				<img src="<?php $u->data_uri('img/mick.png'); ?>" id="mickpic" />
 				<p>Odit officiis voluptatem magni fugiat consequatur a iste. Omnis facilis quibusdam qui saepe culpa dolore at alias. Harum perferendis temporibus consequatur et sapiente totam ut. Vel consequatur id aperiam molestias.</p>
 			</aside>
-		</div>
-	</div>
+		</div><!-- .container -->
+	</div><!-- .row -->
+	<?php
+	include_once 'includes/footer.inc.php';
+	?>
 	<script src="http://code.jquery.com/jquery-1.12.3.min.js"></script>	
 	<script src="js-cache.php"></script>
 </body>
@@ -58,3 +52,4 @@ header("Content-type: text/html");
 <?php
 // include_once 'includes/bottom-cache.php';
 ?>
+
