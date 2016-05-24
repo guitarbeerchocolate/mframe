@@ -1,7 +1,5 @@
 (function()
 {
-  $('.authenticate > .panel').equaliseheight();
-  $('.highlights > .panel').equaliseheight();
 
   /*
   $('form.ajax').on('submit', function(event)
