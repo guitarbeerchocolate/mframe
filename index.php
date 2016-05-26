@@ -19,7 +19,7 @@ include_once 'includes/general/urlhandler.inc.php';
     include_once 'includes/general/linkrel.inc.php';
     ?>
   </head>
-  <body itemscope itemtype="http://schema.org/Organization">    
+  <body itemscope itemtype="http://schema.org/Organization">
     <?php
     include_once 'includes/general/googletracker.inc.php';
     $u->echoeol();

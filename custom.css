@@ -60,6 +60,11 @@ h1
 	width: 100%;
 }
 
+img.thumbnail
+{
+	width:8em;
+}
+
 @media only screen and (max-width: 62em) /* 982/16 */
 {
 

@@ -19,9 +19,8 @@ class events extends database
         $sth->bindParam(':dateend', $this->pa['dateend']);
 		$sth->execute();
         $message = 'Record added';
-		$outURL = $this->settings['website']['url'].'manager.php?inc=manageevents&message='.$message;
-		$myArr = array('location'=>$outURL);
-		return $myArr;
+		$outURL = $this->settings['website']['url'].'manager.php?inc=events&message='.urlencode($message);
+		header('Location:'.$outURL);
     }
 
     function updateevents()
@@ -34,9 +33,8 @@ class events extends database
         $sth->bindParam(':dateend', $this->pa['dateend']);
 		$sth->execute();
         $message = 'Record updated';
-		$outURL = $this->settings['website']['url'].'manager.php?inc=manageevents&message='.$message;
-		$myArr = array('location'=>$outURL);
-		return $myArr;
+		$outURL = $this->settings['website']['url'].'manager.php?inc=events&message='.urlencode($message);
+		header('Location:'.$outURL);
     }
 
     function deleteevents()
@@ -48,25 +46,8 @@ class events extends database
             $sth->execute();
         }        
         $message = 'Records deleted';
-        $outURL = $this->settings['website']['url'].'manager.php?inc=manageevents&message='.$message;
-        $myArr = array('location'=>$outURL);
-        return $myArr;
-    }
-
-    function addeventsimage()
-    {
-        $target_dir = 'data/events/'.$this->pa['id'];
-        if(!file_exists($target_dir))
-        {
-            mkdir($target_dir, 0777, true);
-        }
-        $target_dir .= '/';        
-        $target_file = $target_dir.basename($_FILES["eventsfile"]["name"]);
-        $tmp_name = $_FILES["eventsfile"]["tmp_name"];        
-        move_uploaded_file($tmp_name, $target_file);
-        $outURL = $target_file;
-        $myArr = array('location'=>$outURL);
-        return $myArr;
+        $outURL = $this->settings['website']['url'].'manager.php?inc=events&message='.urlencode($message);
+        header('Location:'.$outURL);
     }
 
     function getevents($id)

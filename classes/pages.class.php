@@ -17,9 +17,8 @@ class pages extends database
 		$sth->bindParam(':content', $this->pa['content']);	
 		$sth->execute();
         $message = 'Record added';
-		$outURL = $this->settings['website']['url'].'manager.php?inc=managepages&message='.$message;
-		$myArr = array('location'=>$outURL);
-		return $myArr;
+		$outURL = $this->settings['website']['url'].'manager.php?inc=pages&message='.urlencode($message);
+        header('Location:'.$outURL);
     }
 
     function updatepage()
@@ -30,9 +29,8 @@ class pages extends database
 		$sth->bindParam(':content', $this->pa['content']);	
 		$sth->execute();
         $message = 'Record updated';
-		$outURL = $this->settings['website']['url'].'manager.php?inc=managepages&message='.$message;
-		$myArr = array('location'=>$outURL);
-		return $myArr;
+		$outURL = $this->settings['website']['url'].'manager.php?inc=pages&message='.urlencode($message);
+        header('Location:'.$outURL);
     }
 
     function deletepages()
@@ -44,26 +42,9 @@ class pages extends database
             $sth->execute();
         }        
         $message = 'Records deleted';
-        $outURL = $this->settings['website']['url'].'manager.php?inc=managepages&message='.$message;
-        $myArr = array('location'=>$outURL);
-        return $myArr;
-    }
-
-    function addpageimage()
-    {
-        $target_dir = 'data/pages/'.$this->pa['id'];
-        if(!file_exists($target_dir))
-        {
-            mkdir($target_dir, 0777, true);
-        }
-        $target_dir .= '/';        
-        $target_file = $target_dir.basename($_FILES["pagefile"]["name"]);
-        $tmp_name = $_FILES["pagefile"]["tmp_name"];        
-        move_uploaded_file($tmp_name, $target_file);
-        $outURL = $target_file;
-        $myArr = array('location'=>$outURL);
-        return $myArr;
-    }
+        $outURL = $this->settings['website']['url'].'manager.php?inc=pages&message='.urlencode($message);
+        header('Location:'.$outURL);
+    }    
 
     function getpage($id)
     {
