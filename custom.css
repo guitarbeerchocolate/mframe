@@ -65,6 +65,11 @@ img.thumbnail
 	width:8em;
 }
 
+.tab-pane
+{
+	padding:1em;
+}
+
 @media only screen and (max-width: 62em) /* 982/16 */
 {
 

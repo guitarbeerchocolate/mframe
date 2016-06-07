@@ -33,7 +33,8 @@ include_once 'includes/general/urlhandler.inc.php';
     $u->echoeol();
     include_once 'includes/general/footer.inc.php';
     ?>
-    <script src="jquery/1.11.2/jquery.min.js"></script>    
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script src="jquery/1.11.2/jquery.min.js"></script>
     <script src="js-cache.php"></script>
   </body>
 </html>
