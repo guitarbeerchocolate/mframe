@@ -17,8 +17,7 @@ class events extends database
 		$sth->bindParam(':content', $this->pa['content']);	
         $sth->bindParam(':datestart', $this->pa['datestart']);
         $sth->bindParam(':dateend', $this->pa['dateend']);
-		$sth->execute();
-        $message = 'Record added';
+        $message = $this->testExcecute($sth, 'Record added');		
 		$outURL = $this->settings['website']['url'].'manager.php?inc=events&message='.urlencode($message);
 		header('Location:'.$outURL);
     }
@@ -31,8 +30,7 @@ class events extends database
 		$sth->bindParam(':content', $this->pa['content']);
         $sth->bindParam(':datestart', $this->pa['datestart']);
         $sth->bindParam(':dateend', $this->pa['dateend']);
-		$sth->execute();
-        $message = 'Record updated';
+		$message = $this->testExcecute($sth, 'Record updated');
 		$outURL = $this->settings['website']['url'].'manager.php?inc=events&message='.urlencode($message);
 		header('Location:'.$outURL);
     }

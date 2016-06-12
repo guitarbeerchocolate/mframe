@@ -1,4 +1,12 @@
 (function()
 {
-  console.log('Success!');
+	if($(this).hasClass('triggersave'))
+    {
+      tinyMCE.triggerSave();  
+    }
+	$('.datepicker').datepicker(
+	{
+		format:'yyyy-mm-dd'
+	});
+	console.log('Success!');
 })();

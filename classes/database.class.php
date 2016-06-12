@@ -30,5 +30,18 @@ class database extends PDO
         $row = $stmt->fetch();        
         return $row['id']+1;
     }
+
+    function testExcecute($sth, $successMessage)
+    {
+        if($sth->execute() == TRUE)
+        {
+            return $successMessage;
+        }
+        else
+        {
+            $messageArr = $sth->errorInfo();
+            return $messageArr[2];
+        }
+    }
 }
 ?>

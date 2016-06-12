@@ -57,8 +57,9 @@ else if (isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
     $u->echoeol();
     include_once 'includes/general/footer.inc.php';
     ?>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
     <script src="jquery/1.11.2/jquery.min.js"></script>
-    <!-- <script type="text/javascript" src="js/jquery.form.min.js"></script> -->
+    <script src="js/datepicker/bootstrap-datepicker.js"></script>
     <script src="js-cache.php"></script>
   </body>
 </html>

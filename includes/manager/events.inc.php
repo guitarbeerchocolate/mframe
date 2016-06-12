@@ -43,7 +43,7 @@
 <div class="row">
 	<div class="container">
 		<div class="col-md-12">
-			<form action="<?php echo $action; ?>" method="POST" role="form" class="ajax triggersave">
+			<form action="formhandler.php?action=<?php echo $action; ?>" method="POST" role="form" class="ajax triggersave">
 				<input type="hidden" name="id" value="<?php echo $id; ?>" />
 				<div class="form-group">
 					<label for="name">Name of event</label>
@@ -55,7 +55,7 @@
 				</div><!-- .form-group -->
 				<div class="form-group">
 					<label for="dateend">End Date</label>
-					<input type="date" name="dateend" class="form-control" value="<?php echo $dateend; ?>" />
+					<input type="date" name="dateend" class="form-control datepicker" value="<?php echo $dateend; ?>" />
 				</div><!-- .form-group -->
 				<div class="form-group">
 					<label for="content">Page content</label>
@@ -73,8 +73,13 @@ include_once 'uploadedimages.inc.php';
 	<div class="container">
 		<div class="col-md-12">
 			<h4>Existing events</h4>			
-			<form method="post" action="events/deleteevents" class="ajax" role="form">	
+			<form method="post" action="formhandler.php?action=events/deleteevents" class="ajax" role="form">	
 				<table class="table">
+					<thead>
+						<tr>
+							<td></td><td>Name</td><td>Action</td>
+						</tr>
+					</thead>
 					<tbody>
 					<?php					
 					$rows = $db->listall('events');
@@ -84,9 +89,9 @@ include_once 'uploadedimages.inc.php';
 						{
 							echo '<tr>';
 							echo '<td>';
-							echo '<div class="checkbox"><label><input type="checkbox" name="id[]"';
-							echo 'value="'.$row['id'].'">';
-							echo ' '.$row['name'].'</label></div>';
+							echo '<input type="checkbox" name="id[]"';
+							echo 'value="'.$row['id'].'"></td>';
+							echo '<td>'.$row['name'].'</td>';
 							echo '</td>';
 							echo '<td>';
 							echo '<a href="manager.php?inc=events&id='.$row['id'].'">Edit</a>';

@@ -37,20 +37,20 @@ else if(isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
     ?>
   </head>
   <body>
-  	
-  			<?php
-        include_once 'includes/general/navigation.inc.php';
-        $u->echoeol();
-        include_once 'includes/general/header.inc.php';
-        $u->echoeol();
-        include_once 'includes/general/message.inc.php';
-        $u->echoeol();
-        include_once 'includes/private/logout.inc.php';
-        $u->echoeol();
-        include_once $includeFile;
-        $u->echoeol();
-        include_once 'includes/general/footer.inc.php';
-        ?>
+  	<?php
+    include_once 'includes/general/navigation.inc.php';
+    $u->echoeol();
+    include_once 'includes/general/header.inc.php';
+    $u->echoeol();
+    include_once 'includes/general/message.inc.php';
+    $u->echoeol();
+    include_once 'includes/private/logout.inc.php';
+    $u->echoeol();
+    include_once $includeFile;
+    $u->echoeol();
+    include_once 'includes/general/footer.inc.php';
+    ?>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
     <script src="jquery/1.11.2/jquery.min.js"></script>
     <script src="js-cache.php"></script>
   </body>

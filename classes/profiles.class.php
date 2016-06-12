@@ -16,8 +16,7 @@ class profiles extends database
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);
         $sth->bindParam(':photo', $this->pa['photo']);
-		$sth->execute();
-        $message = 'Record added';
+		$message = $this->testExcecute($sth, 'Record added');
 		$outURL = $this->settings['website']['url'].'manager.php?inc=profiles&message='.urlencode($message);
         header('Location:'.$outURL);
     }
@@ -29,8 +28,7 @@ class profiles extends database
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);
         $sth->bindParam(':photo', $this->pa['photo']);	
-		$sth->execute();
-        $message = 'Record updated';
+		$message = $this->testExcecute($sth, 'Record updated');
 		$outURL = $this->settings['website']['url'].'manager.php?inc=profiles&message='.urlencode($message);
         header('Location:'.$outURL);
     }

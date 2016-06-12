@@ -60,8 +60,13 @@ include_once 'uploadedimages.inc.php';
 	<div class="container">
 		<div class="col-md-12">
 			<h4>Existing news</h4>
-			<form method="post" action="news/deletenews" class="ajax" role="form">	
+			<form method="post" action="formhandler.php?action=news/deletenews" class="ajax" role="form">	
 				<table class="table">
+					<thead>
+						<tr>
+							<td></td><td>Name</td><td>Action</td>
+						</tr>
+					</thead>
 					<tbody>
 					<?php
 					$rows = $db->listall('news');
@@ -74,6 +79,7 @@ include_once 'uploadedimages.inc.php';
 							echo '<input type="checkbox" name="id[]"';
 							echo 'value="'.$row['id'].'"></td>';
 							echo '<td>'.$row['name'].'</td>';
+							echo '</td>';
 							echo '<td>';
 							echo '<a href="manager.php?inc=news&id='.$row['id'].'">Edit</a>';
 							echo '</td>';

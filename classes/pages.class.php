@@ -15,8 +15,7 @@ class pages extends database
     	$sth = $this->prepare("INSERT INTO pages (name,content) VALUES (:name,:content)");
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);	
-		$sth->execute();
-        $message = 'Record added';
+		$message = $this->testExcecute($sth, 'Record added');
 		$outURL = $this->settings['website']['url'].'manager.php?inc=pages&message='.urlencode($message);
         header('Location:'.$outURL);
     }
@@ -27,8 +26,7 @@ class pages extends database
     	$sth->bindParam(':id', $this->pa['id']);
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);	
-		$sth->execute();
-        $message = 'Record updated';
+		$message = $this->testExcecute($sth, 'Record updated');
 		$outURL = $this->settings['website']['url'].'manager.php?inc=pages&message='.urlencode($message);
         header('Location:'.$outURL);
     }
