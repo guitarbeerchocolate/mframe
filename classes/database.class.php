@@ -16,6 +16,12 @@ class database extends PDO
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    function performquery($q)
+    {
+        $stmt = $this->query($q); 
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     function getOneByID($table,$id)
     {
     	$sql = "SELECT * FROM ".$table." WHERE id=".$id." LIMIT 1"; 

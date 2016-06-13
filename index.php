@@ -29,6 +29,8 @@ include_once 'includes/general/urlhandler.inc.php';
     $u->echoeol();
     include_once 'includes/general/message.inc.php';
     $u->echoeol();
+    include_once 'includes/general/searchresults.inc.php';
+    $u->echoeol();
     include_once $includeFile;
     $u->echoeol();
     include_once 'includes/general/footer.inc.php';

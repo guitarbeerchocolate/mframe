@@ -29,14 +29,16 @@ h1
 	color:white;
 }
 
-.navbar-default .navbar-nav > li:hover
+.navbar-default .navbar-nav > li:hover, .btn-primary:hover
 {
 	background:#E66464;
+	border-color:#E66464;
 }
 
-.navbar-default .navbar-nav > li.active > a
+.navbar-default .navbar-nav > li.active > a, .btn-primary
 {
 	background-color:#CC3333;
+	border-color:#CC3333;
 }
 
 .right-align
