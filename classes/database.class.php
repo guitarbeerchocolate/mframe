@@ -22,11 +22,18 @@ class database extends PDO
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function getOneByID($table,$id)
+    function getOneByFieldValue($table,$field,$value)
     {
-    	$sql = "SELECT * FROM ".$table." WHERE id=".$id." LIMIT 1"; 
+    	$sql = "SELECT * FROM ".$table." WHERE ".$field."=".$value." LIMIT 1"; 
 		$stmt = $this->query($sql); 
 		return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function getOneByID($table,$id)
+    {
+        $sql = "SELECT * FROM ".$table." WHERE id=".$id." LIMIT 1"; 
+        $stmt = $this->query($sql); 
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     function getNextID($table)

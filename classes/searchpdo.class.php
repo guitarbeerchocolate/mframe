@@ -60,7 +60,7 @@ class searchpdo extends database
 			$ss = rtrim($ss," OR ");						
 			$rows = $this->query($ss);
 			echo '<br />Searching in table "'.$table.'" for "'.$q.'"';
-			$this->buildTable($rows, $colArr);
+			$this->buildTable($rows, $colArr, $table);
 		}
 	}
 
@@ -82,7 +82,7 @@ class searchpdo extends database
 			$ss = rtrim($ss," OR ");			
 			$rows = $this->query($ss);
 			echo '<br />Searching in table "'.$table.'" for "'.$q.'"';
-			$this->buildTable($rows, $colArr);
+			$this->buildTable($rows, $colArr, $table);
 		}
 	}
 
@@ -106,7 +106,7 @@ class searchpdo extends database
 			$ss = rtrim($ss," OR ");
 			$rows = $this->query($ss);
 			echo '<br />Searching in table "'.$table.'" for "'.$q.'"';
-			$this->buildTable($rows, $colArr);
+			$this->buildTable($rows, $colArr, $table);
 		}
 	}
 
@@ -115,12 +115,12 @@ class searchpdo extends database
 		$outArr = array();
 		$schema = $this->settings['database']['schema'];
 		$s = "SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='{$schema}' AND `TABLE_NAME`='{$tn}'";
-		$rows = $this->query($s);
+		$rows = $this->performquery($s);
 		foreach ($rows as $row)
 		{
-			if(strtolower($row->COLUMN_NAME) !== 'id')
+			if(strtolower($row['COLUMN_NAME']) !== 'id')
 			{
-				array_push($outArr, $row->COLUMN_NAME);
+				array_push($outArr, $row['COLUMN_NAME']);
 			}
 		}
 		return $outArr;
@@ -155,7 +155,7 @@ class searchpdo extends database
 		}
 	}
 
-	function buildBody($rows, $colArr)
+	function buildBody($rows, $colArr, $table)
 	{
 		foreach ($rows as $row)
 		{
@@ -166,19 +166,19 @@ class searchpdo extends database
 				{
 					if(in_array($col, $this->fieldArr))
 					{
-						echo '<td>'.$row->{$col}.'</td>';
+						echo '<td><a href="'.$table.'&id='.$row['id'].'">'.$row[$col].'</a></td>';
 					}
 				}
 				else
 				{
-					echo '<td>'.$row->{$col}.'</td>';	
+					echo '<td><a href="'.$table.'&id='.$row['id'].'">'.$row[$col].'</a></td>';	
 				}						
 			}
 			echo '</tr>'.PHP_EOL;		
 		}
 	}
 
-	function buildTable($rows, $colArr)
+	function buildTable($rows, $colArr, $table)
 	{
 		if(count($rows) > 0)
 		{
@@ -187,7 +187,7 @@ class searchpdo extends database
 			echo '<thead><tr>';
 			$this->buildHead($colArr);
 			echo '</tr></thead><tbody>'.PHP_EOL;
-			$this->buildBody($rows, $colArr);
+			$this->buildBody($rows, $colArr, $table);
 			echo '</tbody></table>'.PHP_EOL;
 			echo '</div>'.PHP_EOL;
 		}

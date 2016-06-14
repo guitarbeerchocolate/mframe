@@ -1,13 +1,12 @@
 <div class="row">
 	<div class="container">
 		<div class="col-md-12">
-			<h2>News item</h2>
 			<?php
 			if(isset($_GET['id']))
 			{
-				require_once 'classes/news.class.php';
-				$p = new news;
-				$p->getnews($_GET['id']);
+				require_once 'classes/pages.class.php';
+				$p = new pages;
+				$p->getpage($_GET['id']);
 				if(isset($p->name))
 				{
 					echo '<h3>'.$p->name.'</h3>'.PHP_EOL;
