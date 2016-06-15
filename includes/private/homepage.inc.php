@@ -6,7 +6,7 @@
 			$sess_id = $_SESSION['userid'];
 			if(in_array($sess_id, $manageridArr))
 			{
-				$u->brecho('<a href="manager.php">Go to the manager options</a>');
+				$u->brecho('<a href="manager.php" class="btn btn-primary">Go to the manager options</a>');
 			}
 			?>
 		</div>

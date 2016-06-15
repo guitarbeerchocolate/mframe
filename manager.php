@@ -6,26 +6,7 @@ $u = new utilities;
 $settings = parse_ini_file('classes/config.ini', TRUE);
 include_once 'includes/manager/urlhandler.inc.php';
 $manageridArr = explode(',',$settings['website']['managerids']);
-if(!isset($_SESSION['userid']))
-{
-	$error = urlencode('You must be logged in to access the private section.');
-	header('location:'.$settings['website']['formspage'].'?message='.$error);
-	exit;
-}
-else if(!in_array($_SESSION['userid'], $manageridArr))
-{
-  $error = urlencode('You must be logged in as a manager access the manager section.');
-  header('location:'.$settings['website']['formspage'].'?message='.$error);
-  exit;
-}
-else if (isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
-{
-  unset($_SESSION['userid']);
-  session_destroy();
-  $error = urlencode('Logged out.');
-  header('location:'.$settings['website']['formspage'].'?message='.$error);
-  exit;
-}
+include_once 'includes/manager/sessionhandler.inc.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +32,7 @@ else if (isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
     $u->echoeol();
     include_once 'includes/general/message.inc.php';
     $u->echoeol();
-    include_once 'includes/manager/logout.inc.php';
+    include_once 'includes/manager/backtoprivate.inc.php';
     $u->echoeol();
     include_once $includeFile;
     $u->echoeol();

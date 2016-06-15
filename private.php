@@ -5,20 +5,7 @@ require_once 'classes/utilities.class.php';
 $u = new utilities;
 $settings = parse_ini_file('classes/config.ini', TRUE);
 include_once 'includes/private/urlhandler.inc.php';
-if(!isset($_SESSION['userid']))
-{
-	$error = urlencode('You must be logged in to access the private section.');
-	header('location:'.$settings['website']['formspage'].'?message='.$error);
-	exit;
-}
-else if(isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
-{
-	unset($_SESSION['userid']);
-	session_destroy();
-	$error = urlencode('Logged out.');
-	header('location:'.$settings['website']['formspage'].'?message='.$error);
-	exit;
-}
+include_once 'includes/private/sessionhandler.inc.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,10 +31,8 @@ else if(isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
     $u->echoeol();
     include_once 'includes/general/message.inc.php';
     $u->echoeol();
-    include_once 'includes/private/logout.inc.php';
-    $u->echoeol();
     include_once $includeFile;
-    $u->echoeol();
+    $u->echoeol();    
     include_once 'includes/general/footer.inc.php';
     ?>
     <script async src="https://cdn.ampproject.org/v0.js"></script>

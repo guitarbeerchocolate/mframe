@@ -1,35 +1,70 @@
 <?php
 require_once 'database.class.php';
+require_once 'fileupload.class.php';
 class profiles extends database
 {
 	private $pa;
-    public $name, $content, $photo;
+    public $name, $content, $photo, $photolocation;
     public function __construct($postArray = array())
     {
         parent::__construct();
         $this->pa = $postArray;
+        $this->photolocation = 'img/profile';
     }
 
     function addprofiles()
     {
-    	$sth = $this->prepare("INSERT INTO profiles (name,content,photo) VALUES (:name,:content,:photo)");
+        $message = 'Profile added';
+    	$sth = $this->prepare("INSERT INTO profiles (userid,name,content,photo) VALUES (:userid,:name,:content,:photo)");
+        $sth->bindParam(':userid', $this->pa['id']);
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);
-        $sth->bindParam(':photo', $this->pa['photo']);
+        if(!empty($_FILES) && isset($_FILES['photo']))
+        {
+            $this->files = (object) $_FILES['photo'];
+        }        
+        
+        if(!empty($this->files->name))
+        {
+            $fu = new fileupload($this->photolocation);
+            $fu->files = $this->files;
+            $uploadResult = $fu->imageupload($this->pa['id'],200,300);
+        }
+        $sth->bindParam(':photo', $uploadResult);
 		$message = $this->testExcecute($sth, 'Record added');
-		$outURL = $this->settings['website']['url'].'manager.php?inc=profiles&message='.urlencode($message);
+		$outURL = $this->settings['website']['url'].'private.php?message='.urlencode($message);
         header('Location:'.$outURL);
     }
 
     function updateprofiles()
     {
-    	$sth = $this->prepare("UPDATE profiles SET name = :name, content = :content, photo = :photo WHERE id = :id");
+    	$sth = $this->prepare("UPDATE profiles SET name = :name, content = :content, photo = :photo WHERE userid = :id");
     	$sth->bindParam(':id', $this->pa['id']);
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);
-        $sth->bindParam(':photo', $this->pa['photo']);	
-		$message = $this->testExcecute($sth, 'Record updated');
-		$outURL = $this->settings['website']['url'].'manager.php?inc=profiles&message='.urlencode($message);
+
+        if(!empty($_FILES) && isset($_FILES['photo']))
+        {
+            $this->files = (object) $_FILES['photo'];
+            if(!empty($this->files->name))
+            {
+                $fu = new fileupload($this->photolocation);
+                $fu->files = $this->files;
+                $uploadResult = $fu->imageupload($this->pa['id'],200,300);
+            }
+            else
+            {
+                $uploadResult = $this->pa['tempphoto'];
+            }
+            $sth->bindParam(':photo', $uploadResult);
+        }
+        else
+        {
+             $sth->bindParam(':photo', $this->pa['tempphoto']);
+        }	
+		
+        $message = $this->testExcecute($sth, 'Record updated');
+		$outURL = $this->settings['website']['url'].'private.php?message='.urlencode($message);
         header('Location:'.$outURL);
     }
 
