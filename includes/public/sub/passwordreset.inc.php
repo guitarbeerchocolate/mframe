@@ -2,7 +2,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">Password reset</div>
 		<div class="panel-body">
-			<form method="POST" action="authenticate/passwordresetrequest" role="form" class="ajax">						
+			<form method="POST" action="formhandler.php?action=authenticate/passwordresetrequest" role="form" class="ajax">						
 				<div class="form-group">
 					<label for="username">Email:</label>
 					<input type="email" name="username" id="username" class="form-control" placeholder="Email Address" />

@@ -16,7 +16,7 @@ class profiles extends database
     {
         $message = 'Profile added';
     	$sth = $this->prepare("INSERT INTO profiles (userid,name,content,photo) VALUES (:userid,:name,:content,:photo)");
-        $sth->bindParam(':userid', $this->pa['id']);
+        $sth->bindParam(':userid', $this->pa['userid']);
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);
         if(!empty($_FILES) && isset($_FILES['photo']))
@@ -28,18 +28,19 @@ class profiles extends database
         {
             $fu = new fileupload($this->photolocation);
             $fu->files = $this->files;
-            $uploadResult = $fu->imageupload($this->pa['id'],200,300);
+            $uploadResult = $fu->imageupload($this->pa['userid'],200,300);
         }
         $sth->bindParam(':photo', $uploadResult);
 		$message = $this->testExcecute($sth, 'Record added');
 		$outURL = $this->settings['website']['url'].'private.php?message='.urlencode($message);
         header('Location:'.$outURL);
+        exit;
     }
 
     function updateprofiles()
     {
-    	$sth = $this->prepare("UPDATE profiles SET name = :name, content = :content, photo = :photo WHERE userid = :id");
-    	$sth->bindParam(':id', $this->pa['id']);
+    	$sth = $this->prepare("UPDATE profiles SET name = :name, content = :content, photo = :photo WHERE userid = :userid");
+    	$sth->bindParam(':userid', $this->pa['userid']);
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);
 
@@ -50,7 +51,7 @@ class profiles extends database
             {
                 $fu = new fileupload($this->photolocation);
                 $fu->files = $this->files;
-                $uploadResult = $fu->imageupload($this->pa['id'],200,300);
+                $uploadResult = $fu->imageupload($this->pa['userid'],200,300);
             }
             else
             {
@@ -66,6 +67,7 @@ class profiles extends database
         $message = $this->testExcecute($sth, 'Record updated');
 		$outURL = $this->settings['website']['url'].'private.php?message='.urlencode($message);
         header('Location:'.$outURL);
+        exit;
     }
 
     function deleteprofiles()
@@ -79,6 +81,7 @@ class profiles extends database
         $message = 'Records deleted';
         $outURL = $this->settings['website']['url'].'manager.php?inc=profiles&message='.urlencode($message);
         header('Location:'.$outURL);
+        exit;
     }
 
     function getprofiles($id)

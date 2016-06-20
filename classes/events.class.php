@@ -20,6 +20,7 @@ class events extends database
         $message = $this->testExcecute($sth, 'Record added');		
 		$outURL = $this->settings['website']['url'].'manager.php?inc=events&message='.urlencode($message);
 		header('Location:'.$outURL);
+        exit;
     }
 
     function updateevents()
@@ -33,6 +34,7 @@ class events extends database
 		$message = $this->testExcecute($sth, 'Record updated');
 		$outURL = $this->settings['website']['url'].'manager.php?inc=events&message='.urlencode($message);
 		header('Location:'.$outURL);
+        exit;
     }
 
     function deleteevents()
@@ -46,6 +48,7 @@ class events extends database
         $message = 'Records deleted';
         $outURL = $this->settings['website']['url'].'manager.php?inc=events&message='.urlencode($message);
         header('Location:'.$outURL);
+        exit;
     }
 
     function getevents($id)

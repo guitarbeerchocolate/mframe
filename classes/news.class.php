@@ -18,6 +18,7 @@ class news extends database
 		$message = $this->testExcecute($sth, 'Record added');
 		$outURL = $this->settings['website']['url'].'manager.php?inc=news&message='.urlencode($message);
         header('Location:'.$outURL);
+        exit;
     }
 
     function updatenews()
@@ -29,6 +30,7 @@ class news extends database
 		$message = $this->testExcecute($sth, 'Record updated');
 		$outURL = $this->settings['website']['url'].'manager.php?inc=news&message='.urlencode($message);
 		header('Location:'.$outURL);
+        exit;
     }
 
     function deletenews()
@@ -42,6 +44,7 @@ class news extends database
         $message = 'Records deleted';
         $outURL = $this->settings['website']['url'].'manager.php?inc=news&message='.urlencode($message);
         header('Location:'.$outURL);
+        exit;
     }
 
     function getnews($id)
