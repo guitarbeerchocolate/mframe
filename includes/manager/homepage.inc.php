@@ -14,6 +14,9 @@
 				<li>
 					<a href="manager.php?inc=profiles">Manage profiles</a>
 				</li>
+				<li>
+					<a href="manager.php?inc=externalfeeds">Manage external feeds</a>
+				</li>
 			</ul>
 		</div>
 	</div>

@@ -24,7 +24,7 @@ class database extends PDO
 
     function getOneByFieldValue($table,$field,$value)
     {
-    	$sql = "SELECT * FROM ".$table." WHERE ".$field."=".$value." LIMIT 1"; 
+    	$sql = "SELECT * FROM ".$table." WHERE ".$field."=".$value." LIMIT 1";
 		$stmt = $this->query($sql); 
 		return $stmt->fetch(PDO::FETCH_ASSOC);
     }

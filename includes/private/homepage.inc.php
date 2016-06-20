@@ -15,7 +15,7 @@
 			<?php
 			require_once 'classes/database.class.php';
 			$db = new database;
-			$row = $db->getOneByFieldValue('profiles','userid',$sess_id);			
+			$row = $db->getOneByFieldValue('profiles','userid',$sess_id);
 			if($row == TRUE)
 			{
 				$name = $row['name'];

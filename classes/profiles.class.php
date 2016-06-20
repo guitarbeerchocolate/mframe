@@ -15,6 +15,7 @@ class profiles extends database
     function addprofiles()
     {
         $message = 'Profile added';
+        $uploadResult = '';
     	$sth = $this->prepare("INSERT INTO profiles (userid,name,content,photo) VALUES (:userid,:name,:content,:photo)");
         $sth->bindParam(':userid', $this->pa['userid']);
 		$sth->bindParam(':name', $this->pa['name']);

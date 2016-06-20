@@ -4,6 +4,7 @@
 			<br /><a href="manager.php" class="btn btn-primary">Back</a>
 			<h3>Manage external feeds</h3>
 			<?php
+			/* http://feeds.bbci.co.uk/news/rss.xml?edition=uk */
 			require_once 'classes/database.class.php';
 			$db = new database;
 			if(isset($_GET['id']))
@@ -34,13 +35,12 @@
 				$action = 'externalfeeds/addexternalfeed';
 			}
 			?>
-
 		</div>
 	</div>
 </div>
 <div class="row">
 	<div class="container">
-		<div class="col-md-12">
+		<div class="col-md-12">			
 			<form action="formhandler.php?action=<?php echo $action; ?>" method="POST" role="form" class="ajax triggersave">
 				<input type="hidden" name="id" value="<?php echo $id; ?>" />
 				<div class="form-group">
@@ -53,10 +53,16 @@
 				</div><!-- .form-group -->
 				<div class="form-group">
 					<label class="radio-inline">
-						<input type="radio" name="type" id="type1" value="1" checked /> RSS
+						<input type="radio" name="type" id="type1" value="1" <?php if(($type == 1) || ($type == '')) echo 'checked'; ?> /> RSS
 					</label>
 					<label class="radio-inline">
-						<input type="radio" name="type" id="type2" value="2" /> Twitter
+						<input type="radio" name="type" id="type2" value="2" <?php if($type == 2) echo 'checked'; ?> /> Twitter user
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="type" id="type2" value="2" <?php if($type == 3) echo 'checked'; ?> /> Twitter hashtag
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="type" id="type2" value="2" <?php if($type == 4) echo 'checked'; ?> /> YouTube channel
 					</label>
 				</div><!-- .form-group -->
 				<button type="submit" class="btn btn-primary">Submit</button>

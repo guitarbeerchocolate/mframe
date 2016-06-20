@@ -12,11 +12,37 @@ class externalfeeds extends database
 
     function addexternalfeed()
     {
-    	$sth = $this->prepare("INSERT INTO externalfeeds (name,location,type) VALUES (:name,:location,:type)");
-		$sth->bindParam(':name', $this->pa['name']);
-		$sth->bindParam(':location', $this->pa['location']);
-        $sth->bindParam(':type', $this->pa['type']);
-		$message = $this->testExcecute($sth, 'Record added');
+        $feedTest = simplexml_load_file($this->pa['location']);
+        switch ($this->pa['location'])
+        {
+            case 1:
+                $feedTest = simplexml_load_file($this->pa['location']);
+                break;
+            case 2:
+                $feedTest = json_decode(file_get_contents($this->pa['location']));
+                break;
+            case 3:
+                $feedTest = json_decode(file_get_contents($this->pa['location']));
+                break;
+            case 4:
+                $feedTest = json_decode(file_get_contents($this->pa['location']));
+                break;
+            default:
+                $feedTest = simplexml_load_file($this->pa['location']);
+                break;
+        }
+        if($feedTest == FALSE)
+        {
+            $message = 'Invalid feed';
+        }
+        else
+        {
+            $sth = $this->prepare("INSERT INTO externalfeeds (name,location,type) VALUES (:name,:location,:type)");
+            $sth->bindParam(':name', $this->pa['name']);
+            $sth->bindParam(':location', $this->pa['location']);
+            $sth->bindParam(':type', $this->pa['type']);
+            $message = $this->testExcecute($sth, 'Record added');
+        }
 		$outURL = $this->settings['website']['url'].'manager.php?inc=externalfeeds&message='.urlencode($message);
         header('Location:'.$outURL);
         exit;
