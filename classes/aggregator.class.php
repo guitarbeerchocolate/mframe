@@ -1,15 +1,14 @@
 <?php
-require_once('twitterapiexchange.class.php');
+require_once 'database.class.php';
+require_once 'twitterapiexchange.class.php';
 date_default_timezone_set("Europe/London");
 class aggregator extends database
 {
-	public $addr = NULL;
-	private $outArr = Array();
-	private $twittersettings;
-	public $feedLimit;
-	public $messageArr;
+	public $addr = NULL, $feedLimit, $messageArr, $tweeter;
+	private $outArr = Array(), $twittersettings;	
 	function __construct($addr = NULL)
 	{
+		parent::__construct();
 		$this->addr = $addr != NULL ? $addr : $this->addr;
 		if($this->addr)
 		{
@@ -17,10 +16,9 @@ class aggregator extends database
 		}
 		$this->feedLimit = 10;
 		$this->messageArr = array();
-		/* Initialise Twitter */
 		$twitterRow = $this->getOneByID('twitter',1);
-
 		$this->twittersettings = array('oauth_access_token'=>$twitterRow['oauth_access_token'],'oauth_access_token_secret'=>$twitterRow['oauth_access_token_secret'],'consumer_key'=>$twitterRow['consumer_key'],'consumer_secret'=>$twitterRow['consumer_secret']);
+		$this->tweeter = new TwitterAPIExchange($this->twittersettings);
 	}
 
 	function setFeedLimit($l)
@@ -44,14 +42,10 @@ class aggregator extends database
 
 	function addTwitterFeed($tu = NULL)
 	{
-		$twitterurl = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-		$twittergetfield = '?screen_name='.$tu.'&count=10';
-		$twitterrequestMethod = 'GET';
-		$tweeter = new TwitterAPIExchange($this->twittersettings);
-		$twitterjson = json_decode($tweeter->setGetfield($twittergetfield)->buildOauth($twitterurl, $twitterrequestMethod)->performRequest(),$assoc = TRUE);
+		$twitterjson = $this->getTwitterUserJSON($tu);
 		$tempTwitterObjArr = array();
 		$twitterObjArr = array();
-		if(empty($twitterjson))
+		if((empty($twitterjson)) || ($twitterjson == FALSE))
 		{
 			array_push($this->messageArr, 'Failed to load Twitter user feed '.$tu);
 		}
@@ -73,21 +67,17 @@ class aggregator extends database
 
 	function addTwitterHashtagFeed($ht = NULL)
 	{
-		$twitterurl = 'https://api.twitter.com/1.1/search/tweets.json';
-		$twittergetfield = '?q=#'.$ht.'&result_type=recent&count=10';
-		$twitterrequestMethod = 'GET';
-
-		$tweeter = new TwitterAPIExchange($this->twittersettings);		
-		$twitterjson = json_decode($tweeter->setGetfield($twittergetfield)->buildOauth($twitterurl, $twitterrequestMethod)->performRequest(),TRUE);
+		$twitterjson = $this->getTwitterHashtagJSON($ht);
 		$tempTwitterObjArr = array();
 		$twitterObjArr = array();
-		if(empty($twitterjson$twitterjson['statuses']))
+		
+		if((empty($twitterjson['statuses'])) || ($twitterjson == FALSE))
 		{
 			array_push($this->messageArr, 'Failed to load Twitter hashtag feed '.$ht);
 		}
 		else
 		{
-			foreach ($twitterjson['statuses'] as $item)
+			foreach($twitterjson['statuses'] as $item)
 			{
 				$tempTwitterObjArr['title'] = 'Tweet by '.$item['user']['name'];			
 				$tempTwitterObjArr['description'] = $this->turnIntoLinks($item['text']);
@@ -100,23 +90,19 @@ class aggregator extends database
 			$this->outArr = array_merge($this->outArr, $twitterObjArr);
 		}
 	}
-
+	
 	function addYouTubeFeed($url = NULL)
 	{
-		$json = file_get_contents($url);
-		$data = json_decode($json);
+		$data = $this->getYouTubeJSON($url);		
 		if($data == FALSE)
 		{
 			array_push($this->messageArr, 'Failed to load Twitter hashtag feed '.$url);
 		}
 		else
 		{
-			$json = file_get_contents($url);
-			$data = json_decode($json);
 			$items = $data->data->items;
 			$tempYouTubeObjArr = array();
 			$youTubeObjArr = array();
-
 			foreach($items as $child)
 			{
 				$tempYouTubeObjArr['title'] = 'YouTube video : '.$child->title;			
@@ -148,6 +134,28 @@ class aggregator extends database
 			$this->outArr = $this->getStringFilteredFeed($input);
 		}
 		return $this->outArr;
+	}	
+
+	function getTwitterUserJSON($tu)
+	{
+		$twitterurl = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+		$twittergetfield = '?screen_name='.$tu.'&count=10';
+		$twitterrequestMethod = 'GET';
+		return json_decode($this->tweeter->setGetfield($twittergetfield)->buildOauth($twitterurl, $twitterrequestMethod)->performRequest(),$assoc = TRUE);
+	}
+
+	function getTwitterHashtagJSON($ht)
+	{
+		$twitterurl = 'https://api.twitter.com/1.1/search/tweets.json';
+		$twittergetfield = '?q=#'.$ht.'&result_type=recent&count=10';
+		$twitterrequestMethod = 'GET';	
+		return json_decode($this->tweeter->setGetfield($twittergetfield)->buildOauth($twitterurl, $twitterrequestMethod)->performRequest(),TRUE);
+	}
+
+	function getYouTubeJSON($url)
+	{
+		$json = file_get_contents($url);
+		return json_decode($json);
 	}
 
 	private function getStringFilteredFeed($s)

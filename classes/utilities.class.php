@@ -296,6 +296,13 @@ class utilities
 		return $moduleDirArr;
 	}
 
+	function var_dump_to_string($s)
+	{
+		ob_start();
+		var_dump($s);
+		return ob_get_clean();
+	}
+
 	function __destruct()
 	{
 		

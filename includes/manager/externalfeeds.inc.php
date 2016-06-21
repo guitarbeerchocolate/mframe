@@ -5,7 +5,7 @@
 			<h3>Manage external feeds</h3>
 			<?php
 			/* http://feeds.bbci.co.uk/news/rss.xml?edition=uk */
-			require_once 'classes/database.class.php';
+			require_once 'classes/database.class.php';			
 			$db = new database;
 			if(isset($_GET['id']))
 			{
@@ -31,8 +31,27 @@
 				$id = $db->getNextID('externalfeeds');	
 				$name = '';
 				$location = '';
-				$type = '';
+				$type = 1;
 				$action = 'externalfeeds/addexternalfeed';
+			}
+			$placeHolderText = 'Add URL of the feed';
+			switch($type)
+			{
+				case 1:
+					$placeHolderText = 'Add URL of the feed';
+					break;
+				case 2:
+					$placeHolderText = 'Add twitter username';
+					break;
+				case 3:
+					$placeHolderText = 'Add twitter hashtag';
+					break;
+				case 4:
+					$placeHolderText = 'Add URL of YouTube channel';
+					break;
+				default:
+					$placeHolderText = 'Add URL of the feed';
+					break;
 			}
 			?>
 		</div>
@@ -48,10 +67,6 @@
 					<input type="text" name="name" class="form-control" value="<?php echo $name; ?>" />
 				</div><!-- .form-group -->
 				<div class="form-group">
-					<label for="name">Location of external feed</label>
-					<input type="text" name="location" class="form-control" value="<?php echo $location; ?>" />
-				</div><!-- .form-group -->
-				<div class="form-group">
 					<label class="radio-inline">
 						<input type="radio" name="type" id="type1" value="1" <?php if(($type == 1) || ($type == '')) echo 'checked'; ?> /> RSS
 					</label>
@@ -65,6 +80,10 @@
 						<input type="radio" name="type" id="type2" value="2" <?php if($type == 4) echo 'checked'; ?> /> YouTube channel
 					</label>
 				</div><!-- .form-group -->
+				<div class="form-group">
+					<label for="name">Feed</label>
+					<input type="text" name="location" class="form-control" value="<?php echo $location; ?>" placeholder="<?php echo $placeHolderText; ?>" />
+				</div><!-- .form-group -->				
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</form><br />
 		</div>
