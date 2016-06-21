@@ -96,7 +96,7 @@ class aggregator extends database
 		$data = $this->getYouTubeJSON($url);		
 		if($data == FALSE)
 		{
-			array_push($this->messageArr, 'Failed to load Twitter hashtag feed '.$url);
+			array_push($this->messageArr, 'Failed to load YouTube channell '.$url);
 		}
 		else
 		{
