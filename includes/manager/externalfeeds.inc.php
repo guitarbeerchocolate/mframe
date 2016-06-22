@@ -18,7 +18,7 @@
 					exit;
 				}	
 				$name = $row['name'];
-				$content = $row['location'];
+				$location = $row['location'];
 				$type = $row['type'];
 				echo '<h4>Preview external feed</h4>';
 				echo '<h5>'.$name.'</h5>';
@@ -46,9 +46,6 @@
 				case 3:
 					$placeHolderText = 'Add twitter hashtag';
 					break;
-				case 4:
-					$placeHolderText = 'Add URL of YouTube channel';
-					break;
 				default:
 					$placeHolderText = 'Add URL of the feed';
 					break;
@@ -74,10 +71,7 @@
 						<input type="radio" name="type" id="type2" value="2" <?php if($type == 2) echo 'checked'; ?> /> Twitter user
 					</label>
 					<label class="radio-inline">
-						<input type="radio" name="type" id="type2" value="2" <?php if($type == 3) echo 'checked'; ?> /> Twitter hashtag
-					</label>
-					<label class="radio-inline">
-						<input type="radio" name="type" id="type2" value="2" <?php if($type == 4) echo 'checked'; ?> /> YouTube channel
+						<input type="radio" name="type" id="type3" value="3" <?php if($type == 3) echo 'checked'; ?> /> Twitter hashtag
 					</label>
 				</div><!-- .form-group -->
 				<div class="form-group">

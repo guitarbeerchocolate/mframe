@@ -8,7 +8,8 @@
 			foreach($arr as $row)
 			{
 				echo '<h5><a href="'.$row->link.'" target="_blank">'.$row->title.'</a></h5>';
-				echo '<p>'.strip_tags($row->description).'</p>';				
+				echo '<p>'.$row->description.'</p>';
+				echo '<p><small><a href="'.strip_tags($row->link).'" target="_blank">'.strip_tags($row->link).'</a></small></p>';
 				echo 'Posted ';				
 				echo date("jS F Y",strtotime($row->pubDate)).'<br /><hr />';	
 			}

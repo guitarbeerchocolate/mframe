@@ -90,32 +90,6 @@ class aggregator extends database
 			$this->outArr = array_merge($this->outArr, $twitterObjArr);
 		}
 	}
-	
-	function addYouTubeFeed($url = NULL)
-	{
-		$data = $this->getYouTubeJSON($url);		
-		if($data == FALSE)
-		{
-			array_push($this->messageArr, 'Failed to load YouTube channell '.$url);
-		}
-		else
-		{
-			$items = $data->data->items;
-			$tempYouTubeObjArr = array();
-			$youTubeObjArr = array();
-			foreach($items as $child)
-			{
-				$tempYouTubeObjArr['title'] = 'YouTube video : '.$child->title;			
-				$tempYouTubeObjArr['description'] = $child->description;
-				$tempYouTubeObjArr['link'] = $child->player->default;
-				$tempYouTubeObjArr['pubDate'] = $child->updated;
-				$to = (object) $tempYouTubeObjArr;
-				unset($tempYouTubeObjArr);
-			    array_push($youTubeObjArr, $to);
-			}
-			$this->outArr = array_merge($this->outArr, $youTubeObjArr);
-		}
-	}
 
 	function getFeed($input = NULL)
 	{
@@ -150,12 +124,6 @@ class aggregator extends database
 		$twittergetfield = '?q=#'.$ht.'&result_type=recent&count=10';
 		$twitterrequestMethod = 'GET';	
 		return json_decode($this->tweeter->setGetfield($twittergetfield)->buildOauth($twitterurl, $twitterrequestMethod)->performRequest(),TRUE);
-	}
-
-	function getYouTubeJSON($url)
-	{
-		$json = file_get_contents($url);
-		return json_decode($json);
 	}
 
 	private function getStringFilteredFeed($s)
@@ -197,13 +165,23 @@ class aggregator extends database
 	            $newString = '<a href="http://twitter.com/'.ltrim($word,'@').'" target="_blank">'.$word.'</a>';
 	            $words[$key] = $newString;
 	        }
+	        if(0 === strpos($word, '#'))
+	        {
+	            $newString = '<a href="http://twitter.com/hashtag/'.ltrim($word,'#').'" target="_blank">'.$word.'</a>';
+	            $words[$key] = $newString;
+	        }
 	        elseif(0 === strpos($word, 'http'))
 	        {
 	            $newString = '<a href="'.$word.'" target="_blank">'.$word.'</a>';
 	            $words[$key] = $newString;
 	        }
+	        elseif(0 === strpos($word, 'https'))
+	        {
+	            $newString = '<a href="'.$word.'" target="_blank">'.$word.'</a>';
+	            $words[$key] = $newString;
+	        }
 	    }
-	    $res = implode(' ',$words);    
+	    $res = implode(' ',$words);
 	    return $res;
 	}
 

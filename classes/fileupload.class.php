@@ -23,6 +23,7 @@ class fileupload
 				}
 				else
 				{
+					chmod($this->appendSlash($this->upload_file_location).$subDir,0777);
 					$message = $this->appendSlash($this->upload_file_location).$subDir.' created';	
 				}
 			}			

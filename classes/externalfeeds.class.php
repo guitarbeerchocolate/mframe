@@ -28,9 +28,6 @@ class externalfeeds extends database
             case 3:
                 $feedTest = $this->agg->getTwitterHashtagJSON($this->pa['location']);
                 break;
-            case 4:
-                $feedTest = $this->agg->getYouTubeJSON($this->pa['location']);
-                break;
             default:
                 $feedTest = simplexml_load_file($this->pa['location']);
                 break;
@@ -65,9 +62,6 @@ class externalfeeds extends database
                 break;
             case 3:
                 $feedTest = $this->agg->getTwitterHashtagJSON($this->pa['location']);
-                break;
-            case 4:
-                $feedTest = $this->agg->getYouTubeJSON($this->pa['location']);
                 break;
             default:
                 $feedTest = simplexml_load_file($this->pa['location']);

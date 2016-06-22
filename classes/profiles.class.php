@@ -78,8 +78,8 @@ class profiles extends database
             $sth = $this->prepare("DELETE FROM profiles WHERE id = :id");
             $sth->bindParam(':id', $checked);
             $sth->execute();
-        }        
-        $message = 'Records deleted';
+        }
+        $message = 'Records deleted ';
         $outURL = $this->settings['website']['url'].'manager.php?inc=profiles&message='.urlencode($message);
         header('Location:'.$outURL);
         exit;
