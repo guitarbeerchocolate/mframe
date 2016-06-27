@@ -11,6 +11,11 @@ class utilities
 		echo $s.'<br />';
 	}
 
+	function echohr($s = NULL)
+	{
+		echo $s.'<hr />';
+	}
+
 	function brecho($s = NULL)
 	{
 		echo '<br />'.$s;

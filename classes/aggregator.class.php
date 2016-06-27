@@ -65,6 +65,22 @@ class aggregator extends database
 		}
 	}
 
+	function getTwitterUserJSON($tu)
+	{
+		$twitterurl = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+		$twittergetfield = '?screen_name='.$tu.'&count=10';
+		$twitterrequestMethod = 'GET';
+		$decodedJSON = json_decode($this->tweeter->setGetfield($twittergetfield)->buildOauth($twitterurl, $twitterrequestMethod)->performRequest(),$assoc = TRUE);
+		if((JSON_ERROR_NONE !== 0) || (isset($decodedJSON['errors'])))
+		{
+			return FALSE;
+		}
+		else
+		{
+			return $decodedJSON;
+		}		
+	}
+
 	function addTwitterHashtagFeed($ht = NULL)
 	{
 		$twitterjson = $this->getTwitterHashtagJSON($ht);
@@ -91,6 +107,7 @@ class aggregator extends database
 		}
 	}
 
+
 	function getFeed($input = NULL)
 	{
 		usort($this->outArr, function ($x, $y)
@@ -110,13 +127,7 @@ class aggregator extends database
 		return $this->outArr;
 	}	
 
-	function getTwitterUserJSON($tu)
-	{
-		$twitterurl = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-		$twittergetfield = '?screen_name='.$tu.'&count=10';
-		$twitterrequestMethod = 'GET';
-		return json_decode($this->tweeter->setGetfield($twittergetfield)->buildOauth($twitterurl, $twitterrequestMethod)->performRequest(),$assoc = TRUE);
-	}
+	
 
 	function getTwitterHashtagJSON($ht)
 	{

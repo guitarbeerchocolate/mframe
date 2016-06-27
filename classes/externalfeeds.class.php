@@ -87,39 +87,26 @@ class externalfeeds extends database
 
     function getResults()
     {
-        $agg = new aggregator;
-        $agg->setFeedLimit(10);
         $feeds = $this->listall('externalfeeds');
         foreach ($feeds as $feed)
         {
             switch($feed['type']) 
             {
                 case 1:
-                    $agg->addRSSFeed($feed['location']);
+                    $this->agg->addRSSFeed($feed['location']);
                     break;
                 case 2:
-                    $agg->addTwitterFeed($feed['location']);
+                    $this->agg->addTwitterFeed($feed['location']);
                     break;
                 case 3:
-                    $agg->addTwitterHashtagFeed($feed['location']);
+                    $this->agg->addTwitterHashtagFeed($feed['location']);
                     break;
                 default:
                     # code...
                     break;
             }
         }
-        $theFeed = $agg->getFeed();
-        $errorArr = $agg->messageArr;
-        if(count($errorArr) > 0)
-        {
-            $this->u->echoeol('<div class="row"><div class="container"><div id="message" class="col-md-12"><div class="alert alert-warning">');
-            $this->u->echoeol('<h3>Errors</h3>');
-            foreach ($errorArr as $err)
-            {
-                $this->u->echobr($err);
-            }
-            $this->u->echoeol('</div></div></div></div>');
-        }        
+        $theFeed = $this->agg->getFeed();
         return $theFeed;
     }
 
