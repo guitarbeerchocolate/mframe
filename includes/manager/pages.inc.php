@@ -18,6 +18,7 @@
 				}	
 				$name = $row['name'];
 				$content = $row['content'];
+				$layout = $row['layout'];
 				$action = 'pages/updatepage';
 				echo '<h4>Preview page</h4>';
 				echo '<h5>'.$name.'</h5>';
@@ -28,6 +29,7 @@
 				$id = $db->getNextID('pages');	
 				$name = '';
 				$content = '';
+				$layout = '1';
 				$action = 'pages/addpage';
 			}
 			?>
@@ -47,6 +49,23 @@
 					<label for="content">Page content</label>
 					<textarea name="content" id="content" cols="30" rows="10" class="tinymce form-control"><?php echo $content; ?></textarea>
 				</div><!-- .form-group -->
+				<div class="form-group">
+					<label class="radio-inline">
+						<input type="radio" name="layout" id="layout1" value="1" <?php if(($layout == 1) || ($layout == 0)) echo 'checked'; ?>> <img src="img/layouts/full.png" alt="Full screen">
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="layout" id="layout2" value="2" <?php if($layout == 2) echo 'checked'; ?>> <img src="img/layouts/half.png" alt="Half screen">
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="layout" id="layout3" value="3" <?php if($layout == 3) echo 'checked'; ?>> <img src="img/layouts/goldenvertical.png" alt="Golden vertical">
+					</label>
+				</div>
+				<?php
+				if(($layout != 1) && ($layout != 0))
+				{
+					echo 'secondarycontent';
+				}				
+				?>
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</form><br />
 		</div>
