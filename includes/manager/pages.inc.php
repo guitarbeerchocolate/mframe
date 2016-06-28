@@ -19,6 +19,8 @@
 				$name = $row['name'];
 				$content = $row['content'];
 				$layout = $row['layout'];
+				$secondarycontent = $row['secondarycontent'];
+				$issubpage = $row['issubpage'];
 				$action = 'pages/updatepage';
 				echo '<h4>Preview page</h4>';
 				echo '<h5>'.$name.'</h5>';
@@ -30,6 +32,8 @@
 				$name = '';
 				$content = '';
 				$layout = '1';
+				$secondarycontent = '';
+				$issubpage = 0;
 				$action = 'pages/addpage';
 			}
 			?>
@@ -59,13 +63,18 @@
 					<label class="radio-inline">
 						<input type="radio" name="layout" id="layout3" value="3" <?php if($layout == 3) echo 'checked'; ?>> <img src="img/layouts/goldenvertical.png" alt="Golden vertical">
 					</label>
-				</div>
-				<?php
-				if(($layout != 1) && ($layout != 0))
-				{
-					echo 'secondarycontent';
-				}				
+				</div>				
+				<?php				
+				include_once 'secondarycontent.inc.php';
 				?>
+				<div class="form-group">
+					<label class="radio-inline">
+						<input type="radio" name="issubpage" id="issubpage0" value="0" <?php if($issubpage == 0) echo 'checked'; ?>> No
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="issubpage" id="issubpage1" value="1" <?php if($issubpage == 1) echo 'checked'; ?>> Yes
+					</label>					
+				</div>	
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</form><br />
 		</div>

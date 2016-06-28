@@ -27,6 +27,14 @@ else
 			$content = '<p>Not a valid ID</p>';
 			$error = TRUE;
 		}
+		if(($p->seconadrycontent != NULL) || ($p->seconadrycontent != ''))
+		{
+			$seconadrycontent = $p->seconadrycontent;
+		}
+		else
+		{
+			$seconadrycontent = 'Secondary content not set';
+		}
 		echo '<div class="col-md-12">';
 		echo '<h3>'.$h3.'</h3>';
 		echo '</div>';
@@ -49,13 +57,13 @@ else
 			echo $content;
 			echo '</div>';
 			echo '<div class="col-md-6">';
-			echo 'Something else for now';
+			echo $seconadrycontent;
 			echo '</div>';
 		}
 		elseif($p->layout == 3)
 		{
 			echo '<div class="col-md-8">';
-			echo $content;
+			echo $seconadrycontent;
 			echo '</div>';
 			echo '<div class="col-md-4">';
 			echo 'Something else for now';

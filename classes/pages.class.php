@@ -3,7 +3,7 @@ require_once 'database.class.php';
 class pages extends database
 {
 	private $pa;
-    public $name, $content, $layout;
+    public $name, $content, $layout, $secondarycontent, $issubpage;
     public function __construct($postArray = array())
     {
         parent::__construct();
@@ -12,10 +12,12 @@ class pages extends database
 
     function addpage()
     {
-    	$sth = $this->prepare("INSERT INTO pages (name,content,layout) VALUES (:name,:content)");
+    	$sth = $this->prepare("INSERT INTO pages (name,content,layout,secondarycontent,issubpage) VALUES (:name,:content,:layout,:secondaryconten,:issubpaget)");
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);
         $sth->bindParam(':layout', $this->pa['layout']);	
+        $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
+        $sth->bindParam(':issubpage', $this->pa['issubpage']);        
 		$message = $this->testExcecute($sth, 'Record added');
 		$outURL = $this->settings['website']['url'].'manager.php?inc=pages&message='.urlencode($message);
         header('Location:'.$outURL);
@@ -24,11 +26,13 @@ class pages extends database
 
     function updatepage()
     {
-    	$sth = $this->prepare("UPDATE pages SET name = :name, content = :content, layout = :layout WHERE id = :id");
+    	$sth = $this->prepare("UPDATE pages SET name = :name, content = :content, layout = :layout, secondarycontent = :secondarycontent, issubpage = :issubpage WHERE id = :id");
     	$sth->bindParam(':id', $this->pa['id']);
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);
-        $sth->bindParam(':layout', $this->pa['layout']);	
+        $sth->bindParam(':layout', $this->pa['layout']);
+        $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
+        $sth->bindParam(':issubpage', $this->pa['issubpage']);	
 		$message = $this->testExcecute($sth, 'Record updated');
 		$outURL = $this->settings['website']['url'].'manager.php?inc=pages&message='.urlencode($message);
         header('Location:'.$outURL);
