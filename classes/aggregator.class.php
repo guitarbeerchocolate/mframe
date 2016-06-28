@@ -107,6 +107,22 @@ class aggregator extends database
 		}
 	}
 
+	function getTwitterHashtagJSON($ht)
+	{
+		$twitterurl = 'https://api.twitter.com/1.1/search/tweets.json';
+		$twittergetfield = '?q=#'.$ht.'&result_type=recent&count=10';
+		$twitterrequestMethod = 'GET';	
+		$decodedJSON = json_decode($this->tweeter->setGetfield($twittergetfield)->buildOauth($twitterurl, $twitterrequestMethod)->performRequest(),TRUE);
+		if((JSON_ERROR_NONE !== 0) || (isset($decodedJSON['errors'])))
+		{
+			return FALSE;
+		}
+		else
+		{
+			return $decodedJSON;
+		}
+	}
+
 
 	function getFeed($input = NULL)
 	{
@@ -126,16 +142,6 @@ class aggregator extends database
 		}
 		return $this->outArr;
 	}	
-
-	
-
-	function getTwitterHashtagJSON($ht)
-	{
-		$twitterurl = 'https://api.twitter.com/1.1/search/tweets.json';
-		$twittergetfield = '?q=#'.$ht.'&result_type=recent&count=10';
-		$twitterrequestMethod = 'GET';	
-		return json_decode($this->tweeter->setGetfield($twittergetfield)->buildOauth($twitterurl, $twitterrequestMethod)->performRequest(),TRUE);
-	}
 
 	private function getStringFilteredFeed($s)
 	{
