@@ -1,4 +1,5 @@
-<div class="form-group">
+<div class="form-group" id="secondarycontentholder">
+	<h4>Choose the secondary content</h4>
 	<select class="form-control" name="secondarycontent">
 	<?php
 	$dontList = array('.','..','authenticate.inc.php','login.inc.php','passwordreset.inc.php','register.inc.php','resetpassword.inc.php');
@@ -28,11 +29,12 @@
 		foreach ($subpages as $subpage)
 		{
 			echo '<option value="';
-			if($secondarycontent == $subpage[''])
+			echo $subpage['id'].'"';
+			if($secondarycontent == $subpage['id'])
 			{
 				echo ' SELECTED';
 			}
-			echo '>'.$fname;
+			echo '>'.$subpage['name'];
 			echo '</option>';
 		}
 	}

@@ -22,9 +22,6 @@
 				$secondarycontent = $row['secondarycontent'];
 				$issubpage = $row['issubpage'];
 				$action = 'pages/updatepage';
-				echo '<h4>Preview page</h4>';
-				echo '<h5>'.$name.'</h5>';
-				echo $content;
 			}
 			else
 			{
@@ -53,7 +50,8 @@
 					<label for="content">Page content</label>
 					<textarea name="content" id="content" cols="30" rows="10" class="tinymce form-control"><?php echo $content; ?></textarea>
 				</div><!-- .form-group -->
-				<div class="form-group">
+				<div class="form-group" id="layoutholder">
+					<h4>Choose your layout</h4>
 					<label class="radio-inline">
 						<input type="radio" name="layout" id="layout1" value="1" <?php if(($layout == 1) || ($layout == 0)) echo 'checked'; ?>> <img src="img/layouts/full.png" alt="Full screen">
 					</label>
@@ -67,7 +65,8 @@
 				<?php				
 				include_once 'secondarycontent.inc.php';
 				?>
-				<div class="form-group">
+				<div class="form-group" id="issubpageholder">
+					<h4>Is this content a sub-page</h4>
 					<label class="radio-inline">
 						<input type="radio" name="issubpage" id="issubpage0" value="0" <?php if($issubpage == 0) echo 'checked'; ?>> No
 					</label>
@@ -91,7 +90,7 @@ include_once 'uploadedimages.inc.php';
 				<table class="table">
 					<thead>
 						<tr>
-							<td></td><td>Name</td><td>Action</td>
+							<td></td><td>Name</td><td>Action</td><td></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -109,6 +108,9 @@ include_once 'uploadedimages.inc.php';
 							echo '</td>';
 							echo '<td>';
 							echo '<a href="manager.php?inc=pages&id='.$row['id'].'">Edit</a>';
+							echo '</td>';
+							echo '<td>';
+							echo '<a href="index.php?inc=pages&id='.$row['id'].'" target="_blank">Preview</a>';
 							echo '</td>';
 							$u->echoeol('</tr>');
 						}
