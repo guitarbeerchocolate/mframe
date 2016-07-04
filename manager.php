@@ -28,6 +28,9 @@ include_once 'includes/manager/sessionhandler.inc.php';
   	<?php
     include_once 'includes/general/navigation.inc.php';
     $u->echoeol();
+    /* header.inc.php can commonly be commented out
+    because include files can contain H2 headers.
+    */
     include_once 'includes/general/header.inc.php';
     $u->echoeol();
     include_once 'includes/general/message.inc.php';

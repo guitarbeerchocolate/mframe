@@ -27,10 +27,13 @@ include_once 'includes/private/sessionhandler.inc.php';
   	<?php
     include_once 'includes/general/navigation.inc.php';
     $u->echoeol();
-    include_once 'includes/general/header.inc.php';
-    $u->echoeol();
     include_once 'includes/general/message.inc.php';
     $u->echoeol();
+    /* header.inc.php can commonly be commented out
+    because include files can contain H2 headers.
+    */
+    include_once 'includes/general/header.inc.php';
+    $u->echoeol();    
     include_once $includeFile;
     $u->echoeol();    
     include_once 'includes/general/footer.inc.php';
