@@ -17,10 +17,7 @@
 					exit;
 				}	
 				$name = $row['name'];
-				$content = $row['content'];
-				echo '<h4>Preview news</h4>';
-				echo '<h5>'.$name.'</h5>';
-				echo $content;
+				$content = $row['content'];				
 				$action = 'news/updatenews';	
 			}
 			else
@@ -64,7 +61,7 @@ include_once 'uploadedimages.inc.php';
 				<table class="table">
 					<thead>
 						<tr>
-							<td></td><td>Name</td><td>Action</td>
+							<td></td><td>Name</td><td>Action</td><td></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -82,6 +79,9 @@ include_once 'uploadedimages.inc.php';
 							echo '</td>';
 							echo '<td>';
 							echo '<a href="manager.php?inc=news&id='.$row['id'].'">Edit</a>';
+							echo '</td>';
+							echo '<td>';
+							echo '<a href="index.php?inc=news&id='.$row['id'].'" target="_blank">Preview</a>';
 							echo '</td>';
 							$u->echoeol('</tr>');
 						}

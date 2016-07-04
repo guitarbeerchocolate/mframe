@@ -21,11 +21,6 @@
 				$datestart = $row['datestart'];
 				$dateend = $row['dateend'];
 				$action = 'events/updateevents';
-				echo '<h4>Preview event</h4>';
-				echo '<h5>'.$name.'</h5>';
-				echo $content;
-				echo '<p>Start date : '.$datestart.'</p>';
-				echo '<p>End date : '.$dateend.'</p>';
 			}
 			else
 			{
@@ -77,7 +72,7 @@ include_once 'uploadedimages.inc.php';
 				<table class="table">
 					<thead>
 						<tr>
-							<td></td><td>Name</td><td>Action</td>
+							<td></td><td>Name</td><td>Action</td><td></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -95,6 +90,9 @@ include_once 'uploadedimages.inc.php';
 							echo '</td>';
 							echo '<td>';
 							echo '<a href="manager.php?inc=events&id='.$row['id'].'">Edit</a>';
+							echo '</td>';
+							echo '<td>';
+							echo '<a href="index.php?inc=events&id='.$row['id'].'" target="_blank">Preview</a>';
 							echo '</td>';
 							$u->echoeol('</tr>');
 						}

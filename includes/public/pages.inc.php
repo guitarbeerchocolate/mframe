@@ -45,6 +45,13 @@ else
 <div class="row">
 	<div class="container">
 		<?php
+		$sc = FALSE;
+		if((is_numeric($secondarycontent)) && ($secondarycontent != 0))
+		{
+			$sp = new pages;
+			$sp->getpage($secondarycontent);
+			$sc = TRUE;
+		}		
 		if(($error == TRUE) || ($p->layout == 1) || ($p->layout == 0))
 		{
 			echo '<div class="col-md-12">';
@@ -57,16 +64,32 @@ else
 			echo $content;
 			echo '</article>';
 			echo '<aside class="col-md-6">';
-			echo $secondarycontent;
+			if($sc == TRUE)
+			{
+				echo '<header><h3>'.$sp->name.'</h3></header>';
+				echo $sp->content;
+			}
+			else
+			{
+				include_once $secondarycontent;
+			}
 			echo '</aside>';
 		}
 		elseif($p->layout == 3)
 		{
 			echo '<article class="col-md-8">';
-			echo $secondarycontent;
+			echo $content;
 			echo '</article>';
 			echo '<aside class="col-md-4">';
-			echo 'Something else for now';
+			if($sc == TRUE)
+			{
+				echo '<header><h3>'.$sp->name.'</h3></header>';
+				echo $sp->content;
+			}
+			else
+			{
+				include_once $secondarycontent;
+			}
 			echo '</aside>';
 		}
 		?>		

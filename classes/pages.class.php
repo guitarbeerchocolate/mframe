@@ -12,12 +12,12 @@ class pages extends database
 
     function addpage()
     {
-    	$sth = $this->prepare("INSERT INTO pages (name,content,layout,secondarycontent,issubpage) VALUES (:name,:content,:layout,:secondaryconten,:issubpaget)");
+    	$sth = $this->prepare("INSERT INTO pages (name,content,layout,secondarycontent,issubpage) VALUES (:name,:content,:layout,:secondarycontent,:issubpage)");
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);
         $sth->bindParam(':layout', $this->pa['layout']);	
         $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
-        $sth->bindParam(':issubpage', $this->pa['issubpage']);        
+        $sth->bindParam(':issubpage', $this->pa['issubpage']);
 		$message = $this->testExcecute($sth, 'Record added');
 		$outURL = $this->settings['website']['url'].'manager.php?inc=pages&message='.urlencode($message);
         header('Location:'.$outURL);
@@ -59,6 +59,8 @@ class pages extends database
         $this->name = $page['name'];        
         $this->content = $page['content'];
         $this->layout = $page['layout'];
+        $this->secondarycontent = $page['secondarycontent'];
+        $this->issubpage = $page['issubpage'];
     }
 
     function __destruct()

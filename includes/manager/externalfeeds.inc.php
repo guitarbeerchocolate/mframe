@@ -19,11 +19,7 @@
 				}	
 				$name = $row['name'];
 				$location = $row['location'];
-				$type = $row['type'];
-				echo '<h4>Preview external feed</h4>';
-				echo '<h5>'.$name.'</h5>';
-				echo $location;
-				echo $type;
+				$type = $row['type'];				
 				$action = 'externalfeeds/updateexternalfeed';	
 			}
 			else
