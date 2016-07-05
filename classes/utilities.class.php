@@ -308,6 +308,13 @@ class utilities
 		return ob_get_clean();
 	}
 
+	function var_dump_structure($s)
+	{
+		echo "<pre>";
+		var_dump($s);
+		echo "</pre>";
+	}
+
 	function __destruct()
 	{
 		
