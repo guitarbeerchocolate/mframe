@@ -315,6 +315,13 @@ class utilities
 		echo "</pre>";
 	}
 
+	function print_array_structure($a)
+	{
+		echo "<pre>";
+		print_r($a);
+		echo "</pre>";
+	}
+
 	function __destruct()
 	{
 		
