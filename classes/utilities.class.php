@@ -226,6 +226,20 @@ class utilities
 		echo "data:$mime;base64,$base64";
 	}
 
+	function data_uri_image($file = NULL, $mime = NULL, $alt = NULL)
+	{
+		$contents = file_get_contents($file);		
+		$base64 = base64_encode($contents);				
+		echo '<img src="data:'.$mime.';base64,'.$base64.'" alt="'.$alt.'" class="img-responsive" />';
+	}
+
+	function data_uri_string($file = NULL, $mime = NULL, $alt = NULL)
+	{
+		$contents = file_get_contents($file);		
+		$base64 = base64_encode($contents);				
+		return 'data:'.$mime.';base64,'.$base64;
+	}
+
 	function rootPath()
     {
     	return $this->addTrailingSlash($this->getServer().$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']));
