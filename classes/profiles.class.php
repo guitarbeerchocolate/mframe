@@ -1,6 +1,6 @@
 <?php
 require_once 'database.class.php';
-require_once 'fileupload.class.php';
+require_once 'utilities.class.php';
 class profiles extends database
 {
 	private $pa;
@@ -20,16 +20,12 @@ class profiles extends database
         $sth->bindParam(':userid', $this->pa['userid']);
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);
-        if(!empty($_FILES) && isset($_FILES['photo']))
+        if(isset($_FILES) && (!empty($_FILES['photo']['name'])))
         {
-            $this->files = (object) $_FILES['photo'];
-        }        
-        
-        if(!empty($this->files->name))
-        {
-            $fu = new fileupload($this->photolocation);
-            $fu->files = $this->files;
-            $uploadResult = $fu->imageupload($this->pa['userid'],200,300);
+            $u = new utilities;
+            $filename = $_FILES['photo']['tmp_name'];
+            $mime = $_FILES['photo']['type'];            
+            $uploadResult = $u->data_uri_string($filename, $mime);
         }
         $sth->bindParam(':photo', $uploadResult);
 		$message = $this->testExcecute($sth, 'Record added');
@@ -44,27 +40,18 @@ class profiles extends database
     	$sth->bindParam(':userid', $this->pa['userid']);
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);
-
-        if(!empty($_FILES) && isset($_FILES['photo']))
+        if(isset($_FILES) && (!empty($_FILES['photo']['name'])))
         {
-            $this->files = (object) $_FILES['photo'];
-            if(!empty($this->files->name))
-            {
-                $fu = new fileupload($this->photolocation);
-                $fu->files = $this->files;
-                $uploadResult = $fu->imageupload($this->pa['userid'],200,300);
-            }
-            else
-            {
-                $uploadResult = $this->pa['tempphoto'];
-            }
-            $sth->bindParam(':photo', $uploadResult);
+            $u = new utilities;
+            $filename = $_FILES['photo']['tmp_name'];
+            $mime = $_FILES['photo']['type'];            
+            $uploadResult = $u->data_uri_string($filename, $mime);
         }
         else
         {
-             $sth->bindParam(':photo', $this->pa['tempphoto']);
-        }	
-		
+            $uploadResult = $this->pa['tempphoto'];
+        }
+		$sth->bindParam(':photo', $uploadResult);
         $message = $this->testExcecute($sth, 'Record updated');
 		$outURL = $this->settings['website']['url'].'private.php?message='.urlencode($message);
         header('Location:'.$outURL);

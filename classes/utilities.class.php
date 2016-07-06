@@ -233,7 +233,12 @@ class utilities
 		echo '<img src="data:'.$mime.';base64,'.$base64.'" alt="'.$alt.'" class="img-responsive" />';
 	}
 
-	function data_uri_string($file = NULL, $mime = NULL, $alt = NULL)
+	function base64_image($file = NULL, $alt = NULL)
+	{
+		echo '<img src="'.$file.'" alt="'.$alt.'" class="img-responsive" />';
+	}
+
+	function data_uri_string($file = NULL, $mime = NULL)
 	{
 		$contents = file_get_contents($file);		
 		$base64 = base64_encode($contents);				

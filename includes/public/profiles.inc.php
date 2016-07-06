@@ -11,7 +11,7 @@
 				$u->echoeol('<article class="publicprofiles">');
 				$u->echoeol('<h4>'.$row['name'].'</h4>');
 				echo '<table class="table"><tbody><tr><td>';
-				$u->echoeol('<img src="'.$row['photo'].'" alt="'.$row['name'].'" /></td><td>');
+				$u->base64_image($row['photo'], $row['name']);
 				echo strip_tags($row['content']);
 				$u->echoeol('</td></tr><tbody></table></article>');
 			}

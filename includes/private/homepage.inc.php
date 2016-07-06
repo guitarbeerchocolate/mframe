@@ -25,7 +25,7 @@
 				echo $content.'<br />';
 				if(!empty($photo))
 				{
-					echo '<img src="'.$photo.'" />';
+					echo '<img src="'.$photo.'" class="img-responsive" />';
 				}
 				$action = 'profiles/updateprofiles';
 				include 'sub/profileform.inc.php';
