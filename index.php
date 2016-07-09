@@ -1,4 +1,5 @@
 <?php
+session_start();
 // include_once 'includes/general/top-cache.php';
 include_once 'includes/general/showerrors.inc.php';
 require_once 'classes/utilities.class.php';
