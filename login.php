@@ -12,7 +12,7 @@ include_once 'includes/general/urlhandler.inc.php';
     <?php
     include_once 'includes/general/meta.inc.php';
     $u->echoeol();
-    $u->title($cfn,$settings['website']['name']);
+    $u->title($status,$settings['website']['name']);
     $u->echoeol();
     include_once 'includes/general/icons.inc.php';
     $u->echoeol();

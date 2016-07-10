@@ -1,5 +1,5 @@
 <?php
-if(isset($_SESSION))
+if(!empty($_SESSION))
 {
 	require_once 'classes/sessions.class.php';
 	$sess = new sessions($_SESSION);

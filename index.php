@@ -6,6 +6,15 @@ require_once 'classes/utilities.class.php';
 $u = new utilities;
 $settings = parse_ini_file('classes/config.ini', TRUE);
 include_once 'includes/general/urlhandler.inc.php';
+if($status == 'private')
+{
+    include_once 'includes/private/sessionhandler.inc.php';
+}
+elseif($status == 'manager')
+{
+    $manageridArr = explode(',',$settings['website']['managerids']);
+    include_once 'includes/manager/sessionhandler.inc.php';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +22,7 @@ include_once 'includes/general/urlhandler.inc.php';
     <?php
     include_once 'includes/general/meta.inc.php';
     $u->echoeol();
-    $u->title($cfn,$settings['website']['name']);
+    $u->title($status,$settings['website']['name']);
     $u->echoeol();
     include_once 'includes/general/icons.inc.php';
     $u->echoeol();
@@ -22,15 +31,20 @@ include_once 'includes/general/urlhandler.inc.php';
   </head>
   <body itemscope itemtype="http://schema.org/Organization">
     <?php
-    include_once 'includes/general/googletracker.inc.php';
-    $u->echoeol();
+    if($status == 'public')
+    {
+        include_once 'includes/general/googletracker.inc.php';
+        $u->echoeol();
+    }
     include_once 'includes/general/navigation.inc.php';
     $u->echoeol();
     /* header.inc.php can commonly be commented out
     because include files can contain H2 headers.
     */
+    /*
     include_once 'includes/general/header.inc.php';
     $u->echoeol();
+    */
     include_once 'includes/general/message.inc.php';
     $u->echoeol();
     include_once 'includes/general/searchresults.inc.php';
