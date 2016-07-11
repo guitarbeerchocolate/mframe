@@ -84,7 +84,6 @@ else
 if(!file_exists($includeFile))
 {
   $error = urlencode('Include does not exist.');
-  header('location:'.$settings['website']['url'].'&message='.$error);
+  header('location:'.$c->getVal('url').'&message='.$error);
   exit;
 }
-

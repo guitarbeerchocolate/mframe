@@ -2,18 +2,22 @@
 session_start();
 // include_once 'includes/general/top-cache.php';
 include_once 'includes/general/showerrors.inc.php';
+require_once 'classes/config.class.php';
 require_once 'classes/utilities.class.php';
+$c = new config;
 $u = new utilities;
-$settings = parse_ini_file('classes/config.ini', TRUE);
 include_once 'includes/general/urlhandler.inc.php';
 if($status == 'private')
 {
-    include_once 'includes/private/sessionhandler.inc.php';
+    require_once 'classes/sessions.class.php';
+    $sess = new sessions($_SESSION);
+    $sess->privateRedirect();
 }
 elseif($status == 'manager')
 {
-    $manageridArr = explode(',',$settings['website']['managerids']);
-    include_once 'includes/manager/sessionhandler.inc.php';
+    require_once 'classes/sessions.class.php';
+    $sess = new sessions($_SESSION);
+    $sess->managerRedirect();
 }
 ?>
 <!DOCTYPE html>
@@ -22,7 +26,7 @@ elseif($status == 'manager')
     <?php
     include_once 'includes/general/meta.inc.php';
     $u->echoeol();
-    $u->title($status,$settings['website']['name']);
+    $u->title($status,$c->getVal('name'));
     $u->echoeol();
     include_once 'includes/general/icons.inc.php';
     $u->echoeol();
@@ -49,6 +53,7 @@ elseif($status == 'manager')
     $u->echoeol();
     include_once 'includes/general/searchresults.inc.php';
     $u->echoeol();
+    $c->getVal('managerids');
     include_once $includeFile;
     $u->echoeol();
     include_once 'includes/general/footer.inc.php';

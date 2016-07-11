@@ -5,8 +5,8 @@ class database extends PDO
     public function __construct($file = 'config.ini')
     {
         $this->settings = parse_ini_file($file, TRUE);
-        $dns = $this->settings['database']['driver'].':host=' . $this->settings['database']['host'].((!empty($this->settings['database']['port'])) ? (';port='.$this->settings['database']['port']) : '').';dbname='.$this->settings['database']['schema'];        
-        parent::__construct($dns, $this->settings['database']['username'], $this->settings['database']['password']);
+        $dns = $this->settings['driver'].':host=' . $this->settings['host'].((!empty($this->settings['port'])) ? (';port='.$this->settings['port']) : '').';dbname='.$this->settings['schema'];        
+        parent::__construct($dns, $this->settings['username'], $this->settings['password']);
     }
 
     function listall($table)

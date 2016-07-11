@@ -8,10 +8,27 @@ class config extends database
 		parent::__construct();
 		$sth = $this->prepare("SELECT * FROM config");
 		$sth->execute();	
-		$this->i = $sth->fetch(PDO::FETCH_ASSOC);
+		$this->i = $sth->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	function __construct()
+	function getVal($setting = NULL)
+	{
+		foreach ($this->i as $name => $index)
+		{
+			if(strtolower($setting) == strtolower($index['name']))
+			{
+				return $index['value'];
+			}
+		}
+		return FALSE;
+	}
+
+	function getManagers()
+	{
+		return explode(',', $this->getVal('managerids'));
+	}
+
+	function __destruct()
 	{
 		
 	}

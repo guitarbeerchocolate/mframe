@@ -1,7 +1,9 @@
 <?php
+require_once 'config.class.php';
 class sessions
 {
 	public $sess;
+	protected $c;
 	function __construct($sess = NULL)
 	{
 		if($sess == NULL)
@@ -12,6 +14,7 @@ class sessions
 		{
 			$this->sess = $sess;	
 		}
+		$this->c = new config;
 	}
 
 	function logout()
@@ -23,16 +26,16 @@ class sessions
 	    setcookie(session_name(),'',0,'/');
 	    session_regenerate_id(true);
 		$error = urlencode('Logged out.');
-		header('location:http://localhost/git/mframe/&message='.$error);
+		header('location:'.$this->c->getVal('url');.'&message='.$error);
 		exit;
 	}
 
-	function privateRedirect($settings)
+	function privateRedirect()
 	{
 		if(!isset($this->sess['userid']))
 		{
 			$error = urlencode('You must be logged in to access the private section.');
-			header('location:'.$settings['website']['formspage'].'&message='.$error);
+			header('location:'.$this->c->getVal('formspage').'&message='.$error);
 			exit;
 		}
 		else if(isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
@@ -40,23 +43,23 @@ class sessions
 			unset($_SESSION['userid']);
 			session_destroy();
 			$error = urlencode('Logged out.');
-			header('location:'.$settings['website']['formspage'].'&message='.$error);
+			header('location:'.$this->c->getVal('formspage').'&message='.$error);
 			exit;
 		}
 	}
 
-	function managerRedirect($settings, $manageridArr)
+	function managerRedirect()
 	{
 		if(!isset($this->sess['userid']))
 		{
 			$error = urlencode('You must be logged in to access the private section.');
-			header('location:'.$settings['website']['formspage'].'&message='.$error);
+			header('location:'.$this->c->getVal('formspage').'&message='.$error);
 			exit;
 		}
-		else if(!in_array($this->sess['userid'], $manageridArr))
+		else if(!in_array($this->sess['userid'], $this->c->getManagers()))
 		{
 		  $error = urlencode('You must be logged in as a manager access the manager section.');
-		  header('location:'.$settings['website']['formspage'].'&message='.$error);
+		  header('location:'.$this->c->getVal('formspage').'&message='.$error);
 		  exit;
 		}
 		else if (isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
@@ -64,7 +67,7 @@ class sessions
 		  unset($_SESSION['userid']);
 		  session_destroy();
 		  $error = urlencode('Logged out.');
-		  header('location:'.$settings['website']['formspage'].'&message='.$error);
+		  header('location:'.$this->c->getVal('formspage').'&message='.$error);
 		  exit;
 		}
 	}

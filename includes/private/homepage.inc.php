@@ -2,9 +2,8 @@
 	<div class="container">
 		<div class="col-md-6">
 			<?php
-			$manageridArr = explode(',',$settings['website']['managerids']);
 			$sess_id = $_SESSION['userid'];
-			if(in_array($sess_id, $manageridArr))
+			if(in_array($sess_id, $c->getVal('managerids')))
 			{
 				$u->brecho('<a href="manager.php" class="btn btn-primary">Go to the manager options</a>');
 			}

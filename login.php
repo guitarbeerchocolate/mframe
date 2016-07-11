@@ -1,9 +1,10 @@
 <?php
 // include_once 'includes/general/top-cache.php';
 include_once 'includes/general/showerrors.inc.php';
+require_once 'classes/config.class.php';
 require_once 'classes/utilities.class.php';
+$c = new config;
 $u = new utilities;
-$settings = parse_ini_file('classes/config.ini', TRUE);
 include_once 'includes/general/urlhandler.inc.php';
 ?>
 <!DOCTYPE html>
@@ -12,7 +13,7 @@ include_once 'includes/general/urlhandler.inc.php';
     <?php
     include_once 'includes/general/meta.inc.php';
     $u->echoeol();
-    $u->title($status,$settings['website']['name']);
+    $u->title($status,$c->getVal('name'));
     $u->echoeol();
     include_once 'includes/general/icons.inc.php';
     $u->echoeol();
@@ -44,7 +45,7 @@ include_once 'includes/general/urlhandler.inc.php';
 			if(($row === false) && ($sth->rowCount() == 0))
 			{
 				$error = urlencode('Invalid email or password. Please try again.');
-				header('location:'.$settings['website']['formspage'].'?message='.$error);
+				header('location:'.$c->getVal('formspage').'&message='.$error);
 				exit;
 			}
 			else
