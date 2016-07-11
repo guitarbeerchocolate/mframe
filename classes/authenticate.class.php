@@ -26,7 +26,7 @@ class authenticate extends database
 				{
 					session_start();
 					$_SESSION['userid'] = $row['id'];
-					$outURL = $this->settings['website']['url'].'private.php';
+					$outURL = $this->settings['website']['url'].'private';
 					header('Location:'.$outURL);
 				}
 				else
@@ -166,7 +166,7 @@ class authenticate extends database
 				$sth->bindParam(':password', $password);	
 				$sth->execute();
 				$message = 'Password reset. Please log-in';
-				$outURL = $this->settings['website']['url'].$this->settings['website']['formspage'].'?message='.$message;
+				$outURL = $this->settings['website']['url'].$this->settings['website']['formspage'].'&message='.$message;
 				header('Location:'.$outURL);
 				exit;
 			}

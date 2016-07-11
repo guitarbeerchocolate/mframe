@@ -16,6 +16,7 @@ if((isset($_GET['params'])) && (!empty($_GET['params'])))
       if(($paramArr[0] == 'private') || ($paramArr[0] == 'manager'))
       {
         $status = $paramArr[0];
+        $includeFile .= $status.'/homepage.inc.php';
       }
       else
       {
@@ -83,12 +84,7 @@ else
 if(!file_exists($includeFile))
 {
   $error = urlencode('Include does not exist.');
-  header('location:'.$settings['website']['url'].'?message='.$error);
+  header('location:'.$settings['website']['url'].'&message='.$error);
   exit;
 }
 
-if((isset($_POST)) && (!empty($_POST)))
-{
-  echo 'There is a POST array';
-  print_r($_POST);
-}

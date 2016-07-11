@@ -14,12 +14,25 @@ class sessions
 		}
 	}
 
+	function logout()
+	{
+		session_start();
+	    session_unset();
+	    session_destroy();
+	    session_write_close();
+	    setcookie(session_name(),'',0,'/');
+	    session_regenerate_id(true);
+		$error = urlencode('Logged out.');
+		header('location:http://localhost/git/mframe/&message='.$error);
+		exit;
+	}
+
 	function privateRedirect($settings)
 	{
 		if(!isset($this->sess['userid']))
 		{
 			$error = urlencode('You must be logged in to access the private section.');
-			header('location:'.$settings['website']['formspage'].'?message='.$error);
+			header('location:'.$settings['website']['formspage'].'&message='.$error);
 			exit;
 		}
 		else if(isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
@@ -27,7 +40,7 @@ class sessions
 			unset($_SESSION['userid']);
 			session_destroy();
 			$error = urlencode('Logged out.');
-			header('location:'.$settings['website']['formspage'].'?message='.$error);
+			header('location:'.$settings['website']['formspage'].'&message='.$error);
 			exit;
 		}
 	}
@@ -37,13 +50,13 @@ class sessions
 		if(!isset($this->sess['userid']))
 		{
 			$error = urlencode('You must be logged in to access the private section.');
-			header('location:'.$settings['website']['formspage'].'?message='.$error);
+			header('location:'.$settings['website']['formspage'].'&message='.$error);
 			exit;
 		}
 		else if(!in_array($this->sess['userid'], $manageridArr))
 		{
 		  $error = urlencode('You must be logged in as a manager access the manager section.');
-		  header('location:'.$settings['website']['formspage'].'?message='.$error);
+		  header('location:'.$settings['website']['formspage'].'&message='.$error);
 		  exit;
 		}
 		else if (isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
@@ -51,7 +64,7 @@ class sessions
 		  unset($_SESSION['userid']);
 		  session_destroy();
 		  $error = urlencode('Logged out.');
-		  header('location:'.$settings['website']['formspage'].'?message='.$error);
+		  header('location:'.$settings['website']['formspage'].'&message='.$error);
 		  exit;
 		}
 	}
