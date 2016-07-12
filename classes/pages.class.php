@@ -21,9 +21,7 @@ class pages extends database
         $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
         $sth->bindParam(':issubpage', $this->pa['issubpage']);
 		$message = $this->testExcecute($sth, 'Record added');
-		$outURL = $this->c->getVal('url').'manager/pages&message='.urlencode($message);
-        header('Location:'.$outURL);
-        exit;
+		$this->u->move_on($this->c->getVal('url').'manager/pages',$message);
     }
 
     function updatepage()
@@ -36,9 +34,7 @@ class pages extends database
         $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
         $sth->bindParam(':issubpage', $this->pa['issubpage']);	
 		$message = $this->testExcecute($sth, 'Record updated');
-		$outURL = $this->c->getVal('url').'manager/pages&message='.urlencode($message);
-        header('Location:'.$outURL);
-        exit;
+		$this->u->move_on($this->c->getVal('url').'manager/pages',$message);
     }
 
     function deletepages()
@@ -50,9 +46,7 @@ class pages extends database
             $sth->execute();
         }        
         $message = 'Records deleted';
-        $outURL = $this->c->getVal('url').'manager/pages&message='.urlencode($message);
-        header('Location:'.$outURL);
-        exit;
+        $this->u->move_on($this->c->getVal('url').'manager/pages',$message);
     }    
 
     function getpage($id)

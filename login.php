@@ -44,9 +44,8 @@ include_once 'includes/general/urlhandler.inc.php';
 			$row = $sth->fetch(PDO::FETCH_ASSOC);		
 			if(($row === false) && ($sth->rowCount() == 0))
 			{
-				$error = urlencode('Invalid email or password. Please try again.');
-				header('location:'.$c->getVal('formspage').'&message='.$error);
-				exit;
+				$error = 'Invalid email or password. Please try again.';
+        $u->move_on($c->getVal('formspage'), $error);
 			}
 			else
 			{
@@ -56,36 +55,11 @@ include_once 'includes/general/urlhandler.inc.php';
     else
     {
       include_once 'includes/public/sub/authenticate.inc.php';
-    }
-    ?>
-    <div class="row">
-      <div class="container">
-      <?php
-      /*
-      if(isset($_GET['inc']))
-      {
-        $includeFile = 'includes/public/'.$_GET['inc'].'.inc.php';
-        if(file_exists($includeFile))
-        {
-          include_once $includeFile;
-        }
-        else
-        {
-          $error = urlencode('Include does not exist.');
-          header('location:'.$settings['website']['url'].'private.php?message='.$error);
-          exit;
-        }
-      }
-      */
-      ?>		
-  		</div><!-- .container -->
-  	</div><!-- .row -->
-    <?php
+    }    
     include_once 'includes/general/footer.inc.php';
+    $u->echoeol();
+    include_once 'includes/general/script.inc.php';
     ?>
-    <script async src="https://cdn.ampproject.org/v0.js"></script>
-    <script src="jquery/1.11.2/jquery.min.js"></script>    
-    <script src="js-cache.php"></script>
   </body>
 </html>
 <?php

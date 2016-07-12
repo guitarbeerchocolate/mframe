@@ -19,9 +19,8 @@ class events extends database
 		$sth->bindParam(':content', $this->pa['content']);	
         $sth->bindParam(':datestart', $this->pa['datestart']);
         $sth->bindParam(':dateend', $this->pa['dateend']);
-        $outURL = $this->c->getVal('url').'manager/events&message='.urlencode($message);
-		header('Location:'.$outURL);
-        exit;
+        $message = $this->testExcecute($sth, 'Record added');
+        $this->u->move_on($this->c->getVal('url').'manager/events',$message);
     }
 
     function updateevents()
@@ -33,9 +32,7 @@ class events extends database
         $sth->bindParam(':datestart', $this->pa['datestart']);
         $sth->bindParam(':dateend', $this->pa['dateend']);
 		$message = $this->testExcecute($sth, 'Record updated');
-		$outURL = $this->c->getVal('url').'manager/events&message='.urlencode($message);
-		header('Location:'.$outURL);
-        exit;
+		$this->u->move_on($this->c->getVal('url').'manager/events',$message);
     }
 
     function deleteevents()
@@ -47,9 +44,7 @@ class events extends database
             $sth->execute();
         }        
         $message = 'Records deleted';
-        $outURL = $this->c->getVal('url').'manager/events&message='.urlencode($message);
-        header('Location:'.$outURL);
-        exit;
+        $this->u->move_on($this->c->getVal('url').'manager/events',$message);
     }
 
     function getevents($id)

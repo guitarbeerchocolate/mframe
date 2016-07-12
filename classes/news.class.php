@@ -18,9 +18,7 @@ class news extends database
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);	
 		$message = $this->testExcecute($sth, 'Record added');
-        $outURL = $this->c->getVal('url').'manager/news&message='.urlencode($message);
-        header('Location:'.$outURL);
-        exit;
+        $this->u->move_on($this->c->getVal('url').'manager/news',$message);
     }
 
     function updatenews()
@@ -30,9 +28,7 @@ class news extends database
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);	
 		$message = $this->testExcecute($sth, 'Record updated');
-		$outURL = $this->c->getVal('url').'manager/news&message='.urlencode($message);
-		header('Location:'.$outURL);
-        exit;
+		$this->u->move_on($this->c->getVal('url').'manager/news',$message);
     }
 
     function deletenews()
@@ -44,9 +40,7 @@ class news extends database
             $sth->execute();
         }        
         $message = 'Records deleted';
-        $outURL = $this->c->getVal('url').'manager/news&message='.urlencode($message);
-        header('Location:'.$outURL);
-        exit;
+        $this->u->move_on($this->c->getVal('url').'manager/news',$message);
     }
 
     function getnews($id)

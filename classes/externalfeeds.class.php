@@ -1,18 +1,16 @@
 <?php
 require_once 'database.class.php';
 require_once 'aggregator.class.php';
-require_once 'utilities.class.php';
 require_once 'config.class.php';
 class externalfeeds extends database
 {
 	private $pa, $c;
-    public $name, $location, $agg, $u;
+    public $name, $location, $agg;
     public function __construct($postArray = array())
     {
         parent::__construct();
         $this->pa = $postArray;
         $this->agg = new aggregator;
-        $this->u = new utilities;
         $this->c = new config;
     }
 
@@ -46,9 +44,7 @@ class externalfeeds extends database
             $sth->bindParam(':type', $this->pa['type']);
             $message = $this->testExcecute($sth, 'Record added');
         }
-		$outURL = $this->c->getVal('url').'manager/externalfeeds&message='.urlencode($message);
-        header('Location:'.$outURL);
-        exit;
+		$this->u->move_on($this->c->getVal('url').'manager/externalfeeds',$message);
     }
 
     function updateexternalfeed()
@@ -82,9 +78,7 @@ class externalfeeds extends database
             $sth->bindParam(':type', $this->pa['type']);	
     		$message = $this->testExcecute($sth, 'Record updated');
         }
-		$outURL = $this->c->getVal('url').'manager/externalfeeds&message='.urlencode($message);
-		header('Location:'.$outURL);
-        exit;
+		$this->u->move_on($this->c->getVal('url').'manager/externalfeeds',$message);
     }
 
     function getResults()
@@ -121,9 +115,7 @@ class externalfeeds extends database
             $sth->execute();
         }        
         $message = 'Records deleted';
-        $outURL = $this->c->getVal('url').'manager/externalfeeds&message='.urlencode($message);
-        header('Location:'.$outURL);
-        exit;
+        $this->u->move_on($this->c->getVal('url').'manager/externalfeeds',$message);
     }
 
     function getexternalfeed($id)

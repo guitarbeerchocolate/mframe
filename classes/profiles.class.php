@@ -1,10 +1,9 @@
 <?php
 require_once 'database.class.php';
-require_once 'utilities.class.php';
 require_once 'config.class.php';
 class profiles extends database
 {
-	private $pa, $c, $u;
+	private $pa, $c;
     public $name, $content, $photo, $photolocation;
     public function __construct($postArray = array())
     {
@@ -12,7 +11,6 @@ class profiles extends database
         $this->pa = $postArray;
         $this->photolocation = 'img/profile';
         $this->c = new config;
-        $this->u = new utilities;
     }
 
     function addprofiles()
@@ -31,9 +29,7 @@ class profiles extends database
         }
         $sth->bindParam(':photo', $uploadResult);
 		$message = $this->testExcecute($sth, 'Record added');
-		$outURL = $this->c->getVal('url').'private/&message='.urlencode($message);
-        header('Location:'.$outURL);
-        exit;
+        $this->u->move_on($this->c->getVal('url').'private/',$message);
     }
 
     function updateprofiles()
@@ -54,9 +50,7 @@ class profiles extends database
         }
 		$sth->bindParam(':photo', $uploadResult);
         $message = $this->testExcecute($sth, 'Record updated');
-		$outURL = $this->c->getVal('url').'private/&message='.urlencode($message);
-        header('Location:'.$outURL);
-        exit;
+		$this->u->move_on($this->c->getVal('url').'private/',$message);
     }
 
     function deleteprofiles()
@@ -68,9 +62,7 @@ class profiles extends database
             $sth->execute();
         }
         $message = 'Records deleted ';
-        $outURL = $this->c->getVal('url').'manager/profiles&message='.urlencode($message);
-        header('Location:'.$outURL);
-        exit;
+        $this->u->move_on($this->c->getVal('url').'manager/profiles',$message);
     }
 
     function getprofiles($id)

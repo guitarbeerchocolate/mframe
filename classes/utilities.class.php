@@ -342,6 +342,17 @@ class utilities
 		echo "</pre>";
 	}
 
+	function move_on($loc = NULL, $message = NULL)
+	{
+		$locStr = 'location:'.$loc;
+		if(!is_null($message))
+		{
+			$locStr .= '&message='.urlencode($message);
+		}
+		header($locStr);
+		exit;
+	}
+
 	function __destruct()
 	{
 		

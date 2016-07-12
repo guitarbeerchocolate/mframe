@@ -1,12 +1,15 @@
 <?php
+require_once 'utilities.class.php';
 class database extends PDO
 {
 	public $settings;
+    protected $u;
     public function __construct($file = 'config.ini')
     {
         $this->settings = parse_ini_file($file, TRUE);
         $dns = $this->settings['driver'].':host=' . $this->settings['host'].((!empty($this->settings['port'])) ? (';port='.$this->settings['port']) : '').';dbname='.$this->settings['schema'];        
         parent::__construct($dns, $this->settings['username'], $this->settings['password']);
+        $this->u = new utilities;
     }
 
     function listall($table)

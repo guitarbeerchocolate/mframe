@@ -29,27 +29,24 @@ class authenticate extends database
 					session_start();
 					$_SESSION['userid'] = $row['id'];
 					$outURL = $this->c->getVal('url').'private';
-					header('Location:'.$outURL);
+					$this->u->move_on($outURL);
 				}
 				else
 				{
 					$error = 'Invalid email or password. Please try again.';
-					header('Location:login.php?message='.urlencode($error));
-					exit;
+					$this->u->move_on('login.php',$error);
 				}
 			}
 			else
 			{
 				$error = 'Invalid email or password. Please try again.';
-				header('Location:login.php?message='.urlencode($error));
-				exit;
+				$this->u->move_on('login.php',$error);
 			}
 		}
 		else
 		{
 			$error = 'Please enter an email and password to login.';
-			header('Location:login.php?message='.urlencode($error));
-			exit;
+			$this->u->move_on('login.php',$error);
 		}		
     }
 
@@ -70,28 +67,24 @@ class authenticate extends database
 					$msg = $this->c->getVal('url').'?username='.urlencode($row['username']).'&password='.urlencode($row['password']);			
 					mail($username,'Password reset',$msg);
 					$error = 'A link has been sent to your email address. Copy the link and paste it into the address bar of your web browser to reset your password.';
-					header('Location:login.php?message='.urlencode($error));
-					exit;			
+					$this->u->move_on('login.php',$error);			
 				}
 				else
 				{
 					$error = 'Invalid email. Please try again.';
-					header('Location:login.php?message='.urlencode($error));
-					exit;
+					$this->u->move_on('login.php',$error);
 				}
 			}
 			else
 			{
 				$error = 'Invalid email. Please try again.';
-				header('Location:login.php?message='.urlencode($error));
-				exit;
+				$this->u->move_on('login.php',$error);
 			}
 		}
 		else
 		{
 			$error = 'Please enter an email address.';
-			header('Location:login.php?message='.urlencode($error));
-			exit;
+			$this->u->move_on('login.php',$error);
 		}
     }
 
@@ -106,15 +99,13 @@ class authenticate extends database
 			else
 			{
 				$error = 'Username must be a valid email address';
-				header('Location:login.php?message='.urlencode($error));
-				exit;
+				$this->u->move_on('login.php',$error);
 			}
 
 			$pwdCheck = $this->checkPassword($this->pa['password']);
 			if($pwdCheck !== FALSE)
 			{
-				header('Location:login.php?message='.urlencode($pwdCheck));
-				exit;
+				$this->u->move_on('login.php',$pwdCheck);
 			}
 
 			$password = sha1(md5($this->pa['password']));			
@@ -129,19 +120,18 @@ class authenticate extends database
 				$sth->bindParam(':password', $password);	
 				$sth->execute();
 				$error = 'Registered. Please log-in';
-				header('Location:login.php?message='.urlencode($error));
+				$this->u->move_on('login.php',$error);
 			}
 			else
 			{
 				$error = 'Username already exists.';
-				header('Location:login.php?message='.urlencode($error));
+				$this->u->move_on('login.php',$error);
 			}
 		}
 		else
 		{
 			$error = 'Please enter an email and password to login.';
-			header('Location:login.php?message='.urlencode($error));
-			exit;
+			$this->u->move_on('login.php',$error);
 		}
     }
 
@@ -153,8 +143,7 @@ class authenticate extends database
 			$pwdCheck = $this->checkPassword($this->pa['password']);
 			if($pwdCheck !== FALSE)
 			{
-				header('Location:login.php?message='.urlencode($pwdCheck));
-				exit;
+				$this->u->move_on('login.php',$pwdCheck);
 			}
 			$password = sha1(md5($this->pa['password']));			
 			$sth = $this->prepare("SELECT id FROM users WHERE username = :username");	
@@ -168,22 +157,18 @@ class authenticate extends database
 				$sth->bindParam(':password', $password);	
 				$sth->execute();
 				$message = 'Password reset. Please log-in';
-				$outURL = $this->c->getVal('formspage').'&message='.$message;
-				header('Location:'.$outURL);
-				exit;
+				$this->u->move_on($this->c->getVal('formspage'),$message);
 			}
 			else
 			{
 				$error = 'Username already exists.';
-				header('Location:login.php?message='.urlencode($error));
-				exit;
+				$this->u->move_on('login.php',$error);
 			}
 		}
 		else
 		{
 			$error = 'Please enter an email and password to login.';
-			header('Location:login.php?message='.urlencode($error));
-			exit;
+			$this->u->move_on('login.php',$error);
 		}
     }
 
