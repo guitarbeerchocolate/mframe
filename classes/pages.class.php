@@ -1,13 +1,15 @@
 <?php
 require_once 'database.class.php';
+require_once 'config.class.php';
 class pages extends database
 {
-	private $pa;
+	private $pa, $c;
     public $name, $content, $layout, $secondarycontent, $issubpage;
     public function __construct($postArray = array())
     {
         parent::__construct();
         $this->pa = $postArray;
+        $this->c = new config;
     }
 
     function addpage()
@@ -19,7 +21,7 @@ class pages extends database
         $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
         $sth->bindParam(':issubpage', $this->pa['issubpage']);
 		$message = $this->testExcecute($sth, 'Record added');
-		$outURL = $this->settings['website']['url'].'manager.php?inc=pages&message='.urlencode($message);
+		$outURL = $this->c->getVal('url').'manager/pages&message='.urlencode($message);
         header('Location:'.$outURL);
         exit;
     }
@@ -34,7 +36,7 @@ class pages extends database
         $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
         $sth->bindParam(':issubpage', $this->pa['issubpage']);	
 		$message = $this->testExcecute($sth, 'Record updated');
-		$outURL = $this->settings['website']['url'].'manager.php?inc=pages&message='.urlencode($message);
+		$outURL = $this->c->getVal('url').'manager/pages&message='.urlencode($message);
         header('Location:'.$outURL);
         exit;
     }
@@ -48,7 +50,7 @@ class pages extends database
             $sth->execute();
         }        
         $message = 'Records deleted';
-        $outURL = $this->settings['website']['url'].'manager.php?inc=pages&message='.urlencode($message);
+        $outURL = $this->c->getVal('url').'manager/pages&message='.urlencode($message);
         header('Location:'.$outURL);
         exit;
     }    

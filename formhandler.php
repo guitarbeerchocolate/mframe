@@ -1,6 +1,4 @@
 <?php
-echo 'Got it';
-/*
 if(isset($_GET['action']))
 {
 	$arr = explode('/', $_GET['action']);
@@ -34,5 +32,4 @@ else
 	$returnValue = 'No action given';
 	header('Location:login.php?message='.urlencode($returnValue));
 }
-*/
 ?>

@@ -1,9 +1,8 @@
 <?php
+require_once 'config.class.php';
 class flickr
 {
-	private $flickr_key;
-	private $flickr_secret;
-	private $format = 'json';
+	private $flickr_key, $flickr_secret, $format = 'json', $c;
 	public $settings;
 	/* How to use:
 	$f = new flickr;
@@ -15,11 +14,11 @@ class flickr
 		echo '<img src="'.$url.'" />';
 	}
 	*/
-	function __construct($file = 'config.ini')
+	function __construct()
 	{
-		$this->settings = parse_ini_file($file, TRUE);
-		$this->flickr_key = $this->settings['flickr']['flickr_api_key'];
-		$this->flickr_secret = $this->settings['flickr']['flickr_api_secret'];
+		$this->c = new config;
+		$this->flickr_key = $this->c->getVal('flickr_api_key');
+		$this->flickr_secret = $this->c->getVal('flickr_api_secret');
 	}
 
 	function getphotoset($ps = NULL)

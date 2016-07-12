@@ -3,19 +3,22 @@
 		<div class="col-md-12">
 			<ul class="nav nav-pills nav-stacked">
 				<li>
-					<a href="manager.php?inc=events">Manage events</a>
+					<a href="private">Back to private</a>
 				</li>
 				<li>
-					<a href="manager.php?inc=news">Manage news</a>
+					<a href="manager/events">Manage events</a>
 				</li>
 				<li>
-					<a href="manager.php?inc=pages">Manage pages</a>
+					<a href="manager/news">Manage news</a>
 				</li>
 				<li>
-					<a href="manager.php?inc=profiles">Manage profiles</a>
+					<a href="manager/pages">Manage pages</a>
 				</li>
 				<li>
-					<a href="manager.php?inc=externalfeeds">Manage external feeds</a>
+					<a href="manager/profiles">Manage profiles</a>
+				</li>
+				<li>
+					<a href="manager/externalfeeds">Manage external feeds</a>
 				</li>
 			</ul>
 		</div>

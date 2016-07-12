@@ -1,13 +1,15 @@
 <?php
 require_once 'database.class.php';
+require_once 'config.class.php';
 class news extends database
 {
-	private $pa;
+	private $pa, $c;
     public $name, $content;
     public function __construct($postArray = array())
     {
         parent::__construct();
         $this->pa = $postArray;
+        $this->c = new config;
     }
 
     function addnews()
@@ -16,7 +18,7 @@ class news extends database
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);	
 		$message = $this->testExcecute($sth, 'Record added');
-		$outURL = $this->settings['website']['url'].'manager.php?inc=news&message='.urlencode($message);
+        $outURL = $this->c->getVal('url').'manager/news&message='.urlencode($message);
         header('Location:'.$outURL);
         exit;
     }
@@ -28,7 +30,7 @@ class news extends database
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);	
 		$message = $this->testExcecute($sth, 'Record updated');
-		$outURL = $this->settings['website']['url'].'manager.php?inc=news&message='.urlencode($message);
+		$outURL = $this->c->getVal('url').'manager/news&message='.urlencode($message);
 		header('Location:'.$outURL);
         exit;
     }
@@ -42,7 +44,7 @@ class news extends database
             $sth->execute();
         }        
         $message = 'Records deleted';
-        $outURL = $this->settings['website']['url'].'manager.php?inc=news&message='.urlencode($message);
+        $outURL = $this->c->getVal('url').'manager/news&message='.urlencode($message);
         header('Location:'.$outURL);
         exit;
     }

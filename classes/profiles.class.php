@@ -1,15 +1,18 @@
 <?php
 require_once 'database.class.php';
 require_once 'utilities.class.php';
+require_once 'config.class.php';
 class profiles extends database
 {
-	private $pa;
+	private $pa, $c, $u;
     public $name, $content, $photo, $photolocation;
     public function __construct($postArray = array())
     {
         parent::__construct();
         $this->pa = $postArray;
         $this->photolocation = 'img/profile';
+        $this->c = new config;
+        $this->u = new utilities;
     }
 
     function addprofiles()
@@ -22,14 +25,13 @@ class profiles extends database
 		$sth->bindParam(':content', $this->pa['content']);
         if(isset($_FILES) && (!empty($_FILES['photo']['name'])))
         {
-            $u = new utilities;
             $filename = $_FILES['photo']['tmp_name'];
             $mime = $_FILES['photo']['type'];            
-            $uploadResult = $u->data_uri_string($filename, $mime);
+            $uploadResult = $this->u->data_uri_string($filename, $mime);
         }
         $sth->bindParam(':photo', $uploadResult);
 		$message = $this->testExcecute($sth, 'Record added');
-		$outURL = $this->settings['website']['url'].'private.php?message='.urlencode($message);
+		$outURL = $this->c->getVal('url').'private/&message='.urlencode($message);
         header('Location:'.$outURL);
         exit;
     }
@@ -42,10 +44,9 @@ class profiles extends database
 		$sth->bindParam(':content', $this->pa['content']);
         if(isset($_FILES) && (!empty($_FILES['photo']['name'])))
         {
-            $u = new utilities;
             $filename = $_FILES['photo']['tmp_name'];
             $mime = $_FILES['photo']['type'];            
-            $uploadResult = $u->data_uri_string($filename, $mime);
+            $uploadResult = $this->u->data_uri_string($filename, $mime);
         }
         else
         {
@@ -53,7 +54,7 @@ class profiles extends database
         }
 		$sth->bindParam(':photo', $uploadResult);
         $message = $this->testExcecute($sth, 'Record updated');
-		$outURL = $this->settings['website']['url'].'private.php?message='.urlencode($message);
+		$outURL = $this->c->getVal('url').'private/&message='.urlencode($message);
         header('Location:'.$outURL);
         exit;
     }
@@ -67,7 +68,7 @@ class profiles extends database
             $sth->execute();
         }
         $message = 'Records deleted ';
-        $outURL = $this->settings['website']['url'].'manager.php?inc=profiles&message='.urlencode($message);
+        $outURL = $this->c->getVal('url').'manager/profiles&message='.urlencode($message);
         header('Location:'.$outURL);
         exit;
     }

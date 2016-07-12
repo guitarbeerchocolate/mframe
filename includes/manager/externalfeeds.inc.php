@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="container">
 		<div class="col-md-12">
-			<br /><a href="manager.php" class="btn btn-primary">Back</a>
+			<br /><a href="manager" class="btn btn-primary">Back</a>
 			<h3>Manage external feeds</h3>
 			<?php
 			/* http://feeds.bbci.co.uk/news/rss.xml?edition=uk */
@@ -14,7 +14,7 @@
 				if(!isset($row['id']))
 				{
 					$error = urlencode('The ID does not exist');
-					header('location:manager.php?inc=externalfeeds&message='.$error);
+					header('location:manager/externalfeeds&message='.$error);
 					exit;
 				}	
 				$name = $row['name'];
@@ -57,7 +57,7 @@
 				<input type="hidden" name="id" value="<?php echo $id; ?>" />
 				<div class="form-group">
 					<label for="name">Name of external feed</label>
-					<input type="text" name="name" class="form-control" value="<?php echo $name; ?>" />
+					<input type="text" name="name" class="form-control" value="<?php echo $name; ?>" required />
 				</div><!-- .form-group -->
 				<div class="form-group">
 					<label class="radio-inline">
@@ -72,7 +72,7 @@
 				</div><!-- .form-group -->
 				<div class="form-group">
 					<label for="name">Feed</label>
-					<input type="text" name="location" class="form-control" value="<?php echo $location; ?>" placeholder="<?php echo $placeHolderText; ?>" />
+					<input type="text" name="location" class="form-control" value="<?php echo $location; ?>" placeholder="<?php echo $placeHolderText; ?>" required />
 				</div><!-- .form-group -->				
 				<button type="submit" class="btn btn-primary">Submit</button>
 			</form><br />
@@ -99,12 +99,11 @@
 						{
 							echo '<tr>';
 							echo '<td>';
-							echo '<input type="checkbox" name="id[]"';
+							echo '<input type="checkbox" name="id[]" ';
 							echo 'value="'.$row['id'].'"></td>';
 							echo '<td>'.$row['name'].'</td>';
-							echo '</td>';
 							echo '<td>';
-							echo '<a href="manager.php?inc=externalfeeds&id='.$row['id'].'">Edit</a>';
+							echo '<a href="manager/externalfeeds&id='.$row['id'].'">Edit</a>';
 							echo '</td>';
 							$u->echoeol('</tr>');
 						}

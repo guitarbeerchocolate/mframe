@@ -1,13 +1,15 @@
 <?php
 require_once 'database.class.php';
+require_once 'config.class.php';
 class events extends database
 {
-	private $pa;
+	private $pa, $c;
     public $name, $content, $datestart, $dateend;
     public function __construct($postArray = array())
     {
         parent::__construct();
         $this->pa = $postArray;
+        $this->c = new config;
     }
 
     function addevents()
@@ -17,8 +19,7 @@ class events extends database
 		$sth->bindParam(':content', $this->pa['content']);	
         $sth->bindParam(':datestart', $this->pa['datestart']);
         $sth->bindParam(':dateend', $this->pa['dateend']);
-        $message = $this->testExcecute($sth, 'Record added');		
-		$outURL = $this->settings['website']['url'].'manager.php?inc=events&message='.urlencode($message);
+        $outURL = $this->c->getVal('url').'manager/events&message='.urlencode($message);
 		header('Location:'.$outURL);
         exit;
     }
@@ -32,7 +33,7 @@ class events extends database
         $sth->bindParam(':datestart', $this->pa['datestart']);
         $sth->bindParam(':dateend', $this->pa['dateend']);
 		$message = $this->testExcecute($sth, 'Record updated');
-		$outURL = $this->settings['website']['url'].'manager.php?inc=events&message='.urlencode($message);
+		$outURL = $this->c->getVal('url').'manager/events&message='.urlencode($message);
 		header('Location:'.$outURL);
         exit;
     }
@@ -46,7 +47,7 @@ class events extends database
             $sth->execute();
         }        
         $message = 'Records deleted';
-        $outURL = $this->settings['website']['url'].'manager.php?inc=events&message='.urlencode($message);
+        $outURL = $this->c->getVal('url').'manager/events&message='.urlencode($message);
         header('Location:'.$outURL);
         exit;
     }

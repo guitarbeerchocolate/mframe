@@ -2,9 +2,10 @@
 require_once 'database.class.php';
 require_once 'aggregator.class.php';
 require_once 'utilities.class.php';
+require_once 'config.class.php';
 class externalfeeds extends database
 {
-	private $pa;
+	private $pa, $c;
     public $name, $location, $agg, $u;
     public function __construct($postArray = array())
     {
@@ -12,6 +13,7 @@ class externalfeeds extends database
         $this->pa = $postArray;
         $this->agg = new aggregator;
         $this->u = new utilities;
+        $this->c = new config;
     }
 
     function addexternalfeed()
@@ -44,7 +46,7 @@ class externalfeeds extends database
             $sth->bindParam(':type', $this->pa['type']);
             $message = $this->testExcecute($sth, 'Record added');
         }
-		$outURL = $this->settings['website']['url'].'manager.php?inc=externalfeeds&message='.urlencode($message);
+		$outURL = $this->c->getVal('url').'manager/externalfeeds&message='.urlencode($message);
         header('Location:'.$outURL);
         exit;
     }
@@ -80,7 +82,7 @@ class externalfeeds extends database
             $sth->bindParam(':type', $this->pa['type']);	
     		$message = $this->testExcecute($sth, 'Record updated');
         }
-		$outURL = $this->settings['website']['url'].'manager.php?inc=externalfeeds&message='.urlencode($message);
+		$outURL = $this->c->getVal('url').'manager/externalfeeds&message='.urlencode($message);
 		header('Location:'.$outURL);
         exit;
     }
@@ -119,7 +121,7 @@ class externalfeeds extends database
             $sth->execute();
         }        
         $message = 'Records deleted';
-        $outURL = $this->settings['website']['url'].'manager.php?inc=externalfeeds&message='.urlencode($message);
+        $outURL = $this->c->getVal('url').'manager/externalfeeds&message='.urlencode($message);
         header('Location:'.$outURL);
         exit;
     }

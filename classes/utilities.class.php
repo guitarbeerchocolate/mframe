@@ -306,11 +306,12 @@ class utilities
 	function getModuleDirs($moduleDir)
 	{
 		$moduleDirArr = array();
+		$avoidDirrArr = array('.','..','tinymce','datepicker');
 		if($handle = opendir($moduleDir))
 		{
 	    	while(false !== ($entry = readdir($handle)))
 	    	{
-	        	if($entry != "." && $entry != "..")
+	        	if(!in_array($entry, $avoidDirrArr))
 	        	{
 	        		array_push($moduleDirArr, $moduleDir.'/'.$entry);
 	        	}

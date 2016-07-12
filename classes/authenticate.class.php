@@ -1,12 +1,14 @@
 <?php
 require_once 'database.class.php';
+require_once 'config.class.php';
 class authenticate extends database
 {
-	private $pa;
+	private $pa, $c;
     public function __construct($postArray = array())
     {
         parent::__construct();
         $this->pa = $postArray;
+        $this->c = new config;
     }
 
     function login()
@@ -26,7 +28,7 @@ class authenticate extends database
 				{
 					session_start();
 					$_SESSION['userid'] = $row['id'];
-					$outURL = $this->settings['website']['url'].'private';
+					$outURL = $this->c->getVal('url').'private';
 					header('Location:'.$outURL);
 				}
 				else
@@ -65,7 +67,7 @@ class authenticate extends database
 			{
 				if($row['username'] == $username)
 				{
-					$msg = $this->settings['website']['url'].'?username='.urlencode($row['username']).'&password='.urlencode($row['password']);			
+					$msg = $this->c->getVal('url').'?username='.urlencode($row['username']).'&password='.urlencode($row['password']);			
 					mail($username,'Password reset',$msg);
 					$error = 'A link has been sent to your email address. Copy the link and paste it into the address bar of your web browser to reset your password.';
 					header('Location:login.php?message='.urlencode($error));
@@ -166,7 +168,7 @@ class authenticate extends database
 				$sth->bindParam(':password', $password);	
 				$sth->execute();
 				$message = 'Password reset. Please log-in';
-				$outURL = $this->settings['website']['url'].$this->settings['website']['formspage'].'&message='.$message;
+				$outURL = $this->c->getVal('formspage').'&message='.$message;
 				header('Location:'.$outURL);
 				exit;
 			}

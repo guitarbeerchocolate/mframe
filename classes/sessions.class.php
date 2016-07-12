@@ -26,7 +26,7 @@ class sessions
 	    setcookie(session_name(),'',0,'/');
 	    session_regenerate_id(true);
 		$error = urlencode('Logged out.');
-		header('location:'.$this->c->getVal('url');.'&message='.$error);
+		header('location:'.$this->c->getVal('url').'&message='.$error);
 		exit;
 	}
 

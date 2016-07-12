@@ -2,11 +2,11 @@
 	<input type="hidden" name="userid" value="<?php echo $sess_id; ?>" />
 	<div class="form-group">
 		<label for="name">Your name</label>
-		<input type="text" name="name" class="form-control" value="<?php echo $name; ?>" />
+		<input type="text" name="name" class="form-control" value="<?php echo $name; ?>" required />
 	</div><!-- .form-group -->
 	<div class="form-group">
 		<label for="content">About you</label>
-		<textarea name="content" id="content" cols="30" rows="10" class="form-control"><?php echo $content; ?></textarea>
+		<textarea name="content" id="content" cols="30" rows="10" class="form-control" required><?php echo $content; ?></textarea>
 	</div><!-- .form-group -->
 	<div class="form-group">
 		<label for="photo">Chosen photo</label>

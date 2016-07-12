@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="container">
 		<div class="col-md-12">
-			<br /><a href="manager.php" class="btn btn-primary">Back</a>
+			<br /><a href="manager" class="btn btn-primary">Back</a>
 			<h3>Manage events</h3>
 			<?php
 			require_once 'classes/database.class.php';
@@ -13,7 +13,7 @@
 				if(!isset($row['id']))
 				{
 					$error = urlencode('The ID does not exist');
-					header('location:manager.php?inc=events&message='.$error);
+					header('location:manager/events&message='.$error);
 					exit;
 				}	
 				$name = $row['name'];
@@ -42,7 +42,7 @@
 				<input type="hidden" name="id" value="<?php echo $id; ?>" />
 				<div class="form-group">
 					<label for="name">Name of event</label>
-					<input type="text" name="name" class="form-control" value="<?php echo $name; ?>" />
+					<input type="text" name="name" class="form-control" value="<?php echo $name; ?>" required />
 				</div><!-- .form-group -->
 				<div class="form-group">
 					<label for="datestart">Start Date</label>
@@ -84,15 +84,14 @@ include_once 'uploadedimages.inc.php';
 						{
 							echo '<tr>';
 							echo '<td>';
-							echo '<input type="checkbox" name="id[]"';
+							echo '<input type="checkbox" name="id[]" ';
 							echo 'value="'.$row['id'].'"></td>';
 							echo '<td>'.$row['name'].'</td>';
+							echo '<td>';
+							echo '<a href="manager/events&id='.$row['id'].'">Edit</a>';
 							echo '</td>';
 							echo '<td>';
-							echo '<a href="manager.php?inc=events&id='.$row['id'].'">Edit</a>';
-							echo '</td>';
-							echo '<td>';
-							echo '<a href="index.php?inc=events&id='.$row['id'].'" target="_blank">Preview</a>';
+							echo '<a href="events&id='.$row['id'].'" target="_blank">Preview</a>';
 							echo '</td>';
 							$u->echoeol('</tr>');
 						}

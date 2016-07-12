@@ -3,9 +3,9 @@
 		<div class="col-md-6">
 			<?php
 			$sess_id = $_SESSION['userid'];
-			if(in_array($sess_id, $c->getVal('managerids')))
+			if(in_array($sess_id, $c->getManagers()))
 			{
-				$u->brecho('<a href="manager.php" class="btn btn-primary">Go to the manager options</a>');
+				$u->brecho('<a href="manager" class="btn btn-primary">Go to the manager options</a>');
 			}
 			?>
 		</div>

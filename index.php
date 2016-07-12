@@ -7,18 +7,7 @@ require_once 'classes/utilities.class.php';
 $c = new config;
 $u = new utilities;
 include_once 'includes/general/urlhandler.inc.php';
-if($status == 'private')
-{
-    require_once 'classes/sessions.class.php';
-    $sess = new sessions($_SESSION);
-    $sess->privateRedirect();
-}
-elseif($status == 'manager')
-{
-    require_once 'classes/sessions.class.php';
-    $sess = new sessions($_SESSION);
-    $sess->managerRedirect();
-}
+include_once 'includes/general/userlevelhandler.inc.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,15 +20,14 @@ elseif($status == 'manager')
     include_once 'includes/general/icons.inc.php';
     $u->echoeol();
     include_once 'includes/general/linkrel.inc.php';
+    $u->echoeol();
+    include_once 'includes/general/tinymce.inc.php';
     ?>
   </head>
   <body itemscope itemtype="http://schema.org/Organization">
     <?php
-    if($status == 'public')
-    {
-        include_once 'includes/general/googletracker.inc.php';
-        $u->echoeol();
-    }
+    include_once 'includes/general/googletracker.inc.php';
+    $u->echoeol();    
     include_once 'includes/general/navigation.inc.php';
     $u->echoeol();
     /* header.inc.php can commonly be commented out
@@ -52,15 +40,13 @@ elseif($status == 'manager')
     include_once 'includes/general/message.inc.php';
     $u->echoeol();
     include_once 'includes/general/searchresults.inc.php';
-    $u->echoeol();
-    $c->getVal('managerids');
+    $u->echoeol();    
     include_once $includeFile;
     $u->echoeol();
     include_once 'includes/general/footer.inc.php';
-    ?>
-    <script async src="https://cdn.ampproject.org/v0.js"></script>
-    <script src="jquery/1.11.2/jquery.min.js"></script>
-    <script src="js-cache.php"></script>
+    $u->echoeol();
+    include_once 'includes/general/script.inc.php';
+    ?>    
   </body>
 </html>
 <?php
