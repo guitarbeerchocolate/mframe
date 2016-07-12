@@ -32,25 +32,25 @@ include_once 'includes/general/urlhandler.inc.php';
     $u->echoeol();
     if(isset($_GET['username']) && isset($_GET['password']))
     {
-			require_once 'classes/database.class.php';
-			$username = urldecode($_GET['username']);
-			$password = urldecode($_GET['password']);
-			$pdo = new database();	
-			$pdo->query();
-			$sth = $pdo->prepare("SELECT id, username, password FROM users WHERE username = :username AND password = :password");	
-			$sth->bindParam(':username', $username);
-			$sth->bindParam(':password', $password);	
-			$sth->execute();	
-			$row = $sth->fetch(PDO::FETCH_ASSOC);		
-			if(($row === false) && ($sth->rowCount() == 0))
-			{
-				$error = 'Invalid email or password. Please try again.';
-        $u->move_on($c->getVal('formspage'), $error);
-			}
-			else
-			{
-				include_once 'includes/public/sub/resetpassword.inc.php';
-			}	
+		require_once 'classes/database.class.php';
+		$username = urldecode($_GET['username']);
+		$password = urldecode($_GET['password']);
+		$pdo = new database();	
+		$pdo->query();
+		$sth = $pdo->prepare("SELECT id, username, password FROM users WHERE username = :username AND password = :password");	
+		$sth->bindParam(':username', $username);
+		$sth->bindParam(':password', $password);	
+		$sth->execute();	
+		$row = $sth->fetch(PDO::FETCH_ASSOC);		
+		if(($row === false) && ($sth->rowCount() == 0))
+		{
+			$error = 'Invalid email or password. Please try again.';
+            $u->move_on($c->getVal('formspage'), $error);
+		}
+		else
+		{
+			include_once 'includes/public/sub/resetpassword.inc.php';
+		}	
     }
     else
     {
