@@ -13,3 +13,5 @@
 <script src="html5shiv/3.7.2/html5shiv.min.js"></script>
 <script src="respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+<script src="https://use.fontawesome.com/78dedbeda4.js"></script>

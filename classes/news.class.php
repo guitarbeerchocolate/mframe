@@ -17,7 +17,7 @@ class news extends database
     	$sth = $this->prepare("INSERT INTO news (name,content) VALUES (:name,:content)");
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);	
-		$message = $this->testExcecute($sth, 'Record added');
+		$message = $this->testExecute($sth, 'Record added');
         $this->u->move_on($this->c->getVal('url').'manager/news',$message);
     }
 
@@ -27,7 +27,7 @@ class news extends database
     	$sth->bindParam(':id', $this->pa['id']);
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);	
-		$message = $this->testExcecute($sth, 'Record updated');
+		$message = $this->testExecute($sth, 'Record updated');
 		$this->u->move_on($this->c->getVal('url').'manager/news',$message);
     }
 

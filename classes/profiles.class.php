@@ -28,7 +28,7 @@ class profiles extends database
             $uploadResult = $this->u->data_uri_string($filename, $mime);
         }
         $sth->bindParam(':photo', $uploadResult);
-		$message = $this->testExcecute($sth, 'Record added');
+		$message = $this->testExecute($sth, 'Record added');
         $this->u->move_on($this->c->getVal('url').'private/',$message);
     }
 
@@ -49,7 +49,7 @@ class profiles extends database
             $uploadResult = $this->pa['tempphoto'];
         }
 		$sth->bindParam(':photo', $uploadResult);
-        $message = $this->testExcecute($sth, 'Record updated');
+        $message = $this->testExecute($sth, 'Record updated');
 		$this->u->move_on($this->c->getVal('url').'private/',$message);
     }
 

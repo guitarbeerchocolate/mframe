@@ -42,7 +42,7 @@ class externalfeeds extends database
             $sth->bindParam(':name', $this->pa['name']);
             $sth->bindParam(':location', $this->pa['location']);
             $sth->bindParam(':type', $this->pa['type']);
-            $message = $this->testExcecute($sth, 'Record added');
+            $message = $this->testExecute($sth, 'Record added');
         }
 		$this->u->move_on($this->c->getVal('url').'manager/externalfeeds',$message);
     }
@@ -76,7 +76,7 @@ class externalfeeds extends database
     		$sth->bindParam(':name', $this->pa['name']);
     		$sth->bindParam(':location', $this->pa['location']);
             $sth->bindParam(':type', $this->pa['type']);	
-    		$message = $this->testExcecute($sth, 'Record updated');
+    		$message = $this->testExecute($sth, 'Record updated');
         }
 		$this->u->move_on($this->c->getVal('url').'manager/externalfeeds',$message);
     }

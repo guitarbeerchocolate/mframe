@@ -20,6 +20,9 @@
 				<li>
 					<a href="manager/externalfeeds">Manage external feeds</a>
 				</li>
+				<li>
+					<a href="manager/config">Manage configuration items</a>
+				</li>
 			</ul>
 		</div>
 	</div>

@@ -20,7 +20,11 @@ class authenticate extends database
 			$this->query();
 			$sth = $this->prepare("SELECT id, username, password FROM users WHERE username = :username");	
 			$sth->bindParam(':username', $username);	
-			$sth->execute();	
+			$error = $this->testExecute($sth, 'Records received');			
+			if($error !== 'Records received')
+			{
+				$this->u->move_on('login.php',$error);
+			}
 			$row = $sth->fetch(PDO::FETCH_ASSOC);
 			if(($row !== false) && ($sth->rowCount() > 0))
 			{
@@ -58,7 +62,11 @@ class authenticate extends database
 			$this->query();
 			$sth = $this->prepare("SELECT id, username, password FROM users WHERE username = :username");	
 			$sth->bindParam(':username', $username);	
-			$sth->execute();	
+			$error = $this->testExecute($sth, 'Records received');			
+			if($error !== 'Records received')
+			{
+				$this->u->move_on('login.php',$error);
+			}	
 			$row = $sth->fetch(PDO::FETCH_ASSOC);		
 			if(($row !== false) && ($sth->rowCount() > 0))
 			{
@@ -111,7 +119,11 @@ class authenticate extends database
 			$password = sha1(md5($this->pa['password']));			
 			$sth = $this->prepare("SELECT id FROM users WHERE username = :username");	
 			$sth->bindParam(':username', $username);	
-			$sth->execute();	
+			$error = $this->testExecute($sth, 'Records received');			
+			if($error !== 'Records received')
+			{
+				$this->u->move_on('login.php',$error);
+			}	
 			$row = $sth->fetch(PDO::FETCH_ASSOC);		
 			if(($row === false) && ($sth->rowCount() == 0))
 			{
@@ -148,7 +160,11 @@ class authenticate extends database
 			$password = sha1(md5($this->pa['password']));			
 			$sth = $this->prepare("SELECT id FROM users WHERE username = :username");	
 			$sth->bindParam(':username', $username);	
-			$sth->execute();	
+			$error = $this->testExecute($sth, 'Records received');			
+			if($error !== 'Records received')
+			{
+				$this->u->move_on('login.php',$error);
+			}	
 			$row = $sth->fetch(PDO::FETCH_ASSOC);		
 			if(($row !== false) && ($sth->rowCount() > 0))
 			{

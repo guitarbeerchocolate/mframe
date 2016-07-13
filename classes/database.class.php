@@ -47,7 +47,7 @@ class database extends PDO
         return $row['id']+1;
     }
 
-    function testExcecute($sth, $successMessage)
+    function testExecute($sth, $successMessage)
     {
         if($sth->execute() == TRUE)
         {

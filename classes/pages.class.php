@@ -20,7 +20,7 @@ class pages extends database
         $sth->bindParam(':layout', $this->pa['layout']);	
         $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
         $sth->bindParam(':issubpage', $this->pa['issubpage']);
-		$message = $this->testExcecute($sth, 'Record added');
+		$message = $this->testExecute($sth, 'Record added');
 		$this->u->move_on($this->c->getVal('url').'manager/pages',$message);
     }
 
@@ -33,7 +33,7 @@ class pages extends database
         $sth->bindParam(':layout', $this->pa['layout']);
         $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
         $sth->bindParam(':issubpage', $this->pa['issubpage']);	
-		$message = $this->testExcecute($sth, 'Record updated');
+		$message = $this->testExecute($sth, 'Record updated');
 		$this->u->move_on($this->c->getVal('url').'manager/pages',$message);
     }
 
