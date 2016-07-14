@@ -27,7 +27,7 @@
 		</div><!-- .col-md-3 -->
 		<div class="col-md-3">
 			<h3>Send a message</h3>
-			<form method="POST" action="contact/send" class="ajax" role="form">
+			<form method="POST" action="contact/send" role="form">
 				<div class="form-group">
 					<label for="emailaddress">Email address</label>
 					<input type="email" class="form-control" id="emailaddress" name="emailaddress" placeholder="Enter email" required />

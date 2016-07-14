@@ -35,7 +35,7 @@
 <div class="row">
 	<div class="container">
 		<div class="col-md-12">
-			<form action="formhandler.php?action=<?php echo $action; ?>" method="POST" role="form" class="ajax triggersave">
+			<form action="formhandler.php?action=<?php echo $action; ?>" method="POST" role="form">
 				<input type="hidden" name="id" value="<?php echo $id; ?>" />
 				<div class="form-group">
 					<label for="name">Name of item</label>
@@ -54,7 +54,7 @@
 	<div class="container">
 		<div class="col-md-12">
 			<h4>Existing config</h4>
-			<form method="post" action="formhandler.php?action=config/deleteconfig" class="ajax" role="form">	
+			<form method="post" action="formhandler.php?action=config/deleteconfig" role="form">	
 				<table class="table">
 					<thead>
 						<tr>
