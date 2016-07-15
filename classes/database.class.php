@@ -46,6 +46,56 @@ class database extends PDO
         $row = $stmt->fetch();        
         return $row['id']+1;
     }
+    
+    function listorderby($table,$orderby,$ad = "ASC")
+    {
+        $sql = "SELECT * FROM ".$table." ORDER BY ".$orderby." ".$ad; 
+        $stmt = $this->query($sql); 
+        if($stmt !== FALSE)
+        {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+    }
+
+    function listorderbywhere($table,$wherefield, $wherevalue, $orderby,$ad = "ASC")
+    {
+        $sql = "SELECT * FROM ".$table." WHERE ".$wherefield."=".$wherevalue." ORDER BY ".$orderby." ".$ad; 
+        $stmt = $this->query($sql); 
+        if($stmt !== FALSE)
+        {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+    }
+
+    function getOneByFieldName($table, $fn, $val)
+    {
+        $sql = "SELECT * FROM ".$table." WHERE ".$fn."='".$val."' LIMIT 1";         
+        $stmt = $this->query($sql);
+        if($stmt !== FALSE)
+        {
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+    }
+
+    function getFieldsFromTable($tn)
+    {
+        $outArr = array();
+        $dbname = $this->settings['schema'];
+        $s = "SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='{$dbname}' AND `TABLE_NAME`='{$tn}'";
+        $stmt = $this->query($s);
+        if($stmt !== FALSE)
+        {
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }        
+        foreach ($rows as $row)
+        {
+            if(strtolower($row['COLUMN_NAME']) !== 'id')
+            {
+                array_push($outArr, $row['COLUMN_NAME']);
+            }
+        }
+        return $outArr;
+    }
 
     function testExecute($sth, $successMessage)
     {
