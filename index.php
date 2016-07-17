@@ -2,8 +2,10 @@
 session_start();
 // include_once 'includes/general/top-cache.php';
 include_once 'includes/general/showerrors.inc.php';
+require_once 'classes/sessions.class.php';
 require_once 'classes/config.class.php';
 require_once 'classes/utilities.class.php';
+$s = new sessions($_SESSION);
 $c = new config;
 $u = new utilities;
 include_once 'includes/general/urlhandler.inc.php';

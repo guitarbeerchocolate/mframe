@@ -1,5 +1,5 @@
 <form action="formhandler.php?action=<?php echo $action; ?>" method="POST"  enctype="multipart/form-data" role="form">
-	<input type="hidden" name="userid" value="<?php echo $sess_id; ?>" />
+	<input type="hidden" name="userid" value="<?php echo $s->userid; ?>" />
 	<div class="form-group">
 		<label for="name">Your name</label>
 		<input type="text" name="name" class="form-control" value="<?php echo $name; ?>" required />

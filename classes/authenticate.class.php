@@ -1,9 +1,10 @@
 <?php
 require_once 'database.class.php';
+require_once 'sessions.class.php';
 require_once 'config.class.php';
 class authenticate extends database
 {
-	private $pa, $c;
+	private $pa, $c, $s;
     public function __construct($postArray = array())
     {
         parent::__construct();
@@ -31,7 +32,8 @@ class authenticate extends database
 				if($row['password'] == $password)
 				{
 					session_start();
-					$_SESSION['userid'] = $row['id'];
+					$this->s = new sessions($_SESSION);
+					$this->s->userid = $row['id'];
 					$outURL = $this->c->getVal('url').'private';
 					$this->u->move_on($outURL);
 				}

@@ -2,8 +2,7 @@
 	<div class="container">
 		<div class="col-md-6">
 			<?php
-			$sess_id = $_SESSION['userid'];
-			if(in_array($sess_id, $c->getManagers()))
+			if(in_array($s->userid, $c->getManagers()))
 			{
 				$u->brecho('<a href="manager" class="btn btn-primary">Go to the manager options</a>');
 			}
@@ -14,7 +13,7 @@
 			<?php
 			require_once 'classes/database.class.php';
 			$db = new database;
-			$row = $db->getOneByFieldValue('profiles','userid',$sess_id);
+			$row = $db->getOneByFieldValue('profiles','userid',$s->userid);
 			if($row == TRUE)
 			{
 				$name = $row['name'];

@@ -1,11 +1,13 @@
 <?php
 require_once 'config.class.php';
+require_once 'utilities.class.php';
 class sessions
 {
-	public $sess;
-	protected $c;
+	public $sess, $userid;
+	protected $c, $u;
 	function __construct($sess = NULL)
 	{
+		$this->userid = NULL;
 		if($sess == NULL)
 		{
 			$this->sess = $_SESSION;
@@ -14,7 +16,12 @@ class sessions
 		{
 			$this->sess = $sess;	
 		}
+		if(isset($this->sess['userid']))
+		{
+			$this->userid = $this->sess['userid'];
+		}
 		$this->c = new config;
+		$this->u = new utilities;
 	}
 
 	function logout()
@@ -25,50 +32,44 @@ class sessions
 	    session_write_close();
 	    setcookie(session_name(),'',0,'/');
 	    session_regenerate_id(true);
-		$error = urlencode('Logged out.');
-		header('location:'.$this->c->getVal('url').'&message='.$error);
-		exit;
+		$error = 'Logged out.';
+		$this->u->move_on($this->c->getVal('url'),$error);
 	}
 
 	function privateRedirect()
 	{
-		if(!isset($this->sess['userid']))
+		if(!is_null($this->userid))
 		{
-			$error = urlencode('You must be logged in to access the private section.');
-			header('location:'.$this->c->getVal('formspage').'&message='.$error);
-			exit;
+			$error = 'You must be logged in to access the private section.';
+			$this->u->move_on($this->c->getVal('formspage'),$error);
 		}
 		else if(isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
 		{
 			unset($_SESSION['userid']);
 			session_destroy();
-			$error = urlencode('Logged out.');
-			header('location:'.$this->c->getVal('formspage').'&message='.$error);
-			exit;
+			$error = 'Logged out.';
+			$this->u->move_on($this->c->getVal('formspage'),$error);
 		}
 	}
 
 	function managerRedirect()
 	{
-		if(!isset($this->sess['userid']))
+		if(!is_null($this->userid))
 		{
-			$error = urlencode('You must be logged in to access the private section.');
-			header('location:'.$this->c->getVal('formspage').'&message='.$error);
-			exit;
+			$error = 'You must be logged in to access the private section.';
+			$this->u->move_on($this->c->getVal('formspage'),$error);
 		}
-		else if(!in_array($this->sess['userid'], $this->c->getManagers()))
+		else if(!in_array($this->userid, $this->c->getManagers()))
 		{
-		  $error = urlencode('You must be logged in as a manager access the manager section.');
-		  header('location:'.$this->c->getVal('formspage').'&message='.$error);
-		  exit;
+		  $error = 'You must be logged in as a manager access the manager section.';
+		  $this->u->move_on($this->c->getVal('formspage'),$error);
 		}
 		else if (isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
 		{
 		  unset($_SESSION['userid']);
 		  session_destroy();
-		  $error = urlencode('Logged out.');
-		  header('location:'.$this->c->getVal('formspage').'&message='.$error);
-		  exit;
+		  $error = 'Logged out.';
+		  $this->u->move_on($this->c->getVal('formspage'),$error);
 		}
 	}
 }

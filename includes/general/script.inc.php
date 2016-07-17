@@ -9,7 +9,7 @@ if($status == 'manager')
 <script>
 (function()
 {
-	if($(this).hasClass('triggersave'))
+	if($(this).hasClass('tinymce'))
     {
       tinyMCE.triggerSave();  
     }
