@@ -83,7 +83,6 @@ else
 
 if(!file_exists($includeFile))
 {
-  $error = urlencode('Include does not exist.');
-  header('location:'.$c->getVal('url').'&message='.$error);
-  exit;
+  $error = 'Include does not exist.';
+  $u->move_on($this->getVal('url').'manager/config',$error);
 }

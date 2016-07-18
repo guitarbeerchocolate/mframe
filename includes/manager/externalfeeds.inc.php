@@ -4,18 +4,14 @@
 			<br /><a href="manager" class="btn btn-primary">Back</a>
 			<h3>Manage external feeds</h3>
 			<?php
-			/* http://feeds.bbci.co.uk/news/rss.xml?edition=uk */
-			require_once 'classes/database.class.php';			
-			$db = new database;
 			if(isset($_GET['id']))
 			{
 				$id = $_GET['id'];
 				$row = $db->getOneByID('externalfeeds',$id);
 				if(!isset($row['id']))
 				{
-					$error = urlencode('The ID does not exist');
-					header('location:manager/externalfeeds&message='.$error);
-					exit;
+					$error = 'The ID does not exist';
+					$u->move_on($this->getVal('url').'manager/externalfeeds',$error);
 				}	
 				$name = $row['name'];
 				$location = $row['location'];

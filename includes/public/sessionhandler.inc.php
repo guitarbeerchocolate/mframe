@@ -1,8 +1,6 @@
 <?php
-if(!empty($_SESSION))
+if(!is_null($s->userid))
 {
-	require_once 'classes/sessions.class.php';
-	$sess = new sessions($_SESSION);
 	echo '<li class="active">';
 	echo '<a href="formhandler.php?action=sessions/logout">Logout</a>';
 	echo '</li>';

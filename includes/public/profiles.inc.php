@@ -2,9 +2,7 @@
 	<div class="container">
 		<div class="col-md-12">
 			<h2>Profiles</h2>
-			<?php
-			require_once 'classes/database.class.php';
-			$db = new database;
+			<?php			
 			$rows = $db->listall('profiles');
 			foreach ($rows as $row)
 			{

@@ -1,11 +1,17 @@
 <?php
+session_start();
 // include_once 'includes/general/top-cache.php';
 include_once 'includes/general/showerrors.inc.php';
+require_once 'classes/sessions.class.php';
+require_once 'classes/database.class.php';
 require_once 'classes/config.class.php';
 require_once 'classes/utilities.class.php';
+$s = new sessions($_SESSION);
+$db = new database;
 $c = new config;
 $u = new utilities;
 include_once 'includes/general/urlhandler.inc.php';
+include_once 'includes/general/userlevelhandler.inc.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,48 +24,53 @@ include_once 'includes/general/urlhandler.inc.php';
     include_once 'includes/general/icons.inc.php';
     $u->echoeol();
     include_once 'includes/general/linkrel.inc.php';
+    $u->echoeol();
+    include_once 'includes/general/tinymce.inc.php';
     ?>
   </head>
-  <body>
+  <body itemscope itemtype="http://schema.org/Organization">
     <?php
     include_once 'includes/general/googletracker.inc.php';
-    $u->echoeol();
+    $u->echoeol();    
     include_once 'includes/general/navigation.inc.php';
     $u->echoeol();
+    /* header.inc.php can commonly be commented out
+    because include files can contain H2 headers.
+    */
+    /*
     include_once 'includes/general/header.inc.php';
     $u->echoeol();
+    */
     include_once 'includes/general/message.inc.php';
     $u->echoeol();
     if(isset($_GET['username']) && isset($_GET['password']))
     {
-		require_once 'classes/database.class.php';
-		$username = urldecode($_GET['username']);
-		$password = urldecode($_GET['password']);
-		$pdo = new database();	
-		$pdo->query();
-		$sth = $pdo->prepare("SELECT id, username, password FROM users WHERE username = :username AND password = :password");	
-		$sth->bindParam(':username', $username);
-		$sth->bindParam(':password', $password);	
-		$sth->execute();	
-		$row = $sth->fetch(PDO::FETCH_ASSOC);		
-		if(($row === false) && ($sth->rowCount() == 0))
-		{
-			$error = 'Invalid email or password. Please try again.';
+        $username = urldecode($_GET['username']);
+        $password = urldecode($_GET['password']);        
+        $db->query();
+        $sth = $db->prepare("SELECT id, username, password FROM users WHERE username = :username AND password = :password");   
+        $sth->bindParam(':username', $username);
+        $sth->bindParam(':password', $password);    
+        $sth->execute();    
+        $row = $sth->fetch(PDO::FETCH_ASSOC);       
+        if(($row === false) && ($sth->rowCount() == 0))
+        {
+            $error = 'Invalid email or password. Please try again.';
             $u->move_on($c->getVal('formspage'), $error);
-		}
-		else
-		{
-			include_once 'includes/public/sub/resetpassword.inc.php';
-		}	
+        }
+        else
+        {
+            include_once 'includes/public/sub/resetpassword.inc.php';
+        }   
     }
     else
     {
       include_once 'includes/public/sub/authenticate.inc.php';
-    }    
+    }
     include_once 'includes/general/footer.inc.php';
     $u->echoeol();
     include_once 'includes/general/script.inc.php';
-    ?>
+    ?>    
   </body>
 </html>
 <?php

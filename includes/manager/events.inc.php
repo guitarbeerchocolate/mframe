@@ -4,17 +4,14 @@
 			<br /><a href="manager" class="btn btn-primary">Back</a>
 			<h3>Manage events</h3>
 			<?php
-			require_once 'classes/database.class.php';
-			$db = new database;
 			if(isset($_GET['id']))
 			{
 				$id = $_GET['id'];
 				$row = $db->getOneByID('events',$id);
 				if(!isset($row['id']))
 				{
-					$error = urlencode('The ID does not exist');
-					header('location:manager/events&message='.$error);
-					exit;
+					$error = 'The ID does not exist';
+					$u->move_on($this->getVal('url').'manager/events',$error);
 				}	
 				$name = $row['name'];
 				$content = $row['content'];

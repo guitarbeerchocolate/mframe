@@ -16,9 +16,9 @@ class sessions
 		{
 			$this->sess = $sess;	
 		}
-		if(isset($this->sess['userid']))
+		if(isset($_SESSION['userid']))
 		{
-			$this->userid = $this->sess['userid'];
+			$this->userid = $_SESSION['userid'];
 		}
 		$this->c = new config;
 		$this->u = new utilities;
@@ -38,7 +38,7 @@ class sessions
 
 	function privateRedirect()
 	{
-		if(!is_null($this->userid))
+		if(is_null($this->userid))
 		{
 			$error = 'You must be logged in to access the private section.';
 			$this->u->move_on($this->c->getVal('formspage'),$error);
@@ -54,7 +54,7 @@ class sessions
 
 	function managerRedirect()
 	{
-		if(!is_null($this->userid))
+		if(is_null($this->userid))
 		{
 			$error = 'You must be logged in to access the private section.';
 			$this->u->move_on($this->c->getVal('formspage'),$error);

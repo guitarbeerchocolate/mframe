@@ -11,8 +11,6 @@
 		<aside class="col-md-3">
 			<h3>Your profile</h3>
 			<?php
-			require_once 'classes/database.class.php';
-			$db = new database;
 			$row = $db->getOneByFieldValue('profiles','userid',$s->userid);
 			if($row == TRUE)
 			{

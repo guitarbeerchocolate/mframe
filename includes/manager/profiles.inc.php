@@ -11,9 +11,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					<?php
-					require_once 'classes/database.class.php';
-					$db = new database;
+					<?php					
 					$rows = $db->listall('profiles');
 					if(count($rows) > 0)
 					{

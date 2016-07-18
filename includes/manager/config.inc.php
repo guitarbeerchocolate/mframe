@@ -4,17 +4,14 @@
 			<br /><a href="manager" class="btn btn-primary">Back</a>
 			<h3>Manage config</h3>
 			<?php
-			require_once 'classes/database.class.php';
-			$db = new database;
 			if(isset($_GET['id']))
 			{
 				$id = $_GET['id'];
 				$row = $db->getOneByID('config',$id);
 				if(!isset($row['id']))
 				{
-					$error = urlencode('The ID does not exist');
-					header('location:manager/config&message='.$error);
-					exit;
+					$error = 'The ID does not exist';
+					$u->move_on($this->getVal('url').'manager/config',$error);
 				}	
 				$name = $row['name'];
 				$value = $row['value'];				

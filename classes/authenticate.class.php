@@ -32,8 +32,8 @@ class authenticate extends database
 				if($row['password'] == $password)
 				{
 					session_start();
-					$this->s = new sessions($_SESSION);
-					$this->s->userid = $row['id'];
+					$_SESSION['userid'] = $row['id'];
+					$this->s = new sessions($_SESSION);					
 					$outURL = $this->c->getVal('url').'private';
 					$this->u->move_on($outURL);
 				}
