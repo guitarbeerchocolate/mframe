@@ -27,37 +27,41 @@ class database extends PDO
 
     function getOneByFieldValue($table,$field,$value)
     {
-        $sth = $this->prepare("SELECT * FROM `{$table}` WHERE `{$field}` = :{field}");
-        $sth->bindParam(':{$field}', $value);
-        $sth->execute();
-        /* Then try $this->tesExecute('Statement', 'Records received'); */
+        $sql = "SELECT * FROM {$table} WHERE {$field} = :{$field}  LIMIT 1";        
+        $bindStr = ':'.$field;        
+        $sth = $this->prepare($sql);
+        $sth->bindParam($bindStr, $value);        
+        $message = $this->testExecute($sth, 'Record received');        
         return $sth->fetch(PDO::FETCH_ASSOC);
-        /*
-        $sql = "SELECT * FROM ".$table." WHERE ".$field."=".$value." LIMIT 1";
-        $stmt = $this->query($sql); 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-        */
     }
 
     function getAllByFieldValue($table,$field,$value)
     {
-        $sql = "SELECT * FROM ".$table." WHERE ".$field."=".$value;
-        $stmt = $this->query($sql); 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sql = "SELECT * FROM {$table} WHERE {$field} = :{$field}";        
+        $bindStr = ':'.$field;        
+        $sth = $this->prepare($sql);
+        $sth->bindParam($bindStr, $value);        
+        $message = $this->testExecute($sth, 'Records received');        
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function getSimilarByFieldValue($table,$field,$value)
     {
-        $sql = "SELECT * FROM ".$table." WHERE ".$field." LIKE ".$value;
-        $stmt = $this->query($sql); 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sql = "SELECT * FROM {$table} WHERE {$field} LIKE :{$field}";        
+        $bindStr = ':'.$field;        
+        $sth = $this->prepare($sql);
+        $sth->bindParam($bindStr, $value);        
+        $message = $this->testExecute($sth, 'Records received');        
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function getOneByID($table,$id)
     {
-        $sql = "SELECT * FROM ".$table." WHERE id=".$id." LIMIT 1"; 
-        $stmt = $this->query($sql); 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $sql = "SELECT * FROM ".$table." WHERE id = :id LIMIT 1";               
+        $sth = $this->prepare($sql);
+        $sth->bindParam(':id', $id);        
+        $message = $this->testExecute($sth, 'Record received');        
+        return $sth->fetch(PDO::FETCH_ASSOC);
     }
 
     function getNextID($table)
@@ -70,22 +74,20 @@ class database extends PDO
     
     function listorderby($table,$orderby,$ad = "ASC")
     {
-        $sql = "SELECT * FROM ".$table." ORDER BY ".$orderby." ".$ad; 
-        $stmt = $this->query($sql); 
-        if($stmt !== FALSE)
-        {
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
+        $sql = "SELECT * FROM {$table} ORDER BY {$orderby} {$ad}";
+        $sth = $this->prepare($sql);       
+        $message = $this->testExecute($sth, 'Records received');        
+        return $sth->fetchAll(PDO::FETCH_ASSOC);         
     }
 
     function listorderbywhere($table,$wherefield, $wherevalue, $orderby,$ad = "ASC")
     {
-        $sql = "SELECT * FROM ".$table." WHERE ".$wherefield."=".$wherevalue." ORDER BY ".$orderby." ".$ad; 
-        $stmt = $this->query($sql); 
-        if($stmt !== FALSE)
-        {
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
+        $sql = "SELECT * FROM {$table} WHERE {$wherefield} = :{$wherefield} ORDER BY {$orderby} {$ad}";
+        $bindStr = ':'.$wherefield;
+        $sth = $this->prepare($sql);
+        $sth->bindParam($bindStr, $wherevalue);
+        $message = $this->testExecute($sth, 'Records received');        
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function getFieldsFromTable($tn)
@@ -106,6 +108,14 @@ class database extends PDO
             }
         }
         return $outArr;
+    }
+
+    function countrow($table)
+    {
+        $sql = "SELECT * FROM {$table}";
+        $sth = $this->prepare($sql);
+        $sth->execute();
+        return $sth->rowCount();
     }
 
     function testExecute($sth, $successMessage)

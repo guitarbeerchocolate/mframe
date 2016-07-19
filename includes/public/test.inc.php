@@ -3,7 +3,7 @@
 		<div class="col-md-12">
 			<h2>Test page</h2>
 			<?php
-			$rows = $db->getOneByFieldValue('pages','name','Leave it out');
+			$rows = $db->listorderbywhere('pages','layout','1','layout');
 			$u->var_dump_structure($rows);
 			/* foreach ($rows as $row)
 			{

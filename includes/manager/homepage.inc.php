@@ -23,6 +23,9 @@
 				<li>
 					<a href="manager/config">Manage configuration items</a>
 				</li>
+				<li>
+					<a href="manager/metrics">Metrics</a>
+				</li>
 			</ul>
 		</div>
 	</div>
