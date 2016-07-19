@@ -84,5 +84,5 @@ else
 if(!file_exists($includeFile))
 {
   $error = 'Include does not exist.';
-  $u->move_on($this->getVal('url').'manager/config',$error);
+  $u->move_on($c->getVal('url'),$error);
 }

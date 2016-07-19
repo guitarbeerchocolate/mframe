@@ -2,7 +2,7 @@
 require_once 'utilities.class.php';
 class database extends PDO
 {
-	public $settings;
+    public $settings;
     protected $u;
     public function __construct($file = 'config.ini')
     {
@@ -14,9 +14,9 @@ class database extends PDO
 
     function listall($table)
     {
-		$sql = "SELECT * FROM ".$table; 
-		$stmt = $this->query($sql); 
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $sql = "SELECT * FROM ".$table; 
+        $stmt = $this->query($sql); 
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function performquery($q)
@@ -27,9 +27,30 @@ class database extends PDO
 
     function getOneByFieldValue($table,$field,$value)
     {
-    	$sql = "SELECT * FROM ".$table." WHERE ".$field."=".$value." LIMIT 1";
-		$stmt = $this->query($sql); 
-		return $stmt->fetch(PDO::FETCH_ASSOC);
+        $sth = $this->prepare("SELECT * FROM `{$table}` WHERE `{$field}` = :{field}");
+        $sth->bindParam(':{$field}', $value);
+        $sth->execute();
+        /* Then try $this->tesExecute('Statement', 'Records received'); */
+        return $sth->fetch(PDO::FETCH_ASSOC);
+        /*
+        $sql = "SELECT * FROM ".$table." WHERE ".$field."=".$value." LIMIT 1";
+        $stmt = $this->query($sql); 
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+        */
+    }
+
+    function getAllByFieldValue($table,$field,$value)
+    {
+        $sql = "SELECT * FROM ".$table." WHERE ".$field."=".$value;
+        $stmt = $this->query($sql); 
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function getSimilarByFieldValue($table,$field,$value)
+    {
+        $sql = "SELECT * FROM ".$table." WHERE ".$field." LIKE ".$value;
+        $stmt = $this->query($sql); 
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function getOneByID($table,$id)
@@ -67,16 +88,6 @@ class database extends PDO
         }
     }
 
-    function getOneByFieldName($table, $fn, $val)
-    {
-        $sql = "SELECT * FROM ".$table." WHERE ".$fn."='".$val."' LIMIT 1";         
-        $stmt = $this->query($sql);
-        if($stmt !== FALSE)
-        {
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        }
-    }
-
     function getFieldsFromTable($tn)
     {
         $outArr = array();
@@ -100,7 +111,7 @@ class database extends PDO
     function testExecute($sth, $successMessage)
     {
         if($sth->execute() == TRUE)
-        {
+        { 
             return $successMessage;
         }
         else
