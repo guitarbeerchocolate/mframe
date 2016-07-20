@@ -4,7 +4,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Reset password</div>
 				<div class="panel-body">
-					<form method="POST" action="formhandler.php?action=authenticate/resetpassword" role="form">
+					<form method="POST" action="authenticate/resetpassword" role="form">
 						<div class="form-group">
 							<label for="username">Email:</label>
 							<input type="email" name="username" id="username" class="form-control" value=<?php echo $_GET['username']; ?> />

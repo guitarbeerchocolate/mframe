@@ -37,7 +37,7 @@
 <div class="row">
 	<div class="container">
 		<div class="col-md-12">
-			<form action="formhandler.php?action=<?php echo $action; ?>" method="POST" role="form">
+			<form action="<?php echo $action; ?>" method="POST" role="form">
 				<input type="hidden" name="id" value="<?php echo $id; ?>" />
 				<div class="form-group">
 					<label for="name">Name of page</label>
@@ -83,7 +83,7 @@ include_once 'uploadedimages.inc.php';
 	<div class="container">
 		<div class="col-md-12">
 			<h4>Existing pages</h4>
-			<form method="post" action="formhandler.php?action=pages/deletepages" role="form">	
+			<form method="post" action="pages/deletepages" role="form">	
 				<table class="table">
 					<thead>
 						<tr>

@@ -2,6 +2,7 @@
 	<div class="container">
 		<div class="col-md-12">
 			<h2>Metrics</h2>
+			<br /><a href="manager" class="btn btn-primary">Back</a>
 			<table class="table">
 				<tbody>
 				<?php

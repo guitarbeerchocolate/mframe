@@ -1,4 +1,4 @@
-<form action="formhandler.php?action=<?php echo $action; ?>" method="POST"  enctype="multipart/form-data" role="form">
+<form action="<?php echo $action; ?>" method="POST"  enctype="multipart/form-data" role="form">
 	<input type="hidden" name="userid" value="<?php echo $s->userid; ?>" />
 	<div class="form-group">
 		<label for="name">Your name</label>

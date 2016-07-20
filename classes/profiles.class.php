@@ -28,8 +28,8 @@ class profiles extends database
             $uploadResult = $this->u->data_uri_string($filename, $mime);
         }
         $sth->bindParam(':photo', $uploadResult);
-		$message = $this->testExecute($sth, 'Record added');
-        $this->u->move_on($this->c->getVal('url').'private/',$message);
+		$message = $this->testExecute($sth, 'Record added');        
+        $this->u->move_on($this->c->getVal('url').'private',$message);        
     }
 
     function updateprofiles()
@@ -50,7 +50,7 @@ class profiles extends database
         }
 		$sth->bindParam(':photo', $uploadResult);
         $message = $this->testExecute($sth, 'Record updated');
-		$this->u->move_on($this->c->getVal('url').'private/',$message);
+		$this->u->move_on($this->c->getVal('url').'private',$message);
     }
 
     function deleteprofiles()

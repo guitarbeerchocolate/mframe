@@ -1,9 +1,9 @@
 <div class="row">
 	<div class="container">
 		<div class="col-md-12">
-			<br /><a href="manager.php/profiles" class="btn btn-primary">Back</a>
+			<br /><a href="manager" class="btn btn-primary">Back</a>
 			<h3>Manage profiles</h3>
-			<form method="post" action="formhandler.php?action=profiles/deleteprofiles" role="form">
+			<form method="post" action="profiles/deleteprofiles" role="form">
 				<table class="table">
 					<thead>
 						<tr>

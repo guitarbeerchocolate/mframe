@@ -2,7 +2,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">Login</div>
 		<div class="panel-body">
-			<form method="POST" action="formhandler.php?action=authenticate/login" role="form">
+			<form method="POST" action="authenticate/login" role="form">
 				<div class="form-group">
 					<label for="username">Email:</label>
 					<input type="email" name="username" id="username" class="form-control" placeholder="Email Address" />
