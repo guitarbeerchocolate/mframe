@@ -13,13 +13,21 @@ class contact extends database
 
     function send()
     {	
-        $error = 'A message has been sent.';
+        $error = '';
         foreach ($this->c->getManagers() as $managerid)
         {
-        	$user = $this->getOneByID('users',$managerid);
-        	mail($user['username'],'Contact from website',$this->pa['details']);
+            $user = $this->getOneByID('users',$managerid);
+            $message = 'From : '.$this->pa['emailaddress'].PHP_EOL.$this->pa['details'];
+            if(mail($user['username'],'Contact from website',$message))
+            {
+                $error = 'Your message has been sent.';
+            }
+            else
+            {
+                $error = 'Your mail not sent for unknown reasons.';
+            }
         }
-        return $error;
+        $this->u->move_on($this->c->getVal('url'),$error);
     }
 }
 ?>

@@ -9,12 +9,9 @@
 				$ru = $db->countrow('users');
 				$rs = $db->countrow('service');
 				$re = $db->countrow('experiences');
-				echo '<tr><td>Number of registered users</td><td>'.$ru.'</td></tr>';
-				echo '<tr><td>Number of services</td><td>'.$rs.'</td></tr>';
-				echo '<td>Number of experiences</td><td>'.$re.'</td></tr>';
-				/*
-				echo '<td>Number of visits</td>'..'</td>';
-				*/
+				$u->echotr(array('Number of registered users',$ru));
+				$u->echotr(array('Number of services',$rs));
+				$u->echotr(array('Number of experiences',$re));
 				?>
 				</tbody>
 			</table>

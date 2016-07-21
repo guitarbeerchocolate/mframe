@@ -17,8 +17,8 @@
 				$name = $row['name'];
 				$content = $row['content'];
 				$photo = $row['photo'];
-				echo '<h4>'.$name.'</h4>';
-				echo $content.'<br />';
+				$u->echoh4($name);
+				$u->echobr($content);
 				if(!empty($photo))
 				{
 					echo '<img src="'.$photo.'" class="img-responsive" />';

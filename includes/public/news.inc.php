@@ -10,7 +10,7 @@
 				$p->getnews($_GET['id']);
 				if(isset($p->name))
 				{
-					echo '<h3>'.$p->name.'</h3>'.PHP_EOL;
+					$u->echoh3($p->name);
 					echo $p->content;
 				}
 				else

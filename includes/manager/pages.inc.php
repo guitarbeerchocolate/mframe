@@ -97,18 +97,11 @@ include_once 'uploadedimages.inc.php';
 					{
 						foreach ($rows as $row)
 						{
-							echo '<tr>';
-							echo '<td>';
-							echo '<input type="checkbox" name="id[]" ';
-							echo 'value="'.$row['id'].'"></td>';
-							echo '<td>'.$row['name'].'</td>';
-							echo '<td>';
-							echo '<a href="manager/pages&id='.$row['id'].'">Edit</a>';
-							echo '</td>';
-							echo '<td>';
-							echo '<a href="pages&id='.$row['id'].'" target="_blank">Preview</a>';
-							echo '</td>';
-							$u->echoeol('</tr>');
+							$inputStr = '<input type="checkbox" name="id[]" ';
+							$inputStr .= 'value="'.$row['id'].'">';
+							$editStr = '<a href="manager/pages&id='.$row['id'].'">Edit</a>';
+							$previewLink = '<a href="pages&id='.$row['id'].'" target="_blank">Preview</a>';
+							$u->echotr(array($inputStr,$row['name'],$editStr,$previewLink));
 						}
 					}
 					else

@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set("Europe/London");
 // include_once 'includes/general/top-cache.php';
 include_once 'includes/general/showerrors.inc.php';
 require_once 'classes/sessions.class.php';

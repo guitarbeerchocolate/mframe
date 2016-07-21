@@ -1,6 +1,3 @@
-<?php
-date_default_timezone_set('Europe/London');
-?>
 <div class="row">
 	<div class="container">
 		<div class="col-md-12">
@@ -13,7 +10,7 @@ date_default_timezone_set('Europe/London');
 				$p->getevents($_GET['id']);
 				if(isset($p->name))
 				{
-					$u->echoeol('<h3>'.$p->name.'</h3>');
+					$u->echoh3($p->name);
 					$u->echoeol('<p><strong>From '.date("jS F Y",strtotime($p->datestart)).' to '.date("jS F Y",strtotime($p->dateend)).'</strong></p>');
 					echo $p->content;
 				}

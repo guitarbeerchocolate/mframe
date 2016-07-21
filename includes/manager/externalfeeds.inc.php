@@ -93,15 +93,10 @@
 					{
 						foreach ($rows as $row)
 						{
-							echo '<tr>';
-							echo '<td>';
-							echo '<input type="checkbox" name="id[]" ';
-							echo 'value="'.$row['id'].'"></td>';
-							echo '<td>'.$row['name'].'</td>';
-							echo '<td>';
-							echo '<a href="manager/externalfeeds&id='.$row['id'].'">Edit</a>';
-							echo '</td>';
-							$u->echoeol('</tr>');
+							$inputStr = '<input type="checkbox" name="id[]" ';
+							$inputStr .= 'value="'.$row['id'].'">';
+							$editStr = '<a href="manager/externalfeeds&id='.$row['id'].'">Edit</a>';							
+							$u->echotr(array($inputStr,$row['name'],$editStr));
 						}
 					}
 					else

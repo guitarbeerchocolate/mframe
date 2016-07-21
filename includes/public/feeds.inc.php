@@ -7,12 +7,12 @@
 			$arr = $ef->getResults();
 			if(count($ef->agg->messageArr) > 0)
 	        {   
-	            $ef->u->echoeol('<h3>Errors</h3>');
+	            $u->echoh3('Errors');
 	            foreach($ef->agg->messageArr as $err)
 	            {
-	                $ef->u->echobr($err);
+	                $u->echobr($err);
 	            }
-	            $ef->u->echohr();
+	            $u->echohr();
 	        }
 			foreach($arr as $row)
 			{
