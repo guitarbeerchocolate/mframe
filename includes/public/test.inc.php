@@ -2,10 +2,13 @@
 	<div class="container">
 		<div class="col-md-12">
 			<h2>Test page</h2>
-			<form action="manager/config" method="POST" role="form">
-				<input type="text" name="myname" />
-				<button type="submit">Submit</button>
-			</form>
+			<table>
+				<tbody>
+				<?php
+				$u->echotr(['first col','second col']);
+				?>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>

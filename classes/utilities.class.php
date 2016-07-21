@@ -125,7 +125,47 @@ class utilities
 			$outStr .= $url;
 		}
 		$outStr .= '</a>';
-		return $outStr;
+		echo $outStr;
+	}
+
+	function echotr($arr)
+	{
+		echo '<tr>';
+		foreach ($arr as $item)
+		{
+			echo '<td>'.$item.'</td>';
+		}
+		echo '<tr>';
+	}
+
+	function echoh1($s = NULL)
+	{
+		echo '<h1>'.$s.'</h1>';
+	}
+
+	function echoh2($s = NULL)
+	{
+		echo '<h2>'.$s.'</h2>';
+	}
+
+	function echoh3($s = NULL)
+	{
+		echo '<h3>'.$s.'</h3>';
+	}
+
+	function echoh4($s = NULL)
+	{
+		echo '<h4>'.$s.'</h4>';
+	}
+
+	function echoh5($s = NULL)
+	{
+		echo '<h5>'.$s.'</h5>';
+	}
+
+	function echohp($s = NULL)
+	{
+		echo '<p>'.$s.'</p>';
 	}
 
 	function title($s = NULL, $sitename = NULL)
