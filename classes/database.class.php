@@ -14,7 +14,14 @@ class database extends PDO
 
     function listall($table)
     {
-        $sql = "SELECT * FROM ".$table; 
+        $sql = "SELECT * FROM {$table}";
+        $stmt = $this->query($sql); 
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function listallLimit($table, $limit)
+    {
+        $sql = "SELECT * FROM {$table} LIMIT {$limit}";
         $stmt = $this->query($sql); 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -45,9 +52,29 @@ class database extends PDO
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    function getAllByFieldValueLimit($table,$field,$value,$limit)
+    {
+        $sql = "SELECT * FROM {$table} WHERE {$field} = :{$field} LIMIT {$limit}";        
+        $bindStr = ':'.$field;        
+        $sth = $this->prepare($sql);
+        $sth->bindParam($bindStr, $value);        
+        $message = $this->testExecute($sth, 'Records received');        
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     function getSimilarByFieldValue($table,$field,$value)
     {
         $sql = "SELECT * FROM {$table} WHERE {$field} LIKE :{$field}";        
+        $bindStr = ':'.$field;        
+        $sth = $this->prepare($sql);
+        $sth->bindParam($bindStr, $value);        
+        $message = $this->testExecute($sth, 'Records received');        
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function getSimilarByFieldValueLimit($table,$field,$value,$limit)
+    {
+        $sql = "SELECT * FROM {$table} WHERE {$field} LIKE :{$field} LIMIT {$limit}";        
         $bindStr = ':'.$field;        
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $value);        
@@ -80,9 +107,27 @@ class database extends PDO
         return $sth->fetchAll(PDO::FETCH_ASSOC);         
     }
 
-    function listorderbywhere($table,$wherefield, $wherevalue, $orderby,$ad = "ASC")
+    function listorderbyLimit($table,$orderby,$limit,$ad = "ASC")
+    {
+        $sql = "SELECT * FROM {$table} ORDER BY {$orderby} {$ad} LIMIT {$limit}";
+        $sth = $this->prepare($sql);       
+        $message = $this->testExecute($sth, 'Records received');        
+        return $sth->fetchAll(PDO::FETCH_ASSOC);         
+    }
+
+    function listorderbywhere($table,$wherefield, $wherevalue, $orderby, $ad = "ASC")
     {
         $sql = "SELECT * FROM {$table} WHERE {$wherefield} = :{$wherefield} ORDER BY {$orderby} {$ad}";
+        $bindStr = ':'.$wherefield;
+        $sth = $this->prepare($sql);
+        $sth->bindParam($bindStr, $wherevalue);
+        $message = $this->testExecute($sth, 'Records received');        
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function listorderbywhereLimit($table,$wherefield, $wherevalue, $orderby, $limit, $ad = "ASC")
+    {
+        $sql = "SELECT * FROM {$table} WHERE {$wherefield} = :{$wherefield} ORDER BY {$orderby} {$ad} LIMIT {$limit}";
         $bindStr = ':'.$wherefield;
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $wherevalue);

@@ -5,7 +5,11 @@
 			<table>
 				<tbody>
 				<?php
-				$u->echotr(['first col','second col']);
+				$rows = $db->listallLimit('externalfeeds', 2);
+				foreach ($rows as $row)
+				{
+					$u->echobr($row['name']);
+				}
 				?>
 				</tbody>
 			</table>
