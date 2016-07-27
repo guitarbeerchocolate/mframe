@@ -52,6 +52,16 @@ class database extends PDO
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    function searchBynames($table,$field,$value)
+    {
+        $sql = "SELECT * FROM {$table} WHERE {$field} LIKE :{$field}";
+        $bindStr = ':'.$field;        
+        $sth = $this->prepare($sql);
+        $sth->bindParam($bindStr, $value);        
+        $message = $this->testExecute($sth, 'Records received');        
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     function getAllByFieldValueLimit($table,$field,$value,$limit)
     {
         $sql = "SELECT * FROM {$table} WHERE {$field} = :{$field} LIMIT {$limit}";        
