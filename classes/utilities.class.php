@@ -168,6 +168,47 @@ class utilities
 		echo '<p>'.$s.'</p>';
 	}
 
+	function createTable($data = NULL, $headers = NULL)
+	{
+		echo '<table class="table table-responsive">';
+		if(is_array($headers))
+		{
+			echo '<thead><tr>';
+			foreach ($headers as $header)
+			{
+				echo '<th>'.$header.'</th>';
+			}
+			echo '</tr></thead>';
+		}
+		else
+		{
+			echo '<thead><tr>';
+			foreach(array_keys(array_values($data)[0]) as $key)
+			{
+				echo '<th>'.ucwords($key).'</th>';
+			}
+			echo '</tr></thead>';
+		}
+		if(is_array($data))
+		{
+			echo '<tbody>';
+			foreach ($data as $rows)
+			{
+				if(is_array($rows))
+				{
+					echo '<tr>';
+					foreach ($rows as $item)
+					{
+						echo '<td>'.$item.'</td>';
+					}
+					echo '</tr>';	
+				}
+			}
+			echo '</tbody>';	
+		}
+		echo '</table>';
+	}
+
 	function title($s = NULL, $sitename = NULL)
 	{
 		$output = '<title>';
