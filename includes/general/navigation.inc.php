@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="navbar-header" itemscope itemtype="http://schema.org/Organization">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">MENU</button>
-			<a href="index.php" class="navbar-brand" itemprop="url"><img src="img/logo.png" alt="logo" itemprop="logo" id="logo" /><h1 itemprop="name">mframe</h1></a>
+			<a href="index.php" class="navbar-brand" itemprop="url"><img src="img/smalllogo.png" alt="logo" itemprop="logo" id="logo" /><h1 itemprop="name">mframe</h1></a>
 		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">

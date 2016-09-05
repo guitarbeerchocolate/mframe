@@ -1,16 +1,14 @@
 <?php
 session_start();
 date_default_timezone_set("Europe/London");
-// include_once 'includes/general/top-cache.php';
+/* include_once 'includes/general/top-cache.php'; */
 include_once 'includes/general/showerrors.inc.php';
+$liveConfig = array();
 require_once 'classes/sessions.class.php';
 require_once 'classes/database.class.php';
-require_once 'classes/config.class.php';
-require_once 'classes/utilities.class.php';
-$s = new sessions($_SESSION);
 $db = new database;
-$c = new config;
-$u = new utilities;
+include_once 'includes/general/loginhandler.inc.php';
+$s = new sessions($_SESSION);
 include_once 'includes/general/urlhandler.inc.php';
 include_once 'includes/general/userlevelhandler.inc.php';
 ?>
@@ -19,41 +17,41 @@ include_once 'includes/general/userlevelhandler.inc.php';
   <head>
     <?php
     include_once 'includes/general/meta.inc.php';
-    $u->echoeol();
-    $u->title($status,$c->getVal('name'));
-    $u->echoeol();
+    $db->u->echoeol();
+    $db->u->title($liveConfig['theTitle'],$db->getVal('name'));
+    $db->u->echoeol();
     include_once 'includes/general/icons.inc.php';
-    $u->echoeol();
+    $db->u->echoeol();
     include_once 'includes/general/linkrel.inc.php';
-    $u->echoeol();
+    $db->u->echoeol();
     include_once 'includes/general/tinymce.inc.php';
     ?>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
   <body itemscope itemtype="http://schema.org/Organization">
     <?php
     include_once 'includes/general/googletracker.inc.php';
-    $u->echoeol();    
+    $db->u->echoeol();    
     include_once 'includes/general/navigation.inc.php';
-    $u->echoeol();
-    /* header.inc.php can commonly be commented out
-    because include files can contain H2 headers.
-    */
-    /*
-    include_once 'includes/general/header.inc.php';
-    $u->echoeol();
-    */
+    $db->u->echoeol();
     include_once 'includes/general/message.inc.php';
-    $u->echoeol();
-    include_once 'includes/general/searchresults.inc.php';
-    $u->echoeol();    
-    include_once $includeFile;
-    $u->echoeol();
+    $db->u->echoeol();
+    if(isset($_GET['searchterms']))
+    { 
+        include_once 'includes/general/searchresults.inc.php';
+        $db->u->echoeol(); 
+    }
+    else
+    {
+        include_once $liveConfig['includeFile'];
+    }
+    $db->u->echoeol();
     include_once 'includes/general/footer.inc.php';
-    $u->echoeol();
+    $db->u->echoeol();
     include_once 'includes/general/script.inc.php';
     ?>    
   </body>
 </html>
 <?php
-// include_once 'includes/general/bottom-cache.php';
+/* include_once 'includes/general/bottom-cache.php'; */
 ?>

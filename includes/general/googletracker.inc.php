@@ -1,5 +1,5 @@
 <?php
-if($status == 'public')
+if($liveConfig['status'] == 'public')
 {
 ?>
 <script type="text/javascript">
