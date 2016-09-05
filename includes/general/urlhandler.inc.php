@@ -1,88 +1,115 @@
 <?php
-$status = 'public';
-$includeFile = 'includes/';
-$parameterName = NULL;
-$parameterValue = NULL;
-$hasInclude = FALSE;
+$liveConfig['status'] = 'public';
+$liveConfig['includeFile'] = 'includes/';
+$liveConfig['parameterName'] = NULL;
+$liveConfig['parameterValue'] = NULL;
+$liveConfig['hasInclude'] = FALSE;
+$liveConfig['theTitle'] = NULL;
+$liveConfig['paramArr'] = array();
+
+if((isset($_GET['searchterms'])) && (!empty($_GET['searchterms'])))
+{
+  $liveConfig['theTitle'] = 'Search';
+}
 if((isset($_GET['params'])) && (!empty($_GET['params'])))
 {
-  $paramArr = explode('/', $_GET['params']);
-  switch(count($paramArr))
+  $liveConfig['paramArr'] = explode('/', $_GET['params']);
+  $liveConfig['theTitle'] =$liveConfig['paramArr'][0];
+  switch(count($liveConfig['paramArr']))
   {
     case 0:
-      $includeFile .= 'public/homepage.inc.php'; 
+      $liveConfig['includeFile'] .= 'public/homepage.inc.php'; 
       break;
     case 1:
-      if(($paramArr[0] == 'private') || ($paramArr[0] == 'manager'))
+      if(($liveConfig['paramArr'][0] == 'private') || ($liveConfig['paramArr'][0] == 'manager'))
       {
-        $status = $paramArr[0];
-        $includeFile .= $status.'/homepage.inc.php';
+        $liveConfig['status'] = $liveConfig['paramArr'][0];
+        $liveConfig['includeFile'] .= $liveConfig['status'].'/homepage.inc.php';
       }
       else
       {
-        $includeFile .= $status.'/'.$paramArr[0].'.inc.php';
-        $hasInclude = TRUE;
+        $liveConfig['includeFile'] .= $liveConfig['status'].'/'.$liveConfig['paramArr'][0].'.inc.php';
+        $liveConfig['hasInclude'] = TRUE;
       }
       break;
     case 2:
-      if(($paramArr[0] == 'private') || ($paramArr[0] == 'manager'))
+      if(($liveConfig['paramArr'][0] == 'private') || ($liveConfig['paramArr'][0] == 'manager'))
       {
-        $status = $paramArr[0];
-        $includeFile .= $status.'/'.$paramArr[1].'.inc.php';
-        $hasInclude = TRUE;
+        $liveConfig['status'] = $liveConfig['paramArr'][0];
+        $liveConfig['includeFile'] .= $liveConfig['status'].'/'.$liveConfig['paramArr'][1].'.inc.php';
+        $liveConfig['hasInclude'] = TRUE;
       }
       else
       {
-        $includeFile .= $status.'/'.$paramArr[0].'.inc.php';
-        $parameterName = $paramArr[1];
-        $hasInclude = TRUE;
+        $liveConfig['includeFile'] .= $liveConfig['status'].'/'.$liveConfig['paramArr'][0].'.inc.php';
+        $liveConfig['parameterName'] = $liveConfig['paramArr'][1];
+        $liveConfig['hasInclude'] = TRUE;
       }
       break;
     case 3:
-      if(($paramArr[0] == 'private') || ($paramArr[0] == 'manager'))
+      if(($liveConfig['paramArr'][0] == 'private') || ($liveConfig['paramArr'][0] == 'manager'))
       {
-        $status = $paramArr[0];
-        $includeFile .= $status.'/'.$paramArr[1].'.inc.php';
-        $parameterName = $paramArr[2];
-        $hasInclude = TRUE;
+        $liveConfig['status'] = $liveConfig['paramArr'][0];
+        $liveConfig['includeFile'] .= $liveConfig['status'].'/'.$liveConfig['paramArr'][1].'.inc.php';
+        $liveConfig['parameterName'] = $liveConfig['paramArr'][2];
+        $liveConfig['hasInclude'] = TRUE;
       }
       else
       {
-        $includeFile .= $status.'/'.$paramArr[0].'.inc.php';
-        $parameterName = $paramArr[1];
-        $parameterValue = $paramArr[2];
-        $hasInclude = TRUE;
+        $liveConfig['includeFile'] .= $liveConfig['status'].'/'.$liveConfig['paramArr'][0].'.inc.php';
+        $liveConfig['parameterName'] = $liveConfig['paramArr'][1];
+        $liveConfig['parameterValue'] = $liveConfig['paramArr'][2];
+        $liveConfig['hasInclude'] = TRUE;
       }
       break;
     case 4:
-      if(($paramArr[0] == 'private') || ($paramArr[0] == 'manager'))
+      if(($liveConfig['paramArr'][0] == 'private') || ($liveConfig['paramArr'][0] == 'manager'))
       {
-        $status = $paramArr[0];
-        $includeFile .= $status.'/'.$paramArr[1].'.inc.php';
-        $parameterName = $paramArr[2];
-        $parameterValue = $paramArr[3];
-        $hasInclude = TRUE;
+        $liveConfig['status'] = $liveConfig['paramArr'][0];
+        $liveConfig['includeFile'] .= $liveConfig['status'].'/'.$liveConfig['paramArr'][1].'.inc.php';
+        $liveConfig['parameterName'] = $liveConfig['paramArr'][2];
+        $liveConfig['parameterValue'] = $liveConfig['paramArr'][3];
+        $liveConfig['hasInclude'] = TRUE;
       }
       else
       {
-        $includeFile .= $status.'/'.$paramArr[0].'.inc.php';
-        $parameterName = $paramArr[1];
-        $parameterValue = $paramArr[2];
-        $hasInclude = TRUE;
+        $liveConfig['includeFile'] .= $liveConfig['status'].'/'.$liveConfig['paramArr'][0].'.inc.php';
+        $liveConfig['parameterName'] = $liveConfig['paramArr'][1];
+        $liveConfig['parameterValue'] = $liveConfig['paramArr'][2];
+        $liveConfig['hasInclude'] = TRUE;
       }
       break;
     default:
-      $includeFile .= 'public/homepage.inc.php';      
+      $liveConfig['includeFile'] .= 'public/homepage.inc.php';
       break;
   }  
 }
 else
 {
-  $includeFile .= 'public/homepage.inc.php'; 
+  $liveConfig['includeFile'] .= 'public/homepage.inc.php'; 
 }
 
-if(!file_exists($includeFile))
+$theDescription = 'Wedding Review is a free wedding supplier review site of wedding caterers,photographers,bridal boutiques,make-up artists,hairdressers and transport';
+
+if(($liveConfig['theTitle'] == 'service') && (isset($_GET['id'])))
+{
+  $id = $_GET['id'];
+  $titleRow = $db->getOneByID($liveConfig['theTitle'],$id);
+  $liveConfig['theTitle'] = $titleRow['name'];
+
+  if(strlen($titleRow['description']) < 150)
+  {
+    $positionOfLastFullStop = strrpos($titleRow['description'],'.');
+    $theDescription = substr($titleRow['description'], 0, $positionOfLastFullStop);
+  }
+  else
+  {
+    $theDescription = $titleRow['description'];
+  }
+}
+
+if(!file_exists($liveConfig['includeFile']))
 {
   $error = 'Include does not exist.';
-  $u->move_on($c->getVal('url'),$error);
+  $db->u->move_on($c->getVal('url'),$error);
 }

@@ -1,15 +1,13 @@
 <?php
 require_once 'database.class.php';
-require_once 'config.class.php';
 class pages extends database
 {
-	private $pa, $c;
+	private $pa;
     public $name, $content, $layout, $secondarycontent, $issubpage;
     public function __construct($postArray = array())
     {
         parent::__construct();
         $this->pa = $postArray;
-        $this->c = new config;
     }
 
     function addpage()
@@ -21,7 +19,7 @@ class pages extends database
         $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
         $sth->bindParam(':issubpage', $this->pa['issubpage']);
 		$message = $this->testExecute($sth, 'Record added');
-		$this->u->move_on($this->c->getVal('url').'manager/pages',$message);
+		$this->u->move_on($this->getVal('url').'manager/pages',$message);
     }
 
     function updatepage()
@@ -34,7 +32,7 @@ class pages extends database
         $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
         $sth->bindParam(':issubpage', $this->pa['issubpage']);	
 		$message = $this->testExecute($sth, 'Record updated');
-		$this->u->move_on($this->c->getVal('url').'manager/pages',$message);
+		$this->u->move_on($this->getVal('url').'manager/pages',$message);
     }
 
     function deletepages()
@@ -46,7 +44,7 @@ class pages extends database
             $sth->execute();
         }        
         $message = 'Records deleted';
-        $this->u->move_on($this->c->getVal('url').'manager/pages',$message);
+        $this->u->move_on($this->getVal('url').'manager/pages',$message);
     }    
 
     function getpage($id)

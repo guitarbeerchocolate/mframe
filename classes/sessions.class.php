@@ -1,10 +1,9 @@
 <?php
-require_once 'config.class.php';
-require_once 'utilities.class.php';
+require_once 'database.class.php';
 class sessions
 {
 	public $sess, $userid;
-	protected $c, $u;
+	protected $u;
 	function __construct($sess = NULL)
 	{
 		$this->userid = NULL;
@@ -20,8 +19,7 @@ class sessions
 		{
 			$this->userid = $_SESSION['userid'];
 		}
-		$this->c = new config;
-		$this->u = new utilities;
+		$this->db = new database;
 	}
 
 	function logout()
@@ -33,7 +31,7 @@ class sessions
 	    setcookie(session_name(),'',0,'/');
 	    session_regenerate_id(true);
 		$error = 'Logged out.';
-		$this->u->move_on($this->c->getVal('url'),$error);
+		$this->db->u->move_on($this->db->getVal('url'),$error);
 	}
 
 	function privateRedirect()
@@ -41,14 +39,14 @@ class sessions
 		if(is_null($this->userid))
 		{
 			$error = 'You must be logged in to access the private section.';
-			$this->u->move_on($this->c->getVal('formspage'),$error);
+			$this->db->u->move_on($this->db->getVal('formspage'),$error);
 		}
 		else if(isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
 		{
 			unset($_SESSION['userid']);
 			session_destroy();
 			$error = 'Logged out.';
-			$this->u->move_on($this->c->getVal('formspage'),$error);
+			$this->db->u->move_on($this->db->getVal('formspage'),$error);
 		}
 	}
 
@@ -57,19 +55,19 @@ class sessions
 		if(is_null($this->userid))
 		{
 			$error = 'You must be logged in to access the private section.';
-			$this->u->move_on($this->c->getVal('formspage'),$error);
+			$this->db->u->move_on($this->db->getVal('formspage'),$error);
 		}
-		else if(!in_array($this->userid, $this->c->getManagers()))
+		else if(!in_array($this->userid, $this->db->getManagers()))
 		{
 		  $error = 'You must be logged in as a manager access the manager section.';
-		  $this->u->move_on($this->c->getVal('formspage'),$error);
+		  $this->db->u->move_on($this->db->getVal('formspage'),$error);
 		}
 		else if (isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
 		{
 		  unset($_SESSION['userid']);
 		  session_destroy();
 		  $error = 'Logged out.';
-		  $this->u->move_on($this->c->getVal('formspage'),$error);
+		  $this->db->u->move_on($this->db->getVal('formspage'),$error);
 		}
 	}
 }

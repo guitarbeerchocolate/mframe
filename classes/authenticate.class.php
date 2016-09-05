@@ -1,59 +1,57 @@
 <?php
 require_once 'database.class.php';
 require_once 'sessions.class.php';
-require_once 'config.class.php';
 class authenticate extends database
 {
-	private $pa, $c, $s;
+	private $pa, $s;
     public function __construct($postArray = array())
     {
-        parent::__construct();
-        $this->pa = $postArray;
-        $this->c = new config;
+        parent::__construct();             
+        $this->pa = $postArray;        
     }
 
     function login()
     {
     	if(isset($this->pa['username']) && isset($this->pa['password']))
 		{
+			
 			$username = $this->pa['username'];
-			$password = sha1(md5($this->pa['password']));			
+			$password = sha1(md5($this->pa['password']));
 			$this->query();
 			$sth = $this->prepare("SELECT id, username, password FROM users WHERE username = :username");	
 			$sth->bindParam(':username', $username);	
-			$error = $this->testExecute($sth, 'Records received');			
-			if($error !== 'Records received')
+			$error = $this->testExecute($sth);
+			
+			if($error !== TRUE)
 			{
-				$this->u->move_on('login.php',$error);
+				$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+				header('Location:'.$outURL);
+				exit;
 			}
 			$row = $sth->fetch(PDO::FETCH_ASSOC);
 			if(($row !== false) && ($sth->rowCount() > 0))
 			{
+				
 				if($row['password'] == $password)
 				{
-					session_start();
-					$_SESSION['userid'] = $row['id'];
-					$this->s = new sessions($_SESSION);					
-					$outURL = $this->c->getVal('url').'private';
-					$this->u->move_on($outURL);
+					$outURL = $this->getVal('url').'private&setuid='.$row['id'].'&secret='.$row['password'];
+					header('Location:'.$outURL);
+					exit;
 				}
 				else
 				{
-					$error = 'Invalid email or password. Please try again.';
-					$this->u->move_on('login.php',$error);
+					$this->invalidEmail();
 				}
 			}
 			else
 			{
-				$error = 'Invalid email or password. Please try again.';
-				$this->u->move_on('login.php',$error);
+				$this->invalidEmail();
 			}
 		}
 		else
 		{
-			$error = 'Please enter an email and password to login.';
-			$this->u->move_on('login.php',$error);
-		}		
+			$this->pleaseEnter();
+		}
     }
 
     function passwordresetrequest()
@@ -64,67 +62,59 @@ class authenticate extends database
 			$this->query();
 			$sth = $this->prepare("SELECT id, username, password FROM users WHERE username = :username");	
 			$sth->bindParam(':username', $username);	
-			$error = $this->testExecute($sth, 'Records received');			
-			if($error !== 'Records received')
+			$error = $this->testExecute($sth);			
+			if($error !== TRUE)
 			{
-				$this->u->move_on('login.php',$error);
+				$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+				header('Location:'.$outURL);
+				exit;
 			}	
 			$row = $sth->fetch(PDO::FETCH_ASSOC);		
 			if(($row !== false) && ($sth->rowCount() > 0))
 			{
 				if($row['username'] == $username)
 				{
-					$msg = $this->c->getVal('url').'?username='.urlencode($row['username']).'&password='.urlencode($row['password']);			
+					$msg = $this->getVal('url').'?username='.urlencode($row['username']).'&password='.urlencode($row['password']);			
 					mail($username,'Password reset',$msg);
 					$error = 'A link has been sent to your email address. Copy the link and paste it into the address bar of your web browser to reset your password.';
-					$this->u->move_on('login.php',$error);			
+					$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+					header('Location:'.$outURL);
+					exit;			
 				}
 				else
 				{
-					$error = 'Invalid email. Please try again.';
-					$this->u->move_on('login.php',$error);
+					$this->invalidEmail();
 				}
 			}
 			else
 			{
-				$error = 'Invalid email. Please try again.';
-				$this->u->move_on('login.php',$error);
+				$this->invalidEmail();
 			}
 		}
 		else
 		{
-			$error = 'Please enter an email address.';
-			$this->u->move_on('login.php',$error);
+			$this->pleaseEnter();
 		}
     }
 
     function register()
     {
+    	$this->checkCaptcha();
+    	$this->checkTerms();
+    	
     	if(isset($this->pa['username']) && isset($this->pa['password']))
 		{
-			if(filter_var($this->pa['username'], FILTER_VALIDATE_EMAIL))
-			{
-				$username = $this->pa['username'];
-			}
-			else
-			{
-				$error = 'Username must be a valid email address';
-				$this->u->move_on('login.php',$error);
-			}
-
-			$pwdCheck = $this->checkPassword($this->pa['password']);
-			if($pwdCheck !== FALSE)
-			{
-				$this->u->move_on('login.php',$pwdCheck);
-			}
-
+			$this->checkEmail();
+			$this->checkPassword();
 			$password = sha1(md5($this->pa['password']));			
 			$sth = $this->prepare("SELECT id FROM users WHERE username = :username");	
 			$sth->bindParam(':username', $username);	
-			$error = $this->testExecute($sth, 'Records received');			
-			if($error !== 'Records received')
+			$error = $this->testExecute($sth);			
+			if($error !== TRUE)
 			{
-				$this->u->move_on('login.php',$error);
+				$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+				header('Location:'.$outURL);
+				exit;
 			}	
 			$row = $sth->fetch(PDO::FETCH_ASSOC);		
 			if(($row === false) && ($sth->rowCount() == 0))
@@ -133,19 +123,19 @@ class authenticate extends database
 				$sth->bindParam(':username', $username);
 				$sth->bindParam(':password', $password);	
 				$sth->execute();
-				$error = 'Registered. Please log-in';
-				$this->u->move_on('login.php',$error);
+				$error = 'Registered. Please log-in';				
+				$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+				header('Location:'.$outURL);
+				exit;
 			}
 			else
 			{
-				$error = 'Username already exists.';
-				$this->u->move_on('login.php',$error);
+				$this->alreadyExists();
 			}
 		}
 		else
 		{
-			$error = 'Please enter an email and password to login.';
-			$this->u->move_on('login.php',$error);
+			$this->pleaseEnter();
 		}
     }
 
@@ -154,18 +144,16 @@ class authenticate extends database
 		if(isset($this->pa['username']) && isset($this->pa['password']))
 		{
 			$username = $this->pa['username'];
-			$pwdCheck = $this->checkPassword($this->pa['password']);
-			if($pwdCheck !== FALSE)
-			{
-				$this->u->move_on('login.php',$pwdCheck);
-			}
+			$this->checkPassword();			
 			$password = sha1(md5($this->pa['password']));			
 			$sth = $this->prepare("SELECT id FROM users WHERE username = :username");	
 			$sth->bindParam(':username', $username);	
-			$error = $this->testExecute($sth, 'Records received');			
-			if($error !== 'Records received')
+			$error = $this->testExecute($sth);			
+			if($error !== TRUE)
 			{
-				$this->u->move_on('login.php',$error);
+				$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+				header('Location:'.$outURL);
+				exit;
 			}	
 			$row = $sth->fetch(PDO::FETCH_ASSOC);		
 			if(($row !== false) && ($sth->rowCount() > 0))
@@ -175,45 +163,122 @@ class authenticate extends database
 				$sth->bindParam(':password', $password);	
 				$sth->execute();
 				$message = 'Password reset. Please log-in';
-				$this->u->move_on($this->c->getVal('formspage'),$message);
+				$outURL = $this->getVal('formspage').'login.php?message='.urlencode($message);
+				header('Location:'.$outURL);
+				exit;
 			}
 			else
 			{
-				$error = 'Username already exists.';
-				$this->u->move_on('login.php',$error);
+				$this->alreadyExists();
 			}
 		}
 		else
 		{
-			$error = 'Please enter an email and password to login.';
-			$this->u->move_on('login.php',$error);
+			$this->pleaseEnter();
 		}
     }
 
-    function checkPassword($pwd)
+    function invalidEmail()
+    {
+    	$error = 'Invalid email. Please try again.';
+		$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+		header('Location:'.$outURL);
+		exit;
+    }
+
+    function pleaseEnter()
+    {
+    	$error = 'Please enter an email and password to login.';
+		$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+		header('Location:'.$outURL);
+		exit;
+    }
+
+    function alreadyExists()
+    {
+    	$error = 'Username already exists.';
+		$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+		header('Location:'.$outURL);
+		exit;
+    }
+
+    function checkCaptcha()
+    {
+    	$url = 'https://www.google.com/recaptcha/api/siteverify';
+		$data = 'secret=6LcWNyYTAAAAAIXS7i8L-6qskekmeyghQDJhbuFF';
+		$data .= '&response='.$this->pa['g-recaptcha-response'];
+		$data .='&remoteip'.$this->pa['remoteip'];
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                
+		$response = curl_exec($ch);
+		$jsonResponse = json_decode($response, true);
+		if($jsonResponse['success'] !== TRUE)
+		{
+			$error = 'Recaptcha not completed correctly';
+    		$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+			header('Location:'.$outURL);
+			exit;
+		}
+    }
+
+    function checkTerms()
+    {
+    	if($this->pa['termsaccepted'] != 'on')
+    	{
+    		$error = 'Terms of use not accepted';
+    		$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+			header('Location:'.$outURL);
+			exit;
+    	}
+    }
+
+    function checkEmail()
+    {
+    	if(filter_var($this->pa['username'], FILTER_VALIDATE_EMAIL))
+		{
+			$username = $this->pa['username'];
+		}
+		else
+		{
+			$error = 'Username must be a valid email address';
+			$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+			header('Location:'.$outURL);
+			exit;
+		}
+
+		$pwdCheck = $this->checkPassword($this->pa['password']);
+		if($pwdCheck !== FALSE)
+		{
+			$outURL = $this->getVal('url').'login.php?message='.urlencode($pwdCheck);
+			header('Location:'.$outURL);
+			exit;
+		}
+    }
+
+    function checkPassword()
     {
 	    $errors = array();
-	    if(strlen($pwd) < 6)
+	    if(strlen($this->pa['password']) < 6)
 	    {
 	        array_push($errors, 'Password too short. ');
 	    }
 
-	    if(!preg_match("#[0-9]+#", $pwd))
+	    if(!preg_match("#[0-9]+#",$this->pa['password']))
 	    {
 	        array_push($errors, 'Password must include at least one number. ');
 	    }
 
-	    if(!preg_match("#[a-zA-Z]+#", $pwd))
+	    if(!preg_match("#[a-zA-Z]+#", $this->pa['password']))
 	    {
 	        array_push($errors, 'Password must include at least one letter.');
 	    }
-	    if(empty($errors))
+	    if(!empty($errors))
 	    {
-	    	return FALSE;
-	    }
-	    else
-	    {
-	    	return implode($errors);
+	    	$outURL = $this->getVal('url').'login.php?message='.urlencode(implode($errors));
+			header('Location:'.$outURL);
+			exit;
 	    }
 	}
 }

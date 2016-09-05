@@ -2,14 +2,14 @@
 require_once 'utilities.class.php';
 class database extends PDO
 {
-    public $settings;
-    protected $u;
+    public $settings, $u, $c;
     public function __construct($file = 'config.ini')
     {
         $this->settings = parse_ini_file($file, TRUE);
         $dns = $this->settings['driver'].':host=' . $this->settings['host'].((!empty($this->settings['port'])) ? (';port='.$this->settings['port']) : '').';dbname='.$this->settings['schema'];        
         parent::__construct($dns, $this->settings['username'], $this->settings['password']);
         $this->u = new utilities;
+        $this->c = $this->listall('config');
     }
 
     function listall($table)
@@ -32,14 +32,38 @@ class database extends PDO
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    function searchBynames($table,$field,$value)
+    {
+        $sql = "SELECT * FROM {$table} WHERE {$field} LIKE :{$field} AND suspend <> 1 LIMIT 6";
+        $bindStr = ':'.$field;        
+        $sth = $this->prepare($sql);
+        $sth->bindParam($bindStr, $value);        
+        $message = $this->testExecute($sth);
+        if($message == TRUE)
+        {
+            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+        }
+        else
+        {
+            return $message;
+        }
+    }
+
     function getOneByFieldValue($table,$field,$value)
     {
         $sql = "SELECT * FROM {$table} WHERE {$field} = :{$field}  LIMIT 1";        
         $bindStr = ':'.$field;        
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $value);        
-        $message = $this->testExecute($sth, 'Record received');        
-        return $sth->fetch(PDO::FETCH_ASSOC);
+        $message = $this->testExecute($sth);
+        if($message == TRUE)
+        {
+            return $sth->fetch(PDO::FETCH_ASSOC);    
+        }
+        else
+        {
+            return $message;
+        }
     }
 
     function getAllByFieldValue($table,$field,$value)
@@ -48,18 +72,15 @@ class database extends PDO
         $bindStr = ':'.$field;        
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $value);        
-        $message = $this->testExecute($sth, 'Records received');        
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    function searchBynames($table,$field,$value)
-    {
-        $sql = "SELECT * FROM {$table} WHERE {$field} LIKE :{$field}";
-        $bindStr = ':'.$field;        
-        $sth = $this->prepare($sql);
-        $sth->bindParam($bindStr, $value);        
-        $message = $this->testExecute($sth, 'Records received');        
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+        $message = $this->testExecute($sth);
+        if($message == TRUE)
+        {
+            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+        }
+        else
+        {
+            return $message;
+        }
     }
 
     function getAllByFieldValueLimit($table,$field,$value,$limit)
@@ -68,8 +89,15 @@ class database extends PDO
         $bindStr = ':'.$field;        
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $value);        
-        $message = $this->testExecute($sth, 'Records received');        
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+        $message = $this->testExecute($sth);
+        if($message == TRUE)
+        {
+            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+        }
+        else
+        {
+            return $message;
+        }
     }
 
     function getSimilarByFieldValue($table,$field,$value)
@@ -78,8 +106,15 @@ class database extends PDO
         $bindStr = ':'.$field;        
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $value);        
-        $message = $this->testExecute($sth, 'Records received');        
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+        $message = $this->testExecute($sth);
+        if($message == TRUE)
+        {
+            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+        }
+        else
+        {
+            return $message;
+        }
     }
 
     function getSimilarByFieldValueLimit($table,$field,$value,$limit)
@@ -88,8 +123,15 @@ class database extends PDO
         $bindStr = ':'.$field;        
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $value);        
-        $message = $this->testExecute($sth, 'Records received');        
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+        $message = $this->testExecute($sth);
+        if($message == TRUE)
+        {
+            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+        }
+        else
+        {
+            return $message;
+        }
     }
 
     function getOneByID($table,$id)
@@ -97,8 +139,15 @@ class database extends PDO
         $sql = "SELECT * FROM ".$table." WHERE id = :id LIMIT 1";               
         $sth = $this->prepare($sql);
         $sth->bindParam(':id', $id);        
-        $message = $this->testExecute($sth, 'Record received');        
-        return $sth->fetch(PDO::FETCH_ASSOC);
+        $message = $this->testExecute($sth);
+        if($message == TRUE)
+        {
+            return $sth->fetch(PDO::FETCH_ASSOC);    
+        }
+        else
+        {
+            return $message;
+        }
     }
 
     function getNextID($table)
@@ -113,16 +162,30 @@ class database extends PDO
     {
         $sql = "SELECT * FROM {$table} ORDER BY {$orderby} {$ad}";
         $sth = $this->prepare($sql);       
-        $message = $this->testExecute($sth, 'Records received');        
-        return $sth->fetchAll(PDO::FETCH_ASSOC);         
+        $message = $this->testExecute($sth);
+        if($message == TRUE)
+        {
+            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+        }
+        else
+        {
+            return $message;
+        }
     }
 
     function listorderbyLimit($table,$orderby,$limit,$ad = "ASC")
     {
         $sql = "SELECT * FROM {$table} ORDER BY {$orderby} {$ad} LIMIT {$limit}";
         $sth = $this->prepare($sql);       
-        $message = $this->testExecute($sth, 'Records received');        
-        return $sth->fetchAll(PDO::FETCH_ASSOC);         
+        $message = $this->testExecute($sth);
+        if($message == TRUE)
+        {
+            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+        }
+        else
+        {
+            return $message;
+        }
     }
 
     function listorderbywhere($table,$wherefield, $wherevalue, $orderby, $ad = "ASC")
@@ -131,8 +194,15 @@ class database extends PDO
         $bindStr = ':'.$wherefield;
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $wherevalue);
-        $message = $this->testExecute($sth, 'Records received');        
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+        $message = $this->testExecute($sth);
+        if($message == TRUE)
+        {
+            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+        }
+        else
+        {
+            return $message;
+        }
     }
 
     function listorderbywhereLimit($table,$wherefield, $wherevalue, $orderby, $limit, $ad = "ASC")
@@ -141,8 +211,15 @@ class database extends PDO
         $bindStr = ':'.$wherefield;
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $wherevalue);
-        $message = $this->testExecute($sth, 'Records received');        
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+        $message = $this->testExecute($sth);
+        if($message == TRUE)
+        {
+            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+        }
+        else
+        {
+            return $message;
+        }
     }
 
     function getFieldsFromTable($tn)
@@ -173,11 +250,67 @@ class database extends PDO
         return $sth->rowCount();
     }
 
-    function testExecute($sth, $successMessage)
+    function averageValue($table, $col, $serviceid)
+    {
+        $sql = "SELECT * FROM ".$table." WHERE serviceid = :serviceid";
+        $sth = $this->prepare($sql);
+        $sth->bindParam(':serviceid', $serviceid); 
+        $message = $this->testExecute($sth);
+        if($message == TRUE)
+        {
+            $rows = $sth->fetchAll(PDO::FETCH_ASSOC);    
+        }
+        else
+        {
+            return $message;
+        }
+        $count = 0;
+        $total = 0;
+        foreach($rows as $row)
+        {
+            $total += $row[$col];
+            $count++;
+        }
+        if($count == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return ($total/$count);    
+        }
+    }
+
+    function getManagers()
+    {
+        return explode(',', $this->getVal('managerids'));
+    }
+
+    function getVal($key)
+    {
+        foreach ($this->c as $name => $index)
+        {
+            if(strtolower($key) == strtolower($index['name']))
+            {
+                return $index['value'];
+            }
+        }
+        return FALSE;
+    }
+
+    function testExecute($sth, $successMessage = NULL)
     {
         if($sth->execute() == TRUE)
         { 
-            return $successMessage;
+            if($successMessage != NULL)
+            {
+                return $successMessage;    
+            }
+            else
+            {
+                return TRUE;
+            }
+            
         }
         else
         {

@@ -1,6 +1,11 @@
 <div class="row">
 	<div class="container">
-		<div class="col-md-12">
+		<aside class="col-md-4">
+		<?php
+		include_once 'includes/general/advertising.inc.php';
+		?>
+		</aside>
+		<div class="col-md-8">
 			<h2>Event</h2>
 			<?php
 			if(isset($_GET['id']))
@@ -10,8 +15,8 @@
 				$p->getevents($_GET['id']);
 				if(isset($p->name))
 				{
-					$u->echoh3($p->name);
-					$u->echoeol('<p><strong>From '.date("jS F Y",strtotime($p->datestart)).' to '.date("jS F Y",strtotime($p->dateend)).'</strong></p>');
+					$db->u->echoh3($p->name);
+					$db->u->echoeol('<p><strong>From '.date("jS F Y",strtotime($p->datestart)).' to '.date("jS F Y",strtotime($p->dateend)).'</strong></p>');
 					echo $p->content;
 				}
 				else

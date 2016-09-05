@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="col-md-12">
 			<br /><a href="manager" class="btn btn-primary">Back</a>
-			<h3>Manage news</h3>
+			<h2>Manage news</h2>
 			<?php
 			if(isset($_GET['id']))
 			{
@@ -11,7 +11,7 @@
 				if(!isset($row['id']))
 				{
 					$error = 'The ID does not exist';
-					$u->move_on($this->getVal('url').'manager/news',$error);
+					$db->u->move_on($this->getVal('url').'manager/news',$error);
 				}	
 				$name = $row['name'];
 				$content = $row['content'];				
@@ -53,7 +53,7 @@ include_once 'uploadedimages.inc.php';
 <div class="row">
 	<div class="container">
 		<div class="col-md-12">
-			<h4>Existing news</h4>
+			<h3>Existing news</h3>
 			<form method="post" action="news/deletenews" role="form">	
 				<table class="table">
 					<thead>
@@ -72,12 +72,12 @@ include_once 'uploadedimages.inc.php';
 							$inputStr .= 'value="'.$row['id'].'">';
 							$editStr = '<a href="manager/news&id='.$row['id'].'">Edit</a>';
 							$previewLink = '<a href="news&id='.$row['id'].'" target="_blank">Preview</a>';
-							$u->echotr(array($inputStr,$row['name'],$editStr,$previewLink));
+							$db->u->echotr(array($inputStr,$row['name'],$editStr,$previewLink));
 						}
 					}
 					else
 					{
-						echo '<tr><td>No existing news</td></tr>';
+						$db->u->echotr(array('No existing news'));
 					}
 					?>
 					</tbody>

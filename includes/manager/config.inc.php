@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="col-md-12">
 			<br /><a href="manager" class="btn btn-primary">Back</a>
-			<h3>Manage config</h3>
+			<h2>Manage configuration</h2>
 			<?php
 			if(isset($_GET['id']))
 			{
@@ -11,7 +11,7 @@
 				if(!isset($row['id']))
 				{
 					$error = 'The ID does not exist';
-					$u->move_on($this->getVal('url').'manager/config',$error);
+					$db->u->move_on($this->getVal('url').'manager/config',$error);
 				}	
 				$name = $row['name'];
 				$value = $row['value'];				
@@ -50,7 +50,7 @@
 <div class="row">
 	<div class="container">
 		<div class="col-md-12">
-			<h4>Existing config</h4>
+			<h3>Existing configuration items</h3>
 			<form method="post" action="config/deleteconfig" role="form">	
 				<table class="table">
 					<thead>
@@ -68,12 +68,12 @@
 							$inputStr = '<input type="checkbox" name="id[]" ';
 							$inputStr .= 'value="'.$row['id'].'">';
 							$editStr = '<a href="manager/config&id='.$row['id'].'">Edit</a>';
-							$u->echotr(array($inputStr,$row['name'],$row['value'],$editStr));
+							$db->u->echotr(array($inputStr,$row['name'],$row['value'],$editStr));
 						}
 					}
 					else
 					{
-						echo '<tr><td>No existing config</td></tr>';
+						$db->u->echotr(array('No existing config'));
 					}
 					?>
 					</tbody>

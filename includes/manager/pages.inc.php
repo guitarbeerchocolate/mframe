@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="col-md-12">
 			<br /><a href="manager" class="btn btn-primary">Back</a>
-			<h3>Manage pages</h3>
+			<h2>Manage pages</h2>
 			<?php
 			if(isset($_GET['id']))
 			{
@@ -11,7 +11,7 @@
 				if(!isset($row['id']))
 				{
 					$error = 'The ID does not exist';
-					$u->move_on($this->getVal('url').'manager/pages',$error);
+					$db->u->move_on($this->getVal('url').'manager/pages',$error);
 				}	
 				$name = $row['name'];
 				$content = $row['content'];
@@ -82,7 +82,7 @@ include_once 'uploadedimages.inc.php';
 <div class="row">
 	<div class="container">
 		<div class="col-md-12">
-			<h4>Existing pages</h4>
+			<h3>Existing pages</h3>
 			<form method="post" action="pages/deletepages" role="form">	
 				<table class="table">
 					<thead>
@@ -101,12 +101,12 @@ include_once 'uploadedimages.inc.php';
 							$inputStr .= 'value="'.$row['id'].'">';
 							$editStr = '<a href="manager/pages&id='.$row['id'].'">Edit</a>';
 							$previewLink = '<a href="pages&id='.$row['id'].'" target="_blank">Preview</a>';
-							$u->echotr(array($inputStr,$row['name'],$editStr,$previewLink));
+							$db->u->echotr(array($inputStr,$row['name'],$editStr,$previewLink));
 						}
 					}
 					else
 					{
-						echo '<tr><td>No existing pages</td></tr>';
+						$db->u->echotr(array('No existing pages'));
 					}
 					?>
 					</tbody>

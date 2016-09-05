@@ -1,15 +1,13 @@
 <?php
 require_once 'database.class.php';
-require_once 'config.class.php';
 class news extends database
 {
-	private $pa, $c;
+	private $pa;
     public $name, $content;
     public function __construct($postArray = array())
     {
         parent::__construct();
         $this->pa = $postArray;
-        $this->c = new config;
     }
 
     function addnews()
@@ -18,7 +16,7 @@ class news extends database
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);	
 		$message = $this->testExecute($sth, 'Record added');
-        $this->u->move_on($this->c->getVal('url').'manager/news',$message);
+        $this->u->move_on($this->getVal('url').'manager/news',$message);
     }
 
     function updatenews()
@@ -28,7 +26,7 @@ class news extends database
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);	
 		$message = $this->testExecute($sth, 'Record updated');
-		$this->u->move_on($this->c->getVal('url').'manager/news',$message);
+		$this->u->move_on($this->getVal('url').'manager/news',$message);
     }
 
     function deletenews()
@@ -40,7 +38,7 @@ class news extends database
             $sth->execute();
         }        
         $message = 'Records deleted';
-        $this->u->move_on($this->c->getVal('url').'manager/news',$message);
+        $this->u->move_on($this->getVal('url').'manager/news',$message);
     }
 
     function getnews($id)

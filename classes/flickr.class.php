@@ -1,9 +1,9 @@
 <?php
-require_once 'config.class.php';
+require_once 'database.class.php';
 class flickr
 {
-	private $flickr_key, $flickr_secret, $format = 'json', $c;
-	public $settings;
+	private $flickr_key, $flickr_secret, $format = 'json';
+	public $settings,$db;
 	/* How to use:
 	$f = new flickr;
 	$photoset = $f->getphotoset('72157637918564954');
@@ -16,9 +16,9 @@ class flickr
 	*/
 	function __construct()
 	{
-		$this->c = new config;
-		$this->flickr_key = $this->c->getVal('flickr_api_key');
-		$this->flickr_secret = $this->c->getVal('flickr_api_secret');
+		$this->db = new database;
+		$this->flickr_key = $this->db->getVal('flickr_api_key');
+		$this->flickr_secret = $this->db->getVal('flickr_api_secret');
 	}
 
 	function getphotoset($ps = NULL)

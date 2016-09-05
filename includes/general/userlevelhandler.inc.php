@@ -1,9 +1,9 @@
 <?php
-if($status == 'private')
+if($liveConfig['status'] == 'private')
 {
     $s->privateRedirect();
 }
-elseif($status == 'manager')
+elseif($liveConfig['status'] == 'manager')
 {
     $s->managerRedirect();
 }

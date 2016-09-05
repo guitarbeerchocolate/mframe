@@ -11,7 +11,7 @@
 				if(!isset($row['id']))
 				{
 					$error = 'The ID does not exist';
-					$u->move_on($this->getVal('url').'manager/externalfeeds',$error);
+					$db->u->move_on($this->getVal('url').'manager/externalfeeds',$error);
 				}	
 				$name = $row['name'];
 				$location = $row['location'];
@@ -96,12 +96,12 @@
 							$inputStr = '<input type="checkbox" name="id[]" ';
 							$inputStr .= 'value="'.$row['id'].'">';
 							$editStr = '<a href="manager/externalfeeds&id='.$row['id'].'">Edit</a>';							
-							$u->echotr(array($inputStr,$row['name'],$editStr));
+							$db->u->echotr(array($inputStr,$row['name'],$editStr));
 						}
 					}
 					else
 					{
-						echo '<tr><td>No existing external feeds</td></tr>';
+						$db->u->echotr(array('No existing external feeds'));
 					}
 					?>
 					</tbody>

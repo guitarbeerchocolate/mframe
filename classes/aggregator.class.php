@@ -1,12 +1,11 @@
 <?php
 require_once 'database.class.php';
-require_once 'config.class.php';
 require_once 'twitterapiexchange.class.php';
 date_default_timezone_set("Europe/London");
 class aggregator extends database
 {
 	public $addr = NULL, $feedLimit, $messageArr, $tweeter;
-	private $outArr = Array(), $twittersettings, $c;	
+	private $outArr = Array(), $twittersettings;	
 	function __construct($addr = NULL)
 	{
 		parent::__construct();
@@ -17,8 +16,7 @@ class aggregator extends database
 		}
 		$this->feedLimit = 10;
 		$this->messageArr = array();
-		$this->c = new config;		
-		$this->twittersettings = array('oauth_access_token'=>$this->c->getVal('twitter_oauth_access_token'),'oauth_access_token_secret'=>$this->c->getVal('twitter_oauth_access_token_secret'),'consumer_key'=>$this->c->getVal('twitter_consumer_key'),'consumer_secret'=>$this->c->getVal('twitter_consumer_secret'));
+		$this->twittersettings = array('oauth_access_token'=>$this->getVal('twitter_oauth_access_token'),'oauth_access_token_secret'=>$this->getVal('twitter_oauth_access_token_secret'),'consumer_key'=>$this->getVal('twitter_consumer_key'),'consumer_secret'=>$this->getVal('twitter_consumer_secret'));
 		$this->tweeter = new TwitterAPIExchange($this->twittersettings);
 	}
 

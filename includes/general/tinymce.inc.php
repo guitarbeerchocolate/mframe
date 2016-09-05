@@ -1,5 +1,5 @@
 <?php
-if($status == 'manager')
+if($liveConfig['status'] == 'manager')
 {
 ?>
 <script src='modules/tinymce/tinymce.min.js'></script>

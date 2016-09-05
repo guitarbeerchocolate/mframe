@@ -21,6 +21,11 @@ class utilities
 		echo '<br />'.$s;
 	}
 
+	function hrecho($s = NULL)
+	{
+		echo '<hr />'.$s;
+	}
+
 	function echon($s = NULL)
 	{
 		echo $s."\n";
@@ -163,50 +168,9 @@ class utilities
 		echo '<h5>'.$s.'</h5>';
 	}
 
-	function echohp($s = NULL)
+	function echop($s = NULL)
 	{
 		echo '<p>'.$s.'</p>';
-	}
-
-	function createTable($data = NULL, $headers = NULL)
-	{
-		echo '<table class="table table-responsive">';
-		if(is_array($headers))
-		{
-			echo '<thead><tr>';
-			foreach ($headers as $header)
-			{
-				echo '<th>'.$header.'</th>';
-			}
-			echo '</tr></thead>';
-		}
-		else
-		{
-			echo '<thead><tr>';
-			foreach(array_keys(array_values($data)[0]) as $key)
-			{
-				echo '<th>'.ucwords($key).'</th>';
-			}
-			echo '</tr></thead>';
-		}
-		if(is_array($data))
-		{
-			echo '<tbody>';
-			foreach ($data as $rows)
-			{
-				if(is_array($rows))
-				{
-					echo '<tr>';
-					foreach ($rows as $item)
-					{
-						echo '<td>'.$item.'</td>';
-					}
-					echo '</tr>';	
-				}
-			}
-			echo '</tbody>';	
-		}
-		echo '</table>';
 	}
 
 	function title($s = NULL, $sitename = NULL)
@@ -321,9 +285,45 @@ class utilities
 
 	function data_uri_string($file = NULL, $mime = NULL)
 	{
-		$contents = file_get_contents($file);		
-		$base64 = base64_encode($contents);				
-		return 'data:'.$mime.';base64,'.$base64;
+		switch ($mime)
+		{
+			case 'image/png':
+				$image = imagecreatefrompng($file);
+				break;
+			case 'image/jpeg':
+				$image = imagecreatefromjpeg($file);
+				break;
+			case 'image/gif':
+				$image = imagecreatefromgif($file);
+				break;
+			case 'image/bmp':
+				$image = imagecreatefromwbmp($file);
+				break;
+			default:				
+				break;
+		}		
+		$image = imagescale($image , 500);
+		ob_start();
+		switch ($mime)
+		{
+			case 'image/png':
+				imagepng($image);
+				break;
+			case 'image/jpeg':				
+				imagejpeg($image);
+				break;
+			case 'image/gif':
+				imagegif($image);
+				break;
+			case 'image/bmp':
+				imagewbmp($image);
+				break;
+			default:				
+				break;
+		}		
+		$contents = ob_get_contents();
+		ob_end_clean();
+		return "data:".$mime.";base64,".base64_encode($contents);
 	}
 
 	function rootPath()
@@ -387,7 +387,7 @@ class utilities
 	function getModuleDirs($moduleDir)
 	{
 		$moduleDirArr = array();
-		$avoidDirrArr = array('.','..','tinymce','datepicker');
+		$avoidDirrArr = array('.','..','tinymce','datepicker','taghandler');
 		if($handle = opendir($moduleDir))
 		{
 	    	while(false !== ($entry = readdir($handle)))

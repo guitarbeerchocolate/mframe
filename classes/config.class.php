@@ -48,23 +48,6 @@ class config extends database
         $this->u->move_on($this->getVal('url').'manager/config',$message);
     }
 
-	function getVal($setting = NULL)
-	{
-		foreach ($this->i as $name => $index)
-		{
-			if(strtolower($setting) == strtolower($index['name']))
-			{
-				return $index['value'];
-			}
-		}
-		return FALSE;
-	}
-
-	function getManagers()
-	{
-		return explode(',', $this->getVal('managerids'));
-	}
-
 	function __destruct()
 	{
 		

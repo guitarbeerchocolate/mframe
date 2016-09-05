@@ -1,15 +1,13 @@
 <?php
 require_once 'database.class.php';
-require_once 'config.class.php';
 class events extends database
 {
-	private $pa, $c;
+	private $pa;
     public $name, $content, $datestart, $dateend;
     public function __construct($postArray = array())
     {
         parent::__construct();
         $this->pa = $postArray;
-        $this->c = new config;
     }
 
     function addevents()
@@ -20,7 +18,7 @@ class events extends database
         $sth->bindParam(':datestart', $this->pa['datestart']);
         $sth->bindParam(':dateend', $this->pa['dateend']);
         $message = $this->testExecute($sth, 'Record added');
-        $this->u->move_on($this->c->getVal('url').'manager/events',$message);
+        $this->u->move_on($this->getVal('url').'manager/events',$message);
     }
 
     function updateevents()
@@ -32,7 +30,7 @@ class events extends database
         $sth->bindParam(':datestart', $this->pa['datestart']);
         $sth->bindParam(':dateend', $this->pa['dateend']);
 		$message = $this->testExecute($sth, 'Record updated');
-		$this->u->move_on($this->c->getVal('url').'manager/events',$message);
+		$this->u->move_on($this->getVal('url').'manager/events',$message);
     }
 
     function deleteevents()
@@ -44,7 +42,7 @@ class events extends database
             $sth->execute();
         }        
         $message = 'Records deleted';
-        $this->u->move_on($this->c->getVal('url').'manager/events',$message);
+        $this->u->move_on($this->getVal('url').'manager/events',$message);
     }
 
     function getevents($id)

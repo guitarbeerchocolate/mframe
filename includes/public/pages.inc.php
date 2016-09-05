@@ -36,7 +36,7 @@ else
 			$secondarycontent = 'Secondary content not set';
 		}
 		echo '<div class="col-md-12">';
-		$u->echoh3($h3);
+		$db->u->echoh3($h3);
 		echo '</div>';
 		?>		
 	</div>
@@ -67,7 +67,7 @@ else
 			if($sc == TRUE)
 			{
 				echo '<header>';
-				$u->echoh3($sp->name);
+				$db->u->echoh3($sp->name);
 				echo '</header>';
 				echo $sp->content;
 			}
@@ -86,7 +86,7 @@ else
 			if($sc == TRUE)
 			{
 				echo '<header>';
-				$u->echoh3($sp->name);
+				$db->u->echoh3($sp->name);
 				echo '</header>';
 				echo $sp->content;
 			}

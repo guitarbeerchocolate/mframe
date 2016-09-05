@@ -1,4 +1,8 @@
-var form = $("form[role='form']");
-var action = form.attr('action');
-action = 'formhandler.php?action='+action;
-form.attr('action', action);
+var form = '';
+var action = '';
+$("form[role='form']").each(function()
+{
+	action = $(this).attr('action');
+	action = 'formhandler.php?action='+action;
+	$(this).attr('action', action);
+});
