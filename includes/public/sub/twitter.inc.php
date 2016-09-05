@@ -28,5 +28,5 @@
 		$db->u->echop('No existing tweets');
 	}
 	?>
-	<p id="socialmedia">Follow us on <a href="https://twitter.com/WeddingReviewUK" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></p>
+	<p id="socialmedia">Follow us on <a href="https://twitter.com/guitarbeerchoco" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></p>
 </div>

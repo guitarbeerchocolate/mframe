@@ -4,7 +4,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Reset password</div>
 				<div class="panel-body">
-					<form method="POST" action="https://web77.secure-secure.co.uk/wedding-review.co.uk/formhandler.php?action=authenticate/resetpassword">
+					<form method="POST" action="formhandler.php?action=authenticate/resetpassword">
 						<div class="form-group">
 							<label for="username">Email:</label>
 							<input type="email" name="username" id="username" class="form-control" value=<?php echo $_GET['username']; ?> />

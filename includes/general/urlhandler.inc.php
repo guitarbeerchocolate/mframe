@@ -89,7 +89,7 @@ else
   $liveConfig['includeFile'] .= 'public/homepage.inc.php'; 
 }
 
-$theDescription = 'Wedding Review is a free wedding supplier review site of wedding caterers,photographers,bridal boutiques,make-up artists,hairdressers and transport';
+$theDescription = 'mframe is a flexible CSS and JS modular framework.';
 
 if(($liveConfig['theTitle'] == 'service') && (isset($_GET['id'])))
 {

@@ -2,7 +2,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">Register</div>
 		<div class="panel-body">
-			<form method="POST" action="https://web77.secure-secure.co.uk/wedding-review.co.uk/formhandler.php?action=authenticate/register">
+			<form method="POST" action="formhandler.php?action=authenticate/register">
 				<input type="hidden" name="remoteip" value="<?php echo $_SERVER['REMOTE_ADDR']; ?>">
 				<div class="form-group">
 					<label for="username">Email:</label>
