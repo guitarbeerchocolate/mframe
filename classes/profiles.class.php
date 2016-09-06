@@ -18,11 +18,11 @@ class profiles extends database
         $sth->bindParam(':userid', $this->pa['userid']);
 		$sth->bindParam(':name', $this->pa['name']);
 		$sth->bindParam(':content', $this->pa['content']);
-        if(isset($_FILES) && (!empty($_FILES['photo']['name'])))
+        if(isset($_FILES) && (!empty($_FILES['photo']['tmp_name'])))
         {
             $filename = $_FILES['photo']['tmp_name'];
             $mime = $_FILES['photo']['type'];
-            $uploadResult = $this->u->image_db_string($filename, $mime);
+            $uploadResult = $this->u->image_db_string($filename, $mime, 400);
         }
         else
         {
