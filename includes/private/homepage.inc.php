@@ -1,14 +1,6 @@
 <div class="row">
-	<div class="container">
-		<div class="col-md-6">
-			<?php
-			if(in_array($s->userid, $c->getManagers()))
-			{
-				$u->brecho('<a href="manager" class="btn btn-primary">Go to the manager options</a>');
-			}
-			?>
-		</div>
-		<aside class="col-md-3">
+	<div class="container">		
+		<aside class="col-md-12">
 			<h3>Your profile</h3>
 			<?php
 			$row = $db->getOneByFieldValue('profiles','userid',$s->userid);

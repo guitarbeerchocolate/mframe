@@ -27,6 +27,11 @@ class profiles extends database
             $mime = $_FILES['photo']['type'];            
             $uploadResult = $this->u->data_uri_string($filename, $mime);
         }
+        else
+        {
+            $uploadResult = '';
+        }
+        $sth->bindParam(':photo', $uploadResult);
         $sth->bindParam(':photo', $uploadResult);
 		$message = $this->testExecute($sth, 'Record added');        
         $this->u->move_on($this->c->getVal('url').'private',$message);        
@@ -44,11 +49,15 @@ class profiles extends database
             $mime = $_FILES['photo']['type'];            
             $uploadResult = $this->u->data_uri_string($filename, $mime);
         }
-        else
+        elseif(!empty($this->pa['tempphoto']))
         {
             $uploadResult = $this->pa['tempphoto'];
         }
-		$sth->bindParam(':photo', $uploadResult);
+        else
+        {
+            $uploadResult = '';
+        }        
+        $sth->bindParam(':photo', $uploadResult);
         $message = $this->testExecute($sth, 'Record updated');
 		$this->u->move_on($this->c->getVal('url').'private',$message);
     }

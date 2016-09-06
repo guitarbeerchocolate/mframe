@@ -5,11 +5,17 @@
 			<a href="index.php" class="navbar-brand" itemprop="url"><img src="img/smalllogo.png" alt="logo" itemprop="logo" id="logo" /><h1 itemprop="name">mframe</h1></a>
 		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<form action="<?php echo $action; ?>" method="POST" class="navbar-form navbar-right" role="search" id="searchbox">
+				<div class="input-group">
+					<input type="text" class="form-control" name="searchterms" placeholder="Search for...">
+				</div><!-- /input-group -->
+				<button class="btn btn-default" type="submit">Search</button>
+			</form> 
 			<ul class="nav navbar-nav navbar-right">
 				<?php
 				include_once 'includes/public/sessionhandler.inc.php';
-				?>
-			</ul>      
+				?>				
+			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
 </nav>
@@ -26,17 +32,6 @@
 				$action = 'index.php';
 			}
 			?>			
-			<form action="<?php echo $action; ?>" method="GET" class="form-inline pull-left" role="search" id="searchbox">
-				<div class="input-group">
-					<input type="text" class="form-control" name="searchterms" placeholder="Search for...">
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="submit">Search</button>
-					</span>
-					<select id="names" class="form-control">
-						<option>Suggestions</option>
-					</select>
-				</div><!-- /input-group -->
-			</form>
 		</div>
 	</div>
 </div>
