@@ -22,19 +22,7 @@
 				</li>
 				<li>
 					<a href="manager/config">Manage configuration items</a>
-				</li>
-				<li>
-					<a href="manager/tags">Manage tags</a>
-				</li>
-				<li>
-					<a href="manager/service">Manage services</a>
-				</li>
-				<li>
-					<a href="manager/experiences">Manage experiences</a>
-				</li>
-				<li>
-					<a href="manager/metrics">Metrics</a>
-				</li>
+				</li>				
 			</ul>
 		</div>
 	</div>
