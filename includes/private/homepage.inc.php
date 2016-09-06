@@ -9,8 +9,8 @@
 				$name = $row['name'];
 				$content = $row['content'];
 				$photo = $row['photo'];
-				$u->echoh4($name);
-				$u->echobr($content);
+				$db->u->echoh4($name);
+				$db->u->echobr($content);
 				if(!empty($photo))
 				{
 					echo '<img src="'.$photo.'" class="img-responsive" />';

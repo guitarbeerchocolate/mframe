@@ -283,7 +283,7 @@ class utilities
 		echo '<img src="'.$file.'" alt="'.$alt.'" class="img-responsive" />';
 	}
 
-	function data_uri_string($file = NULL, $mime = NULL)
+	function image_db_string($file = NULL, $size = 100)
 	{
 		switch ($mime)
 		{
@@ -302,7 +302,7 @@ class utilities
 			default:				
 				break;
 		}		
-		$image = imagescale($image , 500);
+		$image = imagescale($image , $size);
 		ob_start();
 		switch ($mime)
 		{

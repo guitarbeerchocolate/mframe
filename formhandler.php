@@ -1,11 +1,10 @@
 <?php
 if(isset($_GET['action']))
 {
-	$arr = explode('/', $_GET['action']);
-	$class = $arr[0];
-	$method = $arr[1];	
-	require_once 'classes/'.$class.'.class.php';
-	
+	$arr = explode('/', $_GET['action']);	
+	$class = $arr[0];	
+	$method = $arr[1];		
+	require_once 'classes/'.$class.'.class.php';	
 	if(class_exists($class))
 	{
 		$evalStr = '$'.$class.' = new '.$class.'($_POST);';		
