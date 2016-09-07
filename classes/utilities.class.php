@@ -283,7 +283,7 @@ class utilities
 		echo '<img src="'.$file.'" alt="'.$alt.'" class="img-responsive" />';
 	}
 
-	function image_db_string($file = NULL, $mime = 'image/png', $size = 100)
+	function image_db_string($file = NULL, $mime, $size = 400)
 	{
 		switch ($mime)
 		{
@@ -291,7 +291,6 @@ class utilities
 				$image = imagecreatefrompng($file);
 				break;
 			case 'image/jpeg':
-				echo 'Here 3';
 				$image = imagecreatefromjpeg($file);
 				break;
 			case 'image/gif':
@@ -303,21 +302,21 @@ class utilities
 			default:				
 				break;
 		}		
-		$image = imagescale($image , $size);
+		$image = imagescale($image, $size);
 		ob_start();
 		switch ($mime)
 		{
 			case 'image/png':
-				imagepng($image);
+				imagepng($image,$tempimage,95);
 				break;
-			case 'image/jpeg':
-				imagejpeg($image);
+			case 'image/jpeg':				
+				imagejpeg($image,$tempimage,95);
 				break;
 			case 'image/gif':
-				imagegif($image);
+				imagegif($image,$tempimage,95);
 				break;
 			case 'image/bmp':
-				imagewbmp($image);
+				imagewbmp($image,$tempimage,95);
 				break;
 			default:				
 				break;
