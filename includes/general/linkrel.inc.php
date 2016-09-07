@@ -1,14 +1,14 @@
 <?php
 if($liveConfig['status'] == 'public')
 {
-	$baseURL = $db->getVal('url');
+	$liveConfig['baseURL'] = $db->getVal('url');
 }
 else
 {
-	$baseURL = $db->getVal('url').$liveConfig['status'];
+	$liveConfig['baseURL'] = $db->getVal('url').$liveConfig['status'];
 }
 ?>
-<base href="<?php echo $baseURL; ?>">
+<base href="<?php echo $liveConfig['baseURL']; ?>">
 <link rel="canonical" href="<?php echo "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; ?>" />
 <link type="text/plain" rel="author" href="<?php echo $db->getVal('url'); ?>humans.txt" />
 <link rel="alternate" type="text/directory" title="vCard" href="vcard.vcf" />
@@ -22,5 +22,5 @@ else
 <link href='https://fonts.googleapis.com/css?family=Playfair+Display' rel='stylesheet' type='text/css'>
 <!-- <link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'> -->
 <link rel="stylesheet" href="css-cache.php" />
-<script src="https://use.fontawesome.com/78dedbeda4.js"></script>
+<script src="https://use.fontawesome.com/<php echo $db->getVal('font_awesome_id'); ?>.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

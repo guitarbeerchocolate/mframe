@@ -89,7 +89,7 @@ else
   $liveConfig['includeFile'] .= 'public/homepage.inc.php'; 
 }
 
-$theDescription = 'mframe is a flexible CSS and JS modular framework.';
+$liveConfig['theDescription'] = 'mframe is a flexible CSS and JS modular framework.';
 
 if(($liveConfig['theTitle'] == 'service') && (isset($_GET['id'])))
 {
@@ -100,16 +100,16 @@ if(($liveConfig['theTitle'] == 'service') && (isset($_GET['id'])))
   if(strlen($titleRow['description']) < 150)
   {
     $positionOfLastFullStop = strrpos($titleRow['description'],'.');
-    $theDescription = substr($titleRow['description'], 0, $positionOfLastFullStop);
+    $liveConfig['theDescription'] = substr($titleRow['description'], 0, $positionOfLastFullStop);
   }
   else
   {
-    $theDescription = $titleRow['description'];
+    $liveConfig['theDescription'] = $titleRow['description'];
   }
 }
 
 if(!file_exists($liveConfig['includeFile']))
 {
   $error = 'Include does not exist.';
-  $db->u->move_on($c->getVal('url'),$error);
+  $db->u->move_on($db->getVal('url'),$error);
 }
