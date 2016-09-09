@@ -10,7 +10,6 @@
 	</div><!-- .form-group -->
 	<div class="form-group">
 		<label for="photo">Chosen photo</label>
-		<input type="hidden" name="tempphoto" value="<?php echo $photo; ?>" />
 		<input type="file" name="photo" id="photo" />
 	</div><!-- .form-group -->
 	<button type="submit" class="btn btn-primary">Submit</button>

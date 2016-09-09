@@ -35,29 +35,27 @@ class profiles extends database
 
     function updateprofiles()
     {
-        /*
-        $sth = $this->prepare("UPDATE profiles SET name = :name, content = :content, photo = :photo WHERE userid = :userid");
-        $sth->bindParam(':userid', $this->pa['userid']);
-        $sth->bindParam(':name', $this->pa['name']);
-        $sth->bindParam(':content', $this->pa['content']);
+        
         if(isset($_FILES) && (!empty($_FILES['photo']['name'])))
         {
             $filename = $_FILES['photo']['tmp_name'];
             $mime = $_FILES['photo']['type'];            
             $uploadResult = $this->u->image_db_string($filename, $mime);
-        }
-        elseif(!empty($this->pa['tempphoto']))
-        {
-            $uploadResult = $this->pa['tempphoto'];
-        }
+            $sth = $this->prepare("UPDATE profiles SET name = :name, content = :content, photo = :photo WHERE userid = :userid");
+            $sth->bindParam(':userid', $this->pa['userid']);
+            $sth->bindParam(':name', $this->pa['name']);
+            $sth->bindParam(':content', $this->pa['content']);
+            $sth->bindParam(':photo', $uploadResult);
+        }        
         else
         {
-            $uploadResult = '';
-        }        
-        $sth->bindParam(':photo', $uploadResult);
+            $sth = $this->prepare("UPDATE profiles SET name = :name, content = :content WHERE userid = :userid");
+            $sth->bindParam(':userid', $this->pa['userid']);
+            $sth->bindParam(':name', $this->pa['name']);
+            $sth->bindParam(':content', $this->pa['content']);
+        }
         $message = $this->testExecute($sth, 'Record updated');
-        $this->u->move_on($this->c->getVal('url').'private',$message);
-        */
+        $this->u->move_on($this->getVal('url').'private',$message);
     }
 
     function deleteprofiles()
