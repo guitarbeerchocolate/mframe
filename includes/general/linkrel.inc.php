@@ -22,5 +22,5 @@ else
 <link href='https://fonts.googleapis.com/css?family=Playfair+Display' rel='stylesheet' type='text/css'>
 <!-- <link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'> -->
 <link rel="stylesheet" href="css-cache.php" />
-<script src="https://use.fontawesome.com/<php echo $db->getVal('font_awesome_id'); ?>.js"></script>
+<script src="https://use.fontawesome.com/<?php echo $db->getVal('font_awesome_id'); ?>.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
