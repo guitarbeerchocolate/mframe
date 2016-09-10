@@ -26,6 +26,10 @@ class externalfeeds extends database
             case 3:
                 $feedTest = $this->agg->getTwitterHashtagJSON($this->pa['location']);
                 break;
+            case 4:
+                $url = $this->convertYT($this->pa['location']);
+                $feedTest = simplexml_load_file($this->pa['location']);
+                break;
             default:
                 $feedTest = simplexml_load_file($this->pa['location']);
                 break;
@@ -58,6 +62,10 @@ class externalfeeds extends database
                 break;
             case 3:
                 $feedTest = $this->agg->getTwitterHashtagJSON($this->pa['location']);
+                break;
+            case 4:
+                $url = $this->convertYT($this->pa['location']);
+                $feedTest = simplexml_load_file($this->pa['location']);
                 break;
             default:
                 $feedTest = simplexml_load_file($this->pa['location']);
@@ -95,6 +103,9 @@ class externalfeeds extends database
                 case 3:
                     $this->agg->addTwitterHashtagFeed($feed['location']);
                     break;
+                case 4:
+                    $this->agg->addYouTubeFeed($feed['location']);
+                    break;
                 default:
                     # code...
                     break;
@@ -121,6 +132,16 @@ class externalfeeds extends database
         $externalfeeds = $this->getOneByID('externalfeeds',$id);
         $this->name = $externalfeeds['name'];        
         $this->location = $externalfeeds['location'];
+    }
+
+    function convertYT($u)
+    {
+        $strArr = explode('/',$u);
+        for($x = 0; $x < count($strArr); $x++)
+        {
+            if($strArr[$x] == 'channel') $cid = $strArr[++$x];
+        }
+        return 'https://www.youtube.com/feeds/videos.xml?channel_id='.$cid;
     }
 
     function __destruct()

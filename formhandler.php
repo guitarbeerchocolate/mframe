@@ -17,18 +17,18 @@ if(isset($_GET['action']))
 		else
 		{
 			$returnValue = 'Method does not exist';
-			header('Location:login.php?message='.urlencode($returnValue));
+			header('Location:login&message='.urlencode($returnValue));
 		}
 	}
 	else
 	{
 		$returnValue = 'Class does not exist';
-		header('Location:login.php?message='.urlencode($returnValue));
+		header('Location:login&message='.urlencode($returnValue));
 	}
 }
 else
 {
 	$returnValue = 'No action given';
-	header('Location:login.php?message='.urlencode($returnValue));
+	header('Location:login&message='.urlencode($returnValue));
 }
 ?>

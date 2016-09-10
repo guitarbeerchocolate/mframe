@@ -428,14 +428,6 @@ class utilities
 		$locStr = 'location:'.$loc;
 		if(!is_null($message))
 		{
-			if(strtolower($loc) == 'login.php')
-			{
-				$locStr .= '?';
-			}
-			else
-			{
-				$locStr .= '&';
-			}
 			$locStr .= 'message='.urlencode($message);
 		}
 		header($locStr);

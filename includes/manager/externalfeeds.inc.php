@@ -38,6 +38,9 @@
 				case 3:
 					$placeHolderText = 'Add twitter hashtag';
 					break;
+				case 4:
+					$placeHolderText = 'Add YouTube channel URL';
+					break;
 				default:
 					$placeHolderText = 'Add URL of the feed';
 					break;
@@ -64,6 +67,9 @@
 					</label>
 					<label class="radio-inline">
 						<input type="radio" name="type" id="type3" value="3" <?php if($type == 3) echo 'checked'; ?> /> Twitter hashtag
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="type" id="type4" value="4" <?php if($type == 4) echo 'checked'; ?> /> YouTube channel
 					</label>
 				</div><!-- .form-group -->
 				<div class="form-group">

@@ -24,7 +24,7 @@ class authenticate extends database
 			
 			if($error !== TRUE)
 			{
-				$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+				$outURL = $this->getVal('url').'login&message='.urlencode($error);
 				header('Location:'.$outURL);
 				exit;
 			}
@@ -65,7 +65,7 @@ class authenticate extends database
 			$error = $this->testExecute($sth);			
 			if($error !== TRUE)
 			{
-				$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+				$outURL = $this->getVal('url').'login&message='.urlencode($error);
 				header('Location:'.$outURL);
 				exit;
 			}	
@@ -77,7 +77,7 @@ class authenticate extends database
 					$msg = $this->getVal('url').'?username='.urlencode($row['username']).'&password='.urlencode($row['password']);			
 					mail($username,'Password reset',$msg);
 					$error = 'A link has been sent to your email address. Copy the link and paste it into the address bar of your web browser to reset your password.';
-					$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+					$outURL = $this->getVal('url').'login&message='.urlencode($error);
 					header('Location:'.$outURL);
 					exit;			
 				}
@@ -112,7 +112,7 @@ class authenticate extends database
 			$error = $this->testExecute($sth);			
 			if($error !== TRUE)
 			{
-				$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+				$outURL = $this->getVal('url').'login&message='.urlencode($error);
 				header('Location:'.$outURL);
 				exit;
 			}	
@@ -124,7 +124,7 @@ class authenticate extends database
 				$sth->bindParam(':password', $password);	
 				$sth->execute();
 				$error = 'Registered. Please log-in';				
-				$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+				$outURL = $this->getVal('url').'login&message='.urlencode($error);
 				header('Location:'.$outURL);
 				exit;
 			}
@@ -151,7 +151,7 @@ class authenticate extends database
 			$error = $this->testExecute($sth);			
 			if($error !== TRUE)
 			{
-				$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+				$outURL = $this->getVal('url').'login&message='.urlencode($error);
 				header('Location:'.$outURL);
 				exit;
 			}	
@@ -163,7 +163,7 @@ class authenticate extends database
 				$sth->bindParam(':password', $password);	
 				$sth->execute();
 				$message = 'Password reset. Please log-in';
-				$outURL = $this->getVal('formspage').'login.php?message='.urlencode($message);
+				$outURL = $this->getVal('formspage').'login&message='.urlencode($message);
 				header('Location:'.$outURL);
 				exit;
 			}
@@ -181,7 +181,7 @@ class authenticate extends database
     function invalidEmail()
     {
     	$error = 'Invalid email. Please try again.';
-		$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+		$outURL = $this->getVal('url').'login&message='.urlencode($error);
 		header('Location:'.$outURL);
 		exit;
     }
@@ -189,7 +189,7 @@ class authenticate extends database
     function pleaseEnter()
     {
     	$error = 'Please enter an email and password to login.';
-		$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+		$outURL = $this->getVal('url').'login&message='.urlencode($error);
 		header('Location:'.$outURL);
 		exit;
     }
@@ -197,7 +197,7 @@ class authenticate extends database
     function alreadyExists()
     {
     	$error = 'Username already exists.';
-		$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+		$outURL = $this->getVal('url').'login&message='.urlencode($error);
 		header('Location:'.$outURL);
 		exit;
     }
@@ -217,7 +217,7 @@ class authenticate extends database
 		if($jsonResponse['success'] !== TRUE)
 		{
 			$error = 'Recaptcha not completed correctly';
-    		$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+    		$outURL = $this->getVal('url').'login&message='.urlencode($error);
 			header('Location:'.$outURL);
 			exit;
 		}
@@ -228,7 +228,7 @@ class authenticate extends database
     	if($this->pa['termsaccepted'] != 'on')
     	{
     		$error = 'Terms of use not accepted';
-    		$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+    		$outURL = $this->getVal('url').'login&message='.urlencode($error);
 			header('Location:'.$outURL);
 			exit;
     	}
@@ -243,7 +243,7 @@ class authenticate extends database
 		else
 		{
 			$error = 'Username must be a valid email address';
-			$outURL = $this->getVal('url').'login.php?message='.urlencode($error);
+			$outURL = $this->getVal('url').'login&message='.urlencode($error);
 			header('Location:'.$outURL);
 			exit;
 		}
@@ -251,7 +251,7 @@ class authenticate extends database
 		$pwdCheck = $this->checkPassword($this->pa['password']);
 		if($pwdCheck !== FALSE)
 		{
-			$outURL = $this->getVal('url').'login.php?message='.urlencode($pwdCheck);
+			$outURL = $this->getVal('url').'login&message='.urlencode($pwdCheck);
 			header('Location:'.$outURL);
 			exit;
 		}
@@ -276,7 +276,7 @@ class authenticate extends database
 	    }
 	    if(!empty($errors))
 	    {
-	    	$outURL = $this->getVal('url').'login.php?message='.urlencode(implode($errors));
+	    	$outURL = $this->getVal('url').'login&message='.urlencode(implode($errors));
 			header('Location:'.$outURL);
 			exit;
 	    }
