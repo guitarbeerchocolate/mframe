@@ -5,9 +5,8 @@
 			<?php
 			require_once 'classes/externalfeeds.class.php';
 			$ef = new externalfeeds;
-			$arr = $ef->getResults();
-			print_r($arr);
-			/*
+			$arr = $ef->getResults(4);
+			
 			if(count($ef->agg->messageArr) > 0)
 	        {   
 	            $db->u->echoh3('Errors');
@@ -20,11 +19,10 @@
 			foreach($arr as $row)
 			{
 				$db->u->echoh5('<a href="'.$row->link.'" target="_blank">'.$row->title.'</a>');
-				$db->u->echop($row->description);
+				$db->u->echop(substr($row->description,0,100));
 				$db->u->echop('<small><a href="'.strip_tags($row->link).'" target="_blank">'.strip_tags($row->link).'</a></small>');
 				$db->u->echohr('Posted '.date("jS F Y",strtotime($row->pubDate)).'<br />');
 			}
-			*/
 			?>
 		</div>
 	</div>

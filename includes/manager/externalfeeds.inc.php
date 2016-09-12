@@ -39,7 +39,7 @@
 					$placeHolderText = 'Add twitter hashtag';
 					break;
 				case 4:
-					$placeHolderText = 'Add YouTube channel URL';
+					$placeHolderText = 'Add name of channel URL e.g. patcondell';
 					break;
 				default:
 					$placeHolderText = 'Add URL of the feed';

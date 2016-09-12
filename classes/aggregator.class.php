@@ -122,37 +122,27 @@ class aggregator extends database
 		}
 	}
 
-	function addYouTubeFeed($addr = NULL)
+	function addYouTubeFeed($un = NULL)
 	{
-		/* Looks like it might be possible here. You will need to use the for loop to take elements of the $youtube['entry'] and add them to the $rss array. First you need to structure the rss array in the way that $this->outArr could merge.
-		When you've finally got all that going, you can find a way to take a channel address like https://www.youtube.com/user/patcondell/featured and retrieve the RSS address like https://www.youtube.com/feeds/videos.xml?channel_id=UCWOkEnBl5TO4SCLfSlosjgg from the link rel tag at the top of the youtube page.
-		*/
-		$channel_id = 'UCWOkEnBl5TO4SCLfSlosjgg';
-		$youtube = file_get_contents('https://www.youtube.com/feeds/videos.xml?channel_id='.$channel_id);
-		$xml = simplexml_load_string($youtube, "SimpleXMLElement", LIBXML_NOCDATA);
-		$json = json_encode($xml);
-		$youtube = json_decode($json, true);
-		$yt_vids = array();
-		$count = 0;
-		foreach ($youtube['entry'] as $k => $v) {
-		$yt_vids[$count]['id'] = str_replace('http://www.youtube.com/watch?v=', '', $v['link']['@attributes']['href']);
-		$yt_vids[$count]['title'] = $v['title'];
-		$count++;
-		}
-		print_r($yt_vids);
-		/*
-		$this->addr = $addr != NULL ? $addr : $this->addr;
-		$rss = simplexml_load_file($this->addr);
-		if($rss !== FALSE)
+		if(!is_null($un))
 		{
-			$this->outArr = array_merge($this->outArr, $rss->xpath('/feed/entry'));
-			
+			$tempYouTubeObjArr = array();
+			$youTubeArr = array();
+			$xml = simplexml_load_file('https://www.youtube.com/feeds/videos.xml?user='.$un);
+			foreach ($xml->entry as $entry)
+			{
+				$tempYouTubeObjArr['title'] = $entry->title;
+				$media = $entry->children('http://search.yahoo.com/mrss/');	
+				$tempYouTubeObjArr['description'] = $media->group->description;
+				$tempYouTubeObjArr['link'] = $entry->link['href'];
+				$tempYouTubeObjArr['pubDate'] = $entry->published;			
+				$yto = (object) $tempYouTubeObjArr;			
+				unset($tempYouTubeObjArr);			
+			    array_push($youTubeArr, $yto);
+			}
+			$this->outArr = array_merge($this->outArr, $youTubeArr);	
 		}
-		else
-		{
-			array_push($this->messageArr, 'Failed to load YouTube feed '.$this->addr);
-		}
-		*/		
+		
 	}
 
 

@@ -28,7 +28,7 @@ class externalfeeds extends database
                 break;
             case 4:
                 $url = $this->convertYT($this->pa['location']);
-                $feedTest = simplexml_load_file($this->pa['location']);
+                $feedTest = simplexml_load_file($url);
                 break;
             default:
                 $feedTest = simplexml_load_file($this->pa['location']);
@@ -87,9 +87,16 @@ class externalfeeds extends database
 		$this->u->move_on($this->getVal('url').'manager/externalfeeds',$message);
     }
 
-    function getResults()
+    function getResults($onlyShow = NULL)
     {
-        $feeds = $this->listall('externalfeeds');
+        if(is_null($onlyShow))
+        {
+            $feeds = $this->listall('externalfeeds');
+        }
+        else
+        {
+            $feeds = $this->getAllByFieldValue('externalfeeds','type',$onlyShow);
+        }
         foreach ($feeds as $feed)
         {
             switch($feed['type']) 
@@ -136,12 +143,7 @@ class externalfeeds extends database
 
     function convertYT($u)
     {
-        $strArr = explode('/',$u);
-        for($x = 0; $x < count($strArr); $x++)
-        {
-            if($strArr[$x] == 'channel') $cid = $strArr[++$x];
-        }
-        return 'https://www.youtube.com/feeds/videos.xml?channel_id='.$cid;
+        return 'https://www.youtube.com/feeds/videos.xml?user='.$u;
     }
 
     function __destruct()
