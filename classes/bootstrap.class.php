@@ -41,9 +41,12 @@ class bootstrap
 		return $out;
 	}
 
-	function column($s, $width = 12, $tag = 'div')
+	function column($s, $width = 12, $tag = 'div', $ampArr = NULL, $schemaArr = NULL)
 	{
-		$out = '<'.$tag.' class="col-md-'.$width.'">'.PHP_EOL;
+		$out = '<'.$tag.' class="col-md-'.$width.'"';
+		$out .= $this->setAMP($ampArr);
+		$out .= $this->setSchema($schemaArr);
+		echo '>'.PHP_EOL;
 		$out .= $this->checkNulls($s);
 		$out .= '</'.$tag.'><!-- .col-md-'.$width.' -->'.PHP_EOL;
 		$this->s = $out;
@@ -443,6 +446,16 @@ class bootstrap
 		{
 			return $s.PHP_EOL;
 		}
+	}
+
+	function setAMP($sa)
+	{
+		
+	}
+
+	function setSchema($sa)
+	{
+
 	}
 
 	function render()
