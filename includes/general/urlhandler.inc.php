@@ -89,7 +89,7 @@ else
   $liveConfig['includeFile'] .= 'public/homepage.inc.php'; 
 }
 
-$liveConfig['theDescription'] = 'mframe is a flexible CSS and JS modular framework.';
+$liveConfig['theDescription'] = $db->getVal('meta_description');
 
 if(($liveConfig['theTitle'] == 'service') && (isset($_GET['id'])))
 {

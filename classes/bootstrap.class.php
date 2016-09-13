@@ -21,11 +21,13 @@ class bootstrap
 		return $out;
 	}
 
-	function row($s = NULL)
+	function row($s = NULL, $tag = 'div', $id = NULL)
 	{
-		$out = '<div class="row">'.PHP_EOL;
+		$out = '<'.$tag.' class="row"';
+		if(!is_null($id)) $out .= ' id="'.$id.'"';
+		$out .= '>'.PHP_EOL;
 		$out .= $this->checkNulls($s);
-		$out .= '</div><!-- .row -->'.PHP_EOL;
+		$out .= '</'.$tag.'><!-- .row -->'.PHP_EOL;
 		$this->s = $out;
 		return $out;
 	}

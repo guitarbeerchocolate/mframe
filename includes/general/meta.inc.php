@@ -5,7 +5,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="description" content="<?php echo $liveConfig['theDescription']; ?>" />
 <meta name="google-site-verification" content="" />
-<meta name="keywords" content="" />
+<meta name="keywords" content="<?php echo $db->getVal('meta_keywords'); ?>" />
 <meta name="author" content="Mick Redman, mick.redman@effectivewebdesigns.co.uk">
 <meta name="dc.language" content="en">
 <meta name="dc.title" content="<?php echo $liveConfig['theTitle'].' : '.$db->getVal('name'); ?>">
