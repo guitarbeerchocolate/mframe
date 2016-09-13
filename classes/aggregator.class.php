@@ -31,6 +31,12 @@ class aggregator extends database
 		$rss = simplexml_load_file($this->addr);
 		if($rss !== FALSE)
 		{
+			foreach ($rss->channel->item as $entry)
+			{
+				$entry->title = '<i class="fa fa-rss-square" aria-hidden="true"></i>
+ '.$entry->title;
+			}
+			
 			$this->outArr = array_merge($this->outArr, $rss->xpath('/rss//item'));
 		}
 		else
@@ -52,7 +58,8 @@ class aggregator extends database
 		{
 			foreach($twitterjson as $item)
 			{
-				$tempTwitterObjArr['title'] = 'Tweet by '.$item['user']['name'];			
+				$tempTwitterObjArr['title'] = '<i class="fa fa-twitter-square" aria-hidden="true"></i>
+ Tweet by '.$item['user']['name'];			
 				$tempTwitterObjArr['description'] = $this->turnIntoLinks($item['text']);
 				$tempTwitterObjArr['link'] = 'http://twitter.com/'.$item['user']['screen_name'];
 				$tempTwitterObjArr['pubDate'] = $item['created_at'];
@@ -94,7 +101,8 @@ class aggregator extends database
 		{
 			foreach($twitterjson['statuses'] as $item)
 			{
-				$tempTwitterObjArr['title'] = 'Tweet by '.$item['user']['name'];			
+				$tempTwitterObjArr['title'] = '<i class="fa fa-twitter-square" aria-hidden="true"></i>
+ Tweet by '.$item['user']['name'];			
 				$tempTwitterObjArr['description'] = $this->turnIntoLinks($item['text']);
 				$tempTwitterObjArr['link'] = 'http://twitter.com/'.$item['user']['screen_name'];
 				$tempTwitterObjArr['pubDate'] = $item['created_at'];
@@ -131,7 +139,8 @@ class aggregator extends database
 			$xml = simplexml_load_file('https://www.youtube.com/feeds/videos.xml?user='.$un);
 			foreach ($xml->entry as $entry)
 			{
-				$tempYouTubeObjArr['title'] = $entry->title;
+				$tempYouTubeObjArr['title'] = '<i class="fa fa-youtube-square" aria-hidden="true"></i>
+ '.$entry->title;
 				$media = $entry->children('http://search.yahoo.com/mrss/');	
 				$tempYouTubeObjArr['description'] = $media->group->description;
 				$tempYouTubeObjArr['link'] = $entry->link['href'];

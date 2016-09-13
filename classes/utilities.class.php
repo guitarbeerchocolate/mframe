@@ -423,6 +423,15 @@ class utilities
 		echo "</pre>";
 	}
 
+	function array_to_string($a)
+	{
+		ob_start();
+		echo "<pre>";
+		print_r($a);
+		echo "</pre>";
+		return ob_get_clean();
+	}	
+
 	function move_on($loc = NULL, $message = NULL)
 	{
 		$locStr = 'location:'.$loc;
