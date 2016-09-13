@@ -3,13 +3,7 @@
 		<div class="col-md-12">
 			<h2>Test page</h2>
 			<?php
-			$s = 'https://www.youtube.com/channel/UCsT0YIqwnpJCM-mx7-gSA4Q';
-			$strArr = explode('/',$s);
-			for($x = 0; $x < count($strArr); $x++)
-			{
-				if($strArr[$x] == 'channel') $cid = $strArr[++$x];
-			}
-			echo $cid;
+			print_r($liveConfig);
 			/*
 			$rows = $db->listall('config');			
 			$headers = array('id', 'name', 'value');

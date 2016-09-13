@@ -2,7 +2,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">Register</div>
 		<div class="panel-body">
-			<form method="POST" action="formhandler.php?action=authenticate/register">
+			<form method="POST" action="<?php echo $db->getVal('https_url'); ?>formhandler.php?action=authenticate/register">
 				<input type="hidden" name="remoteip" value="<?php echo $_SERVER['REMOTE_ADDR']; ?>">
 				<div class="form-group">
 					<label for="username">Email:</label>

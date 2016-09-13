@@ -53,9 +53,11 @@ class bootstrap
 		return $out;
 	}
 
-	function table($headers = array(), $rows = array())
+	function table($headers = array(), $rows = array(), $id = NULL)
 	{
-		$out = '<table class="table table-striped table-condensed table-responsive">'.PHP_EOL;
+		$out = '<table class="table table-striped table-condensed table-responsive"';
+		if(!is_null($id)) $out .= ' id="'.$id.'"';
+		$out .= '>'.PHP_EOL;
 		if(!empty($headers))
 		{
 			$out .= '<thead><tr>'.PHP_EOL;
@@ -153,7 +155,7 @@ class bootstrap
 		return $out;
 	}
 
-	function form($fields = NULL, $action = NULL, $upload = FALSE, $role = 'form', $additionalClasses = array())
+	function form($fields = NULL, $action = NULL, $upload = FALSE, $role = 'form', $additionalClasses = array(), $id = NULL)
 	{
 		$out = NULL;
 		$out .= '<form action="'.$action.'" method="POST"';
@@ -170,9 +172,10 @@ class bootstrap
 			}
 			$out = trim($out);
 			$out .= '"';
-		}
-		
-		$out.= ' role="'.$role.'">'.PHP_EOL;
+		}		
+		$out.= ' role="'.$role.'"';
+		if(!is_null($id)) $out .= ' id="'.$id.'"';
+		$out .= '>'.PHP_EOL;
 		if(is_array($fields))
 		{
 			foreach ($fields as $field)
@@ -189,7 +192,7 @@ class bootstrap
 		return $out;
 	}
 
-	function input($name = NULL, $label = NULL, $type = 'text', $value = NULL)
+	function input($name = NULL, $label = NULL, $type = 'text', $value = NULL, $id = NULL)
 	{
 		$out = NULL;
 		$out .= '<div class="form-group">'.PHP_EOL;
@@ -199,6 +202,8 @@ class bootstrap
 		{
 			$out .= ' value="'.$value.'"';
 		}
+		$out .= ' ';
+		if(!is_null($id)) $out .= ' id="'.$id.'"';
 		$out .= ' />'.PHP_EOL;
 		$out .= '</div><!-- .form-group -->'.PHP_EOL;
 		return $out;
@@ -222,14 +227,16 @@ class bootstrap
 		return $out;
 	}
 
-	function textarea($name = NULL, $label = NULL, $value = NULL, $additionalClasses = array())
+	function textarea($name = NULL, $label = NULL, $value = NULL, $additionalClasses = array(), $id = NULL)
 	{
 		$out = NULL;
 		$out .= '<div class="form-group">'.PHP_EOL;
 		$out .= '<label for="'.$name.'">'.$label.'</label>'.PHP_EOL;
 		$out .= '<textarea ';
 		$out .= $this->addClasses($additionalClasses);
-		$out .= ' rows="3" name="'.$name.'">';
+		$out .= ' rows="3" name="'.$name.'"';
+		if(!is_null($id)) $out .= ' id="'.$id.'"';
+		$out .= '>'.PHP_EOL;
 		if(!is_null($value))
 		{
 			$out .= $value;
@@ -267,14 +274,16 @@ class bootstrap
 		return $out;
 	}
 
-	function select($name = NULL, $label = NULL, $optionArr = array(), $selected = NULL, $additionalClasses = array())
+	function select($name = NULL, $label = NULL, $optionArr = array(), $selected = NULL, $additionalClasses = array(), $id = NULL)
 	{
 		$out = NULL;
 		$out .= '<div class="form-group">'.PHP_EOL;
 		$out .= '<label for="'.$name.'">'.$label.'</label>'.PHP_EOL;
 		$out .= '<select ';
 		$out .= $this->addClasses($additionalClasses);
-		$out .= ' name="'.$name.'">'.PHP_EOL;
+		$out .= ' name="'.$name.'"';
+		if(!is_null($id)) $out .= ' id="'.$id.'"';
+		$out .= '>'.PHP_EOL;
 		if(!empty($optionArr))
 		{
 			if($this->isAssoc($optionArr) == TRUE)
@@ -320,15 +329,20 @@ class bootstrap
 		return $out;
 	}
 
-	function img($src = NULL, $alt = NULL)
+	function img($src = NULL, $alt = NULL, $id = NULL)
 	{
-		return '<img src="'.$src.'" class="img-responsive" alt="'.$alt.'" />';
+		$out = '<img src="'.$src.'" class="img-responsive" alt="'.$alt.'"';
+		if(!is_null($id)) $out .= ' id="'.$id.'"';
+		$out .= ' />'.PHP_EOL;		
+		return  $out;
 	}
 
-	function mediaobject($src = NULL, $alt = NULL, $href = '#', $heading = NULL, $body = NULL, $align = 'left')
+	function mediaobject($src = NULL, $alt = NULL, $href = '#', $heading = NULL, $body = NULL, $align = 'left', $id = NULL)
 	{
 		$out = NULL;
-		$out .= '<div class="media">'.PHP_EOL;
+		$out .= '<div class="media"';
+		if(!is_null($id)) $out .= ' id="'.$id.'"';
+		$out .= '>'.PHP_EOL;
 		$out .= '<div class="media-'.$align.'">'.PHP_EOL;
     	$out .= '<a href="'.$href.'">'.PHP_EOL;
 		$out .= '<img class="media-object" src="'.$src.'" alt="'.$alt.'" />'.PHP_EOL;
@@ -379,28 +393,34 @@ class bootstrap
 		return $out;
 	}
 
-	function pageheader($s = NULL)
+	function pageheader($s = NULL, $id = NULL)
 	{
 		$out = NULL;
-		$out .= '<div class="page-header">'.PHP_EOL;
+		$out .= '<div class="page-header"';
+		if(!is_null($id)) $out .= ' id="'.$id.'"';
+		$out .= '>'.PHP_EOL;
 		$out .= $s.PHP_EOL;
 		$out .= '</div><!-- .page-header -->'.PHP_EOL;
 		return $out;
 	}
 
-	function jumbotron($s = NULL)
+	function jumbotron($s = NULL, $id = NULL)
 	{
 		$out = NULL;
-		$out .= '<div class="jumbotron">'.PHP_EOL;
+		$out .= '<div class="jumbotron"';
+		if(!is_null($id)) $out .= ' id="'.$id.'"';
+		$out .= '>'.PHP_EOL;
 		$out .= $s.PHP_EOL;
 		$out .= '</div><!-- .jumbotron -->'.PHP_EOL;
 		return $out;
 	}
 
-	function header($level = 1, $s)
+	function header($level = 1, $s, $id = NULL)
 	{
 		$out = NULL;
-		$out .= '<h'.$level.'>'.PHP_EOL;
+		$out .= '<h'.$level.'';
+		if(!is_null($id)) $out .= ' id="'.$id.'"';
+		$out .= '>'.PHP_EOL;
 		$out .= $s.PHP_EOL;
 		$out .= '</h'.$level.'><!-- h'.$level.' -->'.PHP_EOL;
 		return $out;
@@ -415,10 +435,12 @@ class bootstrap
 		return $out;
 	}
 
-	function panel($s = NULL, $header = NULL, $footer = NULL)
+	function panel($s = NULL, $header = NULL, $footer = NULL, $id = NULL)
 	{
 		$out = NULL;
-		$out .= '<div class="panel panel-default">'.PHP_EOL;
+		$out .= '<div class="panel panel-default"';
+		if(!is_null($id)) $out .= ' id="'.$id.'"';
+		$out .= '>'.PHP_EOL;
 		if(!is_null($header)) $out .= '<div class="panel-heading">'.$header.'</div>'.PHP_EOL;
 		$out .= '<div class="panel-body"></div>'.PHP_EOL;
 		if(!is_null($footer)) $out .= '<div class="panel-footer">'.$footer.'</div>'.PHP_EOL;
@@ -426,7 +448,7 @@ class bootstrap
 		return $out;
 	}
 
-	function well($s = NULL)
+	function well($s = NULL, $id = NULL)
 	{
 		$out = NULL;
 		$out .= '<div class="well">'.PHP_EOL;

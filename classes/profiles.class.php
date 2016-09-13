@@ -60,7 +60,6 @@ class profiles extends database
 
     function deleteprofiles()
     {
-        /*
         foreach ($this->pa['id'] as $checked)
         {
             $sth = $this->prepare("DELETE FROM profiles WHERE id = :id");
@@ -69,16 +68,14 @@ class profiles extends database
         }
         $message = 'Records deleted ';
         $this->u->move_on($this->c->getVal('url').'manager/profiles',$message);
-        */
     }
 
     function getprofiles($id)
     {
-        /*
         $profiles = $this->getOneByID('profiles',$id);
         $this->name = $profiles['name'];        
         $this->content = $profiles['content'];
-        */
+        $this->photo = $profiles['photo'];
     }
 
     function __destruct()

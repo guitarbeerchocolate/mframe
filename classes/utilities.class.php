@@ -437,7 +437,7 @@ class utilities
 		$locStr = 'location:'.$loc;
 		if(!is_null($message))
 		{
-			$locStr .= 'message='.urlencode($message);
+			$locStr .= '&message='.urlencode($message);
 		}
 		header($locStr);
 		exit;
