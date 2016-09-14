@@ -5,7 +5,7 @@
 			<?php
 			require_once 'classes/externalfeeds.class.php';
 			$ef = new externalfeeds;
-			$arr = $ef->getResults();
+			$arr = $ef->getResults(5);
 			
 			if(count($ef->agg->messageArr) > 0)
 	        {   

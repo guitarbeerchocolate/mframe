@@ -41,6 +41,9 @@
 				case 4:
 					$placeHolderText = 'Add name of channel URL e.g. patcondell';
 					break;
+				case 5:
+					$placeHolderText = 'Add name of pinterest username e.g. mick';
+					break;
 				default:
 					$placeHolderText = 'Add URL of the feed';
 					break;
@@ -70,6 +73,9 @@
 					</label>
 					<label class="radio-inline">
 						<input type="radio" name="type" id="type4" value="4" <?php if($type == 4) echo 'checked'; ?> /> YouTube channel
+					</label>
+					<label class="radio-inline">
+						<input type="radio" name="type" id="type5" value="5" <?php if($type == 5) echo 'checked'; ?> /> Pinterest user
 					</label>
 				</div><!-- .form-group -->
 				<div class="form-group">

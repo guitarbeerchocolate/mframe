@@ -4,7 +4,8 @@
 			<h2>Test page</h2>
 			Search test
 			<?php
-
+			$feedTest = simplexml_load_file('https://www.pinterest.com/mick/feed.rss');
+			var_dump($feedTest);
 			/*
 			require_once 'classes/bootstrap.class.php';
 			$html = new bootstrap;

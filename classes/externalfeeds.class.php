@@ -30,6 +30,10 @@ class externalfeeds extends database
                 $url = $this->convertYT($this->pa['location']);
                 $feedTest = simplexml_load_file($url);
                 break;
+            case 5:
+                $url = $this->convertPinterest($this->pa['location']);
+                $feedTest = simplexml_load_file($url);
+                break;
             default:
                 $feedTest = simplexml_load_file($this->pa['location']);
                 break;
@@ -66,6 +70,10 @@ class externalfeeds extends database
             case 4:
                 $url = $this->convertYT($this->pa['location']);
                 $feedTest = simplexml_load_file($this->pa['location']);
+                break;
+            case 5:
+                $url = $this->convertPinterest($this->pa['location']);
+                $feedTest = simplexml_load_file($url);
                 break;
             default:
                 $feedTest = simplexml_load_file($this->pa['location']);
@@ -113,6 +121,9 @@ class externalfeeds extends database
                 case 4:
                     $this->agg->addYouTubeFeed($feed['location']);
                     break;
+                case 5:
+                    $this->agg->addPinterestFeed($feed['location']);
+                    break;
                 default:
                     # code...
                     break;
@@ -144,6 +155,11 @@ class externalfeeds extends database
     function convertYT($u)
     {
         return 'https://www.youtube.com/feeds/videos.xml?user='.$u;
+    }
+
+    function convertPinterest($u)
+    {
+        return 'https://www.pinterest.com/'.$u.'/feed.rss';
     }
 
     function __destruct()

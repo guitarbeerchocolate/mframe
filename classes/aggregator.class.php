@@ -33,8 +33,7 @@ class aggregator extends database
 		{
 			foreach ($rss->channel->item as $entry)
 			{
-				$entry->title = '<i class="fa fa-rss-square" aria-hidden="true"></i>
- '.$entry->title;
+				$entry->title = '<i class="fa fa-rss-square" aria-hidden="true"></i> '.$entry->title;
 			}
 			
 			$this->outArr = array_merge($this->outArr, $rss->xpath('/rss//item'));
@@ -152,6 +151,29 @@ class aggregator extends database
 			$this->outArr = array_merge($this->outArr, $youTubeArr);	
 		}
 		
+	}
+
+
+	function addPinterestFeed($addr)
+	{
+		$this->addr = $addr != NULL ? $addr : $this->addr;		
+		$rss = simplexml_load_file('https://www.pinterest.com/'.$this->addr.'/feed.rss');
+		$tempPinArr = array();
+		$pinArr = array();		
+		if($rss !== FALSE)
+		{
+			foreach ($rss->channel->item as $entry)
+			{
+				$tempPinArr['title'] = '<i class="fa fa-pinterest-square" aria-hidden="true"></i> '.$entry->title;
+				$tempPinArr['description'] = strip_tags($entry->description, '<p><img>');
+				$tempPinArr['link'] = $entry->link;
+				$tempPinArr['pubDate'] = $entry->pubDate;
+				$po = (object) $tempPinArr;			
+				unset($tempPinArr);			
+			    array_push($pinArr, $po);
+			}			
+			$this->outArr = array_merge($this->outArr, $pinArr);
+		}
 	}
 
 
