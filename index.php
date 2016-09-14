@@ -35,9 +35,9 @@ include_once 'includes/general/userlevelhandler.inc.php';
     include_once 'includes/general/navigation.inc.php';
     $db->u->echoeol();
     include_once 'includes/general/message.inc.php';
-    $db->u->echoeol();
-    if(isset($_GET['searchterms']))
-    { 
+    $db->u->echoeol();    
+    if(array_key_exists('searchterms',$_GET))
+    {
         include_once 'includes/general/searchresults.inc.php';
         $db->u->echoeol(); 
     }

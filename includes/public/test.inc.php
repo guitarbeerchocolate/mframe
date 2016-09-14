@@ -2,11 +2,14 @@
 	<div class="container">
 		<div class="col-md-12">
 			<h2>Test page</h2>
+			Search test
 			<?php
+
+			/*
 			require_once 'classes/bootstrap.class.php';
 			$html = new bootstrap;
 			$hr = $html->hr();
-
+			*/
 			/*
 			$headers = array('First', 'Second', 'Third');
 			$data = array(array('1','2','3'),array('4','5','6'),array('7','8','9'));
@@ -27,11 +30,13 @@
 			$data = array(array('First'=>'1','Second'=>'2','Third'=>'3'), array('First'=>'4','Second'=>'5','Third'=>'6'), array('First'=>'7','Second'=>'8','Third'=>'9'));
 			$table = $html->table(NULL, $data);
 			*/
-
+			/*
 			$input = $html->input('mick', 'My field');
 			$checkbox = $html->checkbox('mickeroo', 'My checkbox', TRUE);
 			$textarea = $html->textarea('micktastic', 'My textarea', 'Put this inside', array('tinymce'));
+			*/
 			/* $select = $html->select('mickie', 'My selector', array(1,2,3,4),3); */
+			/*
 			$select = $html->select('mickie', 'My selector', array(1=>'One',2=>'Two',3=>'Three',4=>'Four'),3, array('beer'));
 
 			$radio = $html->radio('mickster', array(1=>'One',2=>'Two',3=>'Three',4=>'Four'),3);
@@ -46,15 +51,6 @@
 			$con = $html->container($col);
 			$html->row($con);
 			$html->render();
-			/*
-			$rows = $db->listall('config');			
-			$headers = array('id', 'name', 'value');
-			$data = array(
-				array('Row1col1','Row1col2','Row1col3'),
-				array('Row2col1','Row2col2','Row2col3'),
-				array('Row3col1','Row3col2','Row3col3')
-			);
-			$u->createTable($rows);
 			*/
 			?>			
 		</div>

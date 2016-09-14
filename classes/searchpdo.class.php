@@ -57,9 +57,10 @@ class searchpdo extends database
 				// This is the area of concentration
 				$ss .= "`".$col."` LIKE '%$q%' OR ";
 			}
-			$ss = rtrim($ss," OR ");			
+			$ss = rtrim($ss," OR ");						
 			$rows = $this->query($ss);
-			$this->buildTable($rows, $colArr, $table);
+			echo '<br />Searching in table "'.$table.'" for "'.$q.'"';
+			$this->buildTable($rows, $colArr);
 		}
 	}
 
@@ -80,7 +81,8 @@ class searchpdo extends database
 			}
 			$ss = rtrim($ss," OR ");			
 			$rows = $this->query($ss);
-			$this->buildTable($rows, $colArr, $table);
+			echo '<br />Searching in table "'.$table.'" for "'.$q.'"';
+			$this->buildTable($rows, $colArr);
 		}
 	}
 
@@ -101,9 +103,10 @@ class searchpdo extends database
 				$ss = rtrim($ss," AND ");
 				$ss .= " OR ";
 			}
-			$ss = rtrim($ss," OR ");			
+			$ss = rtrim($ss," OR ");
 			$rows = $this->query($ss);
-			$this->buildTable($rows, $colArr, $table);
+			echo '<br />Searching in table "'.$table.'" for "'.$q.'"';
+			$this->buildTable($rows, $colArr);
 		}
 	}
 
@@ -123,58 +126,69 @@ class searchpdo extends database
 		return $outArr;
 	}
 
-	function buildBody($rows, $colArr, $table)
+	function buildHead($colArr)
 	{
-		foreach ($rows as $row)
+		foreach ($colArr as $col)
 		{
-			if($row['suspend'] != 1)
+			if(!is_null($this->fieldArr))
 			{
-				echo '<tr itemscope itemtype="http://schema.org/Service">';			
-				echo '<td class="thirty"><a href="service&id='.$row['id'].'">';
-				if(!empty($row['photo']))
+				if($this->isAssoc($this->fieldArr) == TRUE)
 				{
-					echo '<img src="'.$row['photo'].'" alt="'.$row['name'].'" class="img-responsive margtopbit base64" itemprop="image" data-id="'.$row['id'].'" />';
-					/* echo '<img src="'.$row['photo'].'" alt="'.$row['name'].'" class="img-responsive margtopbit base64" itemprop="image" />'; */
+					$key = array_search($col, $this->fieldArr);
+					if(!empty($key))
+					{
+						echo '<th>'.strtoupper($key).'</th>';	
+					}
 				}
 				else
 				{
-					$this->u->base64_image('img/blank.png', 'Blank');
+					if(in_array($col, $this->fieldArr))
+					{
+						echo '<th>'.strtoupper($col).'</th>';	
+					}
 				}
-				echo '<i class="fa fa-spinner fa-spin fa-4x fa-fw"></i>';
-				echo '</a></td>';
-				echo '<td id="description"><a href="service&id='.$row['id'].'"><h4 itemprop="name">'.$row['name'].'</h4></a>';
-				echo '<section itemprop="description">'.$row['description'].'</section>';
-				$this->u->echop($row['county']);
-
-				$avgRating = $this->averageValue('experiences', 'overallrating', $row['id']);
-				if($avgRating != 0)
-				{
-					echo 'Average rating = '.round($avgRating, 1);
-				}
-				$exp = $this->getAllByFieldValue('experiences','serviceid',$row['id']);
-				$totalRecommended = 0;
-				foreach ($exp as $e)
-				{
-					if($e['recommend'] == 1) $totalRecommended++;
-				}
-				if($totalRecommended != 0)
-				{
-					$this->u->echop($totalRecommended.' out of '.count($exp).' reviewers recommended this service.');
-				}
-				echo '</td>';
-				echo '</tr>'.PHP_EOL;
 			}
+			else
+			{
+				echo '<th>'.strtoupper($col).'</th>';	
+			}					
 		}
 	}
 
-	function buildTable($rows, $colArr, $table)
+	function buildBody($rows, $colArr)
+	{
+		foreach ($rows as $row)
+		{
+			echo '<tr>';
+			foreach ($colArr as $col)
+			{
+				if(!is_null($this->fieldArr))
+				{
+					if(in_array($col, $this->fieldArr))
+					{
+						echo '<td>'.$row[$col].'</td>';
+						/* echo '<td>'.$row->{$col}.'</td>'; */
+					}
+				}
+				else
+				{
+					echo '<td>'.$row[$col].'</td>';	
+				}						
+			}
+			echo '</tr>'.PHP_EOL;		
+		}
+	}
+
+	function buildTable($rows, $colArr)
 	{
 		if(count($rows) > 0)
 		{
 			echo '<div class="table-responsive">';
-			echo '<table class="table table-condensed table-hover" id="searchresults">'.PHP_EOL;
-			echo '<tbody>'.PHP_EOL;
-			$this->buildBody($rows, $colArr, $table);
+			echo '<table class="table table-condensed">'.PHP_EOL;
+			echo '<thead><tr>';
+			$this->buildHead($colArr);
+			echo '</tr></thead><tbody>'.PHP_EOL;
+			$this->buildBody($rows, $colArr);
 			echo '</tbody></table>'.PHP_EOL;
 			echo '</div>'.PHP_EOL;
 		}
