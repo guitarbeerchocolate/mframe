@@ -25,7 +25,7 @@
 				}
 			}
 		}
-		$subpages = $db->performquery('SELECT * FROM pages WHERE issubpage = 1');
+		$subpages = $db->performquery('SELECT * FROM pages USE INDEX (content) WHERE issubpage = 1');
 		foreach ($subpages as $subpage)
 		{
 			echo '<option value="';

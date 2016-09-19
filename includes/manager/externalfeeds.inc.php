@@ -7,7 +7,7 @@
 			if(isset($_GET['id']))
 			{
 				$id = $_GET['id'];
-				$row = $db->getOneByID('externalfeeds',$id);
+				$row = $db->getOneByID('externalfeeds',$id,'content');
 				if(!isset($row['id']))
 				{
 					$error = 'The ID does not exist';
@@ -100,7 +100,7 @@
 					</thead>
 					<tbody>
 					<?php
-					$rows = $db->listall('externalfeeds');
+					$rows = $db->listall('externalfeeds','content');
 					if(count($rows) > 0)
 					{
 						foreach ($rows as $row)

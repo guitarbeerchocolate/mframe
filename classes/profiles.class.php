@@ -72,7 +72,7 @@ class profiles extends database
 
     function getprofiles($id)
     {
-        $profiles = $this->getOneByID('profiles',$id);
+        $profiles = $this->getOneByID('profiles',$id,'content');
         $this->name = $profiles['name'];        
         $this->content = $profiles['content'];
         $this->photo = $profiles['photo'];

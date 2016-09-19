@@ -1,7 +1,7 @@
 <div class="col-md-6">
 	<h3>News item</h3>
 	<?php
-	$rows = $db->listall('news');
+	$rows = $db->listall('news','content');
 	if(count($rows) > 0)
 	{
 		foreach ($rows as $row)

@@ -39,14 +39,14 @@ class sessions
 		if(is_null($this->userid))
 		{
 			$error = 'You must be logged in to access the private section.';
-			$this->db->u->move_on($this->db->getVal('formspage'),$error);
+			$this->db->u->move_on($this->db->getVal('url'),$error);
 		}
 		else if(isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
 		{
 			unset($_SESSION['userid']);
 			session_destroy();
 			$error = 'Logged out.';
-			$this->db->u->move_on($this->db->getVal('formspage'),$error);
+			$this->db->u->move_on($this->db->getVal('url'),$error);
 		}
 	}
 
@@ -55,19 +55,19 @@ class sessions
 		if(is_null($this->userid))
 		{
 			$error = 'You must be logged in to access the private section.';
-			$this->db->u->move_on($this->db->getVal('formspage'),$error);
+			$this->db->u->move_on($this->db->getVal('url'),$error);
 		}
 		else if(!in_array($this->userid, $this->db->getManagers()))
 		{
 		  $error = 'You must be logged in as a manager access the manager section.';
-		  $this->db->u->move_on($this->db->getVal('formspage'),$error);
+		  $this->db->u->move_on($this->db->getVal('url'),$error);
 		}
 		else if (isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
 		{
 		  unset($_SESSION['userid']);
 		  session_destroy();
 		  $error = 'Logged out.';
-		  $this->db->u->move_on($this->db->getVal('formspage'),$error);
+		  $this->db->u->move_on($this->db->getVal('url'),$error);
 		}
 	}
 }

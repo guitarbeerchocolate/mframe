@@ -7,7 +7,7 @@
 			if(isset($_GET['id']))
 			{
 				$id = $_GET['id'];
-				$row = $db->getOneByID('news',$id);
+				$row = $db->getOneByID('news',$id,'content');
 				if(!isset($row['id']))
 				{
 					$error = 'The ID does not exist';
@@ -63,7 +63,7 @@ include_once 'uploadedimages.inc.php';
 					</thead>
 					<tbody>
 					<?php
-					$rows = $db->listall('news');
+					$rows = $db->listall('news','content');
 					if(count($rows) > 0)
 					{
 						foreach ($rows as $row)

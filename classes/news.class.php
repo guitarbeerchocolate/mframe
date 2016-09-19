@@ -43,7 +43,7 @@ class news extends database
 
     function getnews($id)
     {
-        $news = $this->getOneByID('news',$id);
+        $news = $this->getOneByID('news',$id,'content');
         $this->name = $news['name'];        
         $this->content = $news['content'];
     }

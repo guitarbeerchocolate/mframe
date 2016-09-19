@@ -8,7 +8,7 @@ class config extends database
 	{
 		parent::__construct();
 		$this->pa = $postArray;
-		$sth = $this->prepare("SELECT * FROM config");
+		$sth = $this->prepare("SELECT * FROM config USE INDEX (content)");
 		$error = $this->testExecute($sth, 'Records received');			
 		if($error !== 'Records received')
 		{

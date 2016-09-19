@@ -50,7 +50,7 @@ class searchpdo extends database
 		foreach ($this->tableArr as $table)
 		{
 			$ss = NULL;
-			$ss = "SELECT * FROM `".$table."` WHERE ";
+			$ss = "SELECT * FROM `".$table."` USE INDEX (content) WHERE ";
 			$colArr = $this->getFieldsFromTable($table);
 			foreach ($colArr as $col)
 			{
@@ -70,7 +70,7 @@ class searchpdo extends database
 		foreach ($this->tableArr as $table)
 		{
 			$ss = NULL;
-			$ss = "SELECT * FROM `".$table."` WHERE ";
+			$ss = "SELECT * FROM `".$table."` USE INDEX (content) WHERE ";
 			$colArr = $this->getFieldsFromTable($table);			
 			foreach ($colArr as $col)
 			{
@@ -92,7 +92,7 @@ class searchpdo extends database
 		foreach ($this->tableArr as $table)
 		{
 			$ss = NULL;
-			$ss = "SELECT * FROM `".$table."` WHERE ";
+			$ss = "SELECT * FROM `".$table."` USE INDEX (content) WHERE ";
 			$colArr = $this->getFieldsFromTable($table);			
 			foreach ($colArr as $col)
 			{

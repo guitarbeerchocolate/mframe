@@ -47,7 +47,7 @@ class events extends database
 
     function getevents($id)
     {
-        $events = $this->getOneByID('events',$id);
+        $events = $this->getOneByID('events',$id,'content');
         $this->name = $events['name'];        
         $this->content = $events['content'];
         $this->datestart = $events['datestart'];        
@@ -56,7 +56,7 @@ class events extends database
 
     function listevents()
     {
-        $sql = "SELECT * FROM events ORDER BY datestart ASC"; 
+        $sql = "SELECT * FROM events USE INDEX (content) ORDER BY datestart ASC"; 
         $stmt = $this->query($sql); 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

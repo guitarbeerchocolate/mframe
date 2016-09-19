@@ -99,7 +99,7 @@ class externalfeeds extends database
     {
         if(is_null($onlyShow))
         {
-            $feeds = $this->listall('externalfeeds');
+            $feeds = $this->listall('externalfeeds','content');
         }
         else
         {
@@ -147,7 +147,7 @@ class externalfeeds extends database
 
     function getexternalfeed($id)
     {
-        $externalfeeds = $this->getOneByID('externalfeeds',$id);
+        $externalfeeds = $this->getOneByID('externalfeeds',$id,'content');
         $this->name = $externalfeeds['name'];        
         $this->location = $externalfeeds['location'];
     }

@@ -12,7 +12,7 @@
 					</thead>
 					<tbody>
 					<?php					
-					$rows = $db->listall('profiles');
+					$rows = $db->listall('profiles','content');
 					if(count($rows) > 0)
 					{
 						foreach ($rows as $row)

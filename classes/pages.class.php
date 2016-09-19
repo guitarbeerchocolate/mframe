@@ -49,7 +49,7 @@ class pages extends database
 
     function getpage($id)
     {
-        $page = $this->getOneByID('pages',$id);
+        $page = $this->getOneByID('pages',$id,'content');
         $this->name = $page['name'];        
         $this->content = $page['content'];
         $this->layout = $page['layout'];

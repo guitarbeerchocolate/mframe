@@ -94,7 +94,7 @@ $liveConfig['theDescription'] = $db->getVal('meta_description');
 if(($liveConfig['theTitle'] == 'service') && (isset($_GET['id'])))
 {
   $id = $_GET['id'];
-  $titleRow = $db->getOneByID($liveConfig['theTitle'],$id);
+  $titleRow = $db->getOneByID($liveConfig['theTitle'],$id,'content');
   $liveConfig['theTitle'] = $titleRow['name'];
 
   if(strlen($titleRow['description']) < 150)

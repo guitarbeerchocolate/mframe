@@ -29,7 +29,7 @@ class contact extends database
         }
         foreach ($this->getManagers() as $managerid)
         {
-        	$user = $this->getOneByID('users',$managerid);
+        	$user = $this->getOneByID('users',$managerid,'content');
             $message = 'From : '.$this->pa['emailaddress'].PHP_EOL.$this->pa['details'];
         	if(mail($user['username'],'Contact from website',$message))
             {

@@ -4,8 +4,17 @@
 			<h2>Test page</h2>
 			Search test
 			<?php
+			$rows = $db->performquery('SELECT * FROM news USE INDEX (content)');
+			foreach ($rows as $row)
+			{
+				echo '<h2>'.$row['name'].'</h2>';
+				echo $row['content'];
+				echo '<hr />';
+			}
+			/*
 			$feedTest = simplexml_load_file('https://www.pinterest.com/mick/feed.rss');
 			var_dump($feedTest);
+			*/
 			/*
 			require_once 'classes/bootstrap.class.php';
 			$html = new bootstrap;

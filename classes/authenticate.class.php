@@ -18,7 +18,7 @@ class authenticate extends database
 			$username = $this->pa['username'];
 			$password = sha1(md5($this->pa['password']));
 			$this->query();
-			$sth = $this->prepare("SELECT id, username, password FROM users WHERE username = :username");	
+			$sth = $this->prepare("SELECT id, username, password FROM users USE INDEX (content) WHERE username = :username");	
 			$sth->bindParam(':username', $username);	
 			$error = $this->testExecute($sth);
 			
@@ -60,7 +60,7 @@ class authenticate extends database
 		{
 			$username = $this->pa['username'];			
 			$this->query();
-			$sth = $this->prepare("SELECT id, username, password FROM users WHERE username = :username");	
+			$sth = $this->prepare("SELECT id, username, password FROM users USE INDEX (content) WHERE username = :username");	
 			$sth->bindParam(':username', $username);	
 			$error = $this->testExecute($sth);			
 			if($error !== TRUE)
@@ -107,7 +107,7 @@ class authenticate extends database
 			$this->checkEmail();
 			$this->checkPassword();
 			$password = sha1(md5($this->pa['password']));			
-			$sth = $this->prepare("SELECT id FROM users WHERE username = :username");	
+			$sth = $this->prepare("SELECT id FROM users USE INDEX (content) WHERE username = :username");	
 			$sth->bindParam(':username', $username);	
 			$error = $this->testExecute($sth);			
 			if($error !== TRUE)
@@ -146,7 +146,7 @@ class authenticate extends database
 			$username = $this->pa['username'];
 			$this->checkPassword();			
 			$password = sha1(md5($this->pa['password']));			
-			$sth = $this->prepare("SELECT id FROM users WHERE username = :username");	
+			$sth = $this->prepare("SELECT id FROM users USE INDEX (content) WHERE username = :username");	
 			$sth->bindParam(':username', $username);	
 			$error = $this->testExecute($sth);			
 			if($error !== TRUE)
@@ -163,7 +163,7 @@ class authenticate extends database
 				$sth->bindParam(':password', $password);	
 				$sth->execute();
 				$message = 'Password reset. Please log-in';
-				$outURL = $this->getVal('formspage').'login&message='.urlencode($message);
+				$outURL = $this->getVal('url').'login&message='.urlencode($message);
 				header('Location:'.$outURL);
 				exit;
 			}

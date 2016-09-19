@@ -4,7 +4,7 @@ if(isset($_GET['username']) && isset($_GET['password']))
     $username = urldecode($_GET['username']);
     $password = urldecode($_GET['password']);        
     $db->query();
-    $sth = $db->prepare("SELECT id, username, password FROM users WHERE username = :username AND password = :password");   
+    $sth = $db->prepare("SELECT id, username, password FROM users USE INDEX (content) WHERE username = :username AND password = :password");   
     $sth->bindParam(':username', $username);
     $sth->bindParam(':password', $password);    
     $sth->execute();    
@@ -12,7 +12,7 @@ if(isset($_GET['username']) && isset($_GET['password']))
     if(($row === false) && ($sth->rowCount() == 0))
     {
         $error = 'Invalid email or password. Please try again.';
-        $u->move_on($c->getVal('formspage'), $error);
+        $u->move_on($c->getVal('url'), $error);
     }
     else
     {

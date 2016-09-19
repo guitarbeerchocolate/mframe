@@ -9,19 +9,22 @@ class database extends PDO
         $dns = $this->settings['driver'].':host=' . $this->settings['host'].((!empty($this->settings['port'])) ? (';port='.$this->settings['port']) : '').';dbname='.$this->settings['schema'];        
         parent::__construct($dns, $this->settings['username'], $this->settings['password']);
         $this->u = new utilities;
-        $this->c = $this->listall('config');
+        $this->c = $this->listall('config','content');
     }
 
-    function listall($table)
+    function listall($table, $index = NULL)
     {
         $sql = "SELECT * FROM {$table}";
+        if(!isset($index)) $sql .= " USE INDEX ({$index})";
         $stmt = $this->query($sql); 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function listallLimit($table, $limit)
+    function listallLimit($table, $limit, $index = NULL)
     {
-        $sql = "SELECT * FROM {$table} LIMIT {$limit}";
+        $sql = "SELECT * FROM {$table}";
+        if(!isset($index)) $sql .= " USE INDEX ({$index})";
+        $sql .= " LIMIT {$limit}";
         $stmt = $this->query($sql); 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -32,9 +35,11 @@ class database extends PDO
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function searchBynames($table,$field,$value)
+    function searchBynames($table,$field,$value, $index = NULL)
     {
-        $sql = "SELECT * FROM {$table} WHERE {$field} LIKE :{$field} AND suspend <> 1 LIMIT 6";
+        $sql = "SELECT * FROM {$table}";
+        if(!isset($index)) $sql .= " USE INDEX ({$index})";
+        $sql .= " WHERE {$field} LIKE :{$field} AND suspend <> 1 LIMIT 6";
         $bindStr = ':'.$field;        
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $value);        
@@ -49,9 +54,11 @@ class database extends PDO
         }
     }
 
-    function getOneByFieldValue($table,$field,$value)
+    function getOneByFieldValue($table,$field,$value, $index = NULL)
     {
-        $sql = "SELECT * FROM {$table} WHERE {$field} = :{$field}  LIMIT 1";        
+        $sql = "SELECT * FROM {$table}";
+        if(!isset($index)) $sql .= " USE INDEX ({$index})";
+        $sql .= " WHERE {$field} = :{$field}  LIMIT 1";        
         $bindStr = ':'.$field;        
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $value);        
@@ -66,9 +73,11 @@ class database extends PDO
         }
     }
 
-    function getAllByFieldValue($table,$field,$value)
+    function getAllByFieldValue($table,$field,$value, $index = NULL)
     {
-        $sql = "SELECT * FROM {$table} WHERE {$field} = :{$field}";        
+        $sql = "SELECT * FROM {$table}";
+        if(!isset($index)) $sql .= " USE INDEX ({$index})";
+        $sql .= " WHERE {$field} = :{$field}";        
         $bindStr = ':'.$field;        
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $value);        
@@ -83,9 +92,11 @@ class database extends PDO
         }
     }
 
-    function getAllByFieldValueLimit($table,$field,$value,$limit)
+    function getAllByFieldValueLimit($table,$field,$value,$limit, $index = NULL)
     {
-        $sql = "SELECT * FROM {$table} WHERE {$field} = :{$field} LIMIT {$limit}";        
+        $sql = "SELECT * FROM {$table}";
+        if(!isset($index)) $sql .= " USE INDEX ({$index})";
+        $sql .= " WHERE {$field} = :{$field} LIMIT {$limit}";        
         $bindStr = ':'.$field;        
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $value);        
@@ -100,9 +111,11 @@ class database extends PDO
         }
     }
 
-    function getSimilarByFieldValue($table,$field,$value)
+    function getSimilarByFieldValue($table,$field,$value, $index = NULL)
     {
-        $sql = "SELECT * FROM {$table} WHERE {$field} LIKE :{$field}";        
+        $sql = "SELECT * FROM {$table}";
+        if(!isset($index)) $sql .= " USE INDEX ({$index})";
+        $sql .= " WHERE {$field} LIKE :{$field}";        
         $bindStr = ':'.$field;        
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $value);        
@@ -117,9 +130,11 @@ class database extends PDO
         }
     }
 
-    function getSimilarByFieldValueLimit($table,$field,$value,$limit)
+    function getSimilarByFieldValueLimit($table,$field,$value,$limit, $index = NULL)
     {
-        $sql = "SELECT * FROM {$table} WHERE {$field} LIKE :{$field} LIMIT {$limit}";        
+        $sql = "SELECT * FROM {$table}";
+        if(!isset($index)) $sql .= " USE INDEX ({$index})";
+        $sql .= " WHERE {$field} LIKE :{$field} LIMIT {$limit}";        
         $bindStr = ':'.$field;        
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $value);        
@@ -134,9 +149,11 @@ class database extends PDO
         }
     }
 
-    function getOneByID($table,$id)
+    function getOneByID($table,$id, $index = NULL)
     {
-        $sql = "SELECT * FROM ".$table." WHERE id = :id LIMIT 1";               
+        $sql = "SELECT * FROM ".$table;
+        if(!isset($index)) $sql .= " USE INDEX ({$index})";
+        $sql .= " WHERE id = :id LIMIT 1";               
         $sth = $this->prepare($sql);
         $sth->bindParam(':id', $id);        
         $message = $this->testExecute($sth);
@@ -158,9 +175,11 @@ class database extends PDO
         return $row['id']+1;
     }
     
-    function listorderby($table,$orderby,$ad = "ASC")
+    function listorderby($table,$orderby,$ad = "ASC", $index = NULL)
     {
-        $sql = "SELECT * FROM {$table} ORDER BY {$orderby} {$ad}";
+        $sql = "SELECT * FROM {$table}";
+        if(!isset($index)) $sql .= " USE INDEX ({$index})";
+        $sql .= " ORDER BY {$orderby} {$ad}";
         $sth = $this->prepare($sql);       
         $message = $this->testExecute($sth);
         if($message == TRUE)
@@ -173,9 +192,11 @@ class database extends PDO
         }
     }
 
-    function listorderbyLimit($table,$orderby,$limit,$ad = "ASC")
+    function listorderbyLimit($table,$orderby,$limit,$ad = "ASC", $index = NULL)
     {
-        $sql = "SELECT * FROM {$table} ORDER BY {$orderby} {$ad} LIMIT {$limit}";
+        $sql = "SELECT * FROM {$table}";
+        if(!isset($index)) $sql .= " USE INDEX ({$index})";
+        $sql .= " ORDER BY {$orderby} {$ad} LIMIT {$limit}";
         $sth = $this->prepare($sql);       
         $message = $this->testExecute($sth);
         if($message == TRUE)
@@ -188,9 +209,11 @@ class database extends PDO
         }
     }
 
-    function listorderbywhere($table,$wherefield, $wherevalue, $orderby, $ad = "ASC")
+    function listorderbywhere($table,$wherefield, $wherevalue, $orderby, $ad = "ASC", $index = NULL)
     {
-        $sql = "SELECT * FROM {$table} WHERE {$wherefield} = :{$wherefield} ORDER BY {$orderby} {$ad}";
+        $sql = "SELECT * FROM {$table}";
+        if(!isset($index)) $sql .= " USE INDEX ({$index})";
+        $sql .= " WHERE {$wherefield} = :{$wherefield} ORDER BY {$orderby} {$ad}";
         $bindStr = ':'.$wherefield;
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $wherevalue);
@@ -205,9 +228,11 @@ class database extends PDO
         }
     }
 
-    function listorderbywhereLimit($table,$wherefield, $wherevalue, $orderby, $limit, $ad = "ASC")
+    function listorderbywhereLimit($table,$wherefield, $wherevalue, $orderby, $limit, $ad = "ASC", $index = NULL)
     {
-        $sql = "SELECT * FROM {$table} WHERE {$wherefield} = :{$wherefield} ORDER BY {$orderby} {$ad} LIMIT {$limit}";
+        $sql = "SELECT * FROM {$table}";
+        if(!isset($index)) $sql .= " USE INDEX ({$index})";
+        $sql .= " WHERE {$wherefield} = :{$wherefield} ORDER BY {$orderby} {$ad} LIMIT {$limit}";
         $bindStr = ':'.$wherefield;
         $sth = $this->prepare($sql);
         $sth->bindParam($bindStr, $wherevalue);
@@ -242,43 +267,13 @@ class database extends PDO
         return $outArr;
     }
 
-    function countrow($table)
+    function countrow($table, $index = NULL)
     {
         $sql = "SELECT * FROM {$table}";
+        if(!isset($index)) $sql .= " USE INDEX ({$index})";
         $sth = $this->prepare($sql);
         $sth->execute();
         return $sth->rowCount();
-    }
-
-    function averageValue($table, $col, $serviceid)
-    {
-        $sql = "SELECT * FROM ".$table." WHERE serviceid = :serviceid";
-        $sth = $this->prepare($sql);
-        $sth->bindParam(':serviceid', $serviceid); 
-        $message = $this->testExecute($sth);
-        if($message == TRUE)
-        {
-            $rows = $sth->fetchAll(PDO::FETCH_ASSOC);    
-        }
-        else
-        {
-            return $message;
-        }
-        $count = 0;
-        $total = 0;
-        foreach($rows as $row)
-        {
-            $total += $row[$col];
-            $count++;
-        }
-        if($count == 0)
-        {
-            return 0;
-        }
-        else
-        {
-            return ($total/$count);    
-        }
     }
 
     function getManagers()

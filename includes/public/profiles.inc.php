@@ -3,7 +3,7 @@
 		<div class="col-md-12">
 			<h2>Profiles</h2>
 			<?php			
-			$rows = $db->listall('profiles');
+			$rows = $db->listall('profiles','content');
 			foreach ($rows as $row)
 			{
 				$u->echoeol('<article class="publicprofiles">');
