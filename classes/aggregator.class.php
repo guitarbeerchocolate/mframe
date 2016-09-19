@@ -57,14 +57,18 @@ class aggregator extends database
 		{
 			foreach($twitterjson as $item)
 			{
-				$tempTwitterObjArr['title'] = '<i class="fa fa-twitter-square" aria-hidden="true"></i>
- Tweet by '.$item['user']['name'];			
-				$tempTwitterObjArr['description'] = $this->turnIntoLinks($item['text']);
+				$tempTwitterObjArr['description'] = '';
+				$tempTwitterObjArr['title'] = '<i class="fa fa-twitter-square" aria-hidden="true"></i> Tweet by '.$item['user']['name'];			
+ 				if(isset($item['entities']['media'][0]['media_url']))
+				{
+					$tempTwitterObjArr['description'] .= '<img class="thumbnail" src="'.$item['entities']['media'][0]['media_url'].'" />';
+				}
+				$tempTwitterObjArr['description'] .= $this->turnIntoLinks($item['text']);
 				$tempTwitterObjArr['link'] = 'http://twitter.com/'.$item['user']['screen_name'];
 				$tempTwitterObjArr['pubDate'] = $item['created_at'];
 				$to = (object) $tempTwitterObjArr;
 				unset($tempTwitterObjArr);
-			    array_push($twitterObjArr, $to);		   
+			    array_push($twitterObjArr, $to);
 			}
 			$this->outArr = array_merge($this->outArr, $twitterObjArr);
 		}
@@ -100,9 +104,13 @@ class aggregator extends database
 		{
 			foreach($twitterjson['statuses'] as $item)
 			{
-				$tempTwitterObjArr['title'] = '<i class="fa fa-twitter-square" aria-hidden="true"></i>
- Tweet by '.$item['user']['name'];			
-				$tempTwitterObjArr['description'] = $this->turnIntoLinks($item['text']);
+				$tempTwitterObjArr['description'] = '';
+				$tempTwitterObjArr['title'] = '<i class="fa fa-twitter-square" aria-hidden="true"></i> Tweet by '.$item['user']['name'];
+				if(isset($item['entities']['media'][0]['media_url']))
+				{
+					$tempTwitterObjArr['description'] .= '<img class="thumbnail" src="'.$item['entities']['media'][0]['media_url'].'" />';
+				}			
+				$tempTwitterObjArr['description'] .= $this->turnIntoLinks($item['text']);
 				$tempTwitterObjArr['link'] = 'http://twitter.com/'.$item['user']['screen_name'];
 				$tempTwitterObjArr['pubDate'] = $item['created_at'];
 				$to = (object) $tempTwitterObjArr;
@@ -136,12 +144,32 @@ class aggregator extends database
 			$tempYouTubeObjArr = array();
 			$youTubeArr = array();
 			$xml = simplexml_load_file('https://www.youtube.com/feeds/videos.xml?user='.$un);
+			$namespaces=$xml->getNameSpaces(true); // access all the namespaces used in the tree
+			array_unshift($namespaces,"");
 			foreach ($xml->entry as $entry)
 			{
-				$tempYouTubeObjArr['title'] = '<i class="fa fa-youtube-square" aria-hidden="true"></i>
- '.$entry->title;
-				$media = $entry->children('http://search.yahoo.com/mrss/');	
-				$tempYouTubeObjArr['description'] = $media->group->description;
+				$tempYouTubeObjArr['title'] = '<i class="fa fa-youtube-square" aria-hidden="true"></i> '.$entry->title;
+				$media = $entry->children('http://search.yahoo.com/mrss/');
+				$index = 0;
+				$thumbs = $media->group->thumbnail;
+				foreach ($thumbs as $thumb)
+				{
+					$attrstring="";
+        			foreach ($namespaces as $ns)
+        			{
+                		foreach ($thumb->attributes($ns) as $attr => $value)
+                		{ 
+                			if($attr == 'url')
+                			{
+                				$tempYouTubeObjArr['description'] = '<img src="'.$value[0].'" class="thumbnail" />';
+                			}
+                        	$thumb_attrs[$index][$attr] = $value;
+                        	$attrstring.= $attr . ': ' . $thumb_attrs[$index][$attr] . "| ";
+                		}
+        			}        			
+        			$index++;
+				}
+				$tempYouTubeObjArr['description'] .= substr($media->group->description, 0,140).'...';
 				$tempYouTubeObjArr['link'] = $entry->link['href'];
 				$tempYouTubeObjArr['pubDate'] = $entry->published;			
 				$yto = (object) $tempYouTubeObjArr;			
@@ -166,6 +194,7 @@ class aggregator extends database
 			{
 				$tempPinArr['title'] = '<i class="fa fa-pinterest-square" aria-hidden="true"></i> '.$entry->title;
 				$tempPinArr['description'] = strip_tags($entry->description, '<p><img>');
+				$tempPinArr['description'] = str_replace('<img ', '<img class="thumbnail" ', $tempPinArr['description']);
 				$tempPinArr['link'] = $entry->link;
 				$tempPinArr['pubDate'] = $entry->pubDate;
 				$po = (object) $tempPinArr;			
