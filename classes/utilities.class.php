@@ -402,6 +402,15 @@ class utilities
 		return $moduleDirArr;
 	}
 
+	function include_to_string($inc)
+	{
+		ob_start();
+		include_once $inc;
+		$html = ob_get_contents();
+		ob_get_clean();
+		return $html;
+	}
+
 	function var_dump_to_string($s)
 	{
 		ob_start();

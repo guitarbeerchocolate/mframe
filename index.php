@@ -11,6 +11,8 @@ include_once 'includes/general/loginhandler.inc.php';
 $s = new sessions($_SESSION);
 include_once 'includes/general/urlhandler.inc.php';
 include_once 'includes/general/userlevelhandler.inc.php';
+require_once 'classes/bootstrap.class.php';
+$bs = new bootstrap;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +37,6 @@ include_once 'includes/general/userlevelhandler.inc.php';
     include_once 'includes/general/navigation.inc.php';
     $db->u->echoeol();
     include_once 'includes/general/message.inc.php';
-    $db->u->echoeol();    
     if(array_key_exists('searchterms',$_GET))
     {
         include_once 'includes/general/searchresults.inc.php';

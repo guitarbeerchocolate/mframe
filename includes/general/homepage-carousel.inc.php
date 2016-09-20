@@ -1,3 +1,7 @@
+<?php
+require_once 'classes/database.class.php';
+$db = new database;
+?>
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner" role="listbox">
     <div class="item active">

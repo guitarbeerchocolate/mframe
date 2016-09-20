@@ -1,20 +1,15 @@
-<div class="row">
-	<div class="container">
-		<article class="col-md-6">
-			<i class="fa fa-envira" aria-hidden="true"></i>
-		</article>
-		<aside class="col-md-6">
-		<?php
-		include_once 'includes/general/homepage-carousel.inc.php';
-		?>
-		</aside><!-- col-md-6 -->
-	</div><!-- .container -->
-</div><!-- .row -->
-<div class="row">
-	<div class="container"><hr />
-	<?php
-	include_once 'includes/public/sub/news.inc.php';
-	include_once 'includes/public/sub/twitter.inc.php';
-	?>
-	</div><!-- .container -->
-</div><!-- .row -->
+<?php
+$inc = $db->u->include_to_string('includes/general/homepage-carousel.inc.php');
+$col1 = $bs->column('<i class="fa fa-envira" aria-hidden="true"></i>', 6,'article');
+$col2 = $bs->column($inc, 6,'aside');
+$con = $bs->container($col1.$col2);
+$bs->row($con);
+$bs->render();
+$inc = $db->u->include_to_string('includes/public/sub/news.inc.php');
+$col1 = $bs->column($inc, 6);
+$inc = $db->u->include_to_string('includes/public/sub/twitter.inc.php');
+$col2 = $bs->column($inc, 6);
+$con = $bs->container($col1.$col2);
+$bs->row($con);
+$bs->render();
+?>

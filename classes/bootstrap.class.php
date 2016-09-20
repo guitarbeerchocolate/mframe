@@ -46,7 +46,7 @@ class bootstrap
 		$out = '<'.$tag.' class="col-md-'.$width.'"';
 		$out .= $this->setAMP($ampArr);
 		$out .= $this->setSchema($schemaArr);
-		echo '>'.PHP_EOL;
+		$out .= '>'.PHP_EOL;
 		$out .= $this->checkNulls($s);
 		$out .= '</'.$tag.'><!-- .col-md-'.$width.' -->'.PHP_EOL;
 		$this->s = $out;
