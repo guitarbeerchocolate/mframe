@@ -61,7 +61,7 @@ class aggregator extends database
 				$tempTwitterObjArr['title'] = '<i class="fa fa-twitter-square" aria-hidden="true"></i> Tweet by '.$item['user']['name'];			
  				if(isset($item['entities']['media'][0]['media_url']))
 				{
-					$tempTwitterObjArr['description'] .= '<img class="thumbnail" src="'.$item['entities']['media'][0]['media_url'].'" />';
+					$tempTwitterObjArr['description'] .= '<img class="thumbnail pull-left" src="'.$item['entities']['media'][0]['media_url'].'" />';
 				}
 				$tempTwitterObjArr['description'] .= $this->turnIntoLinks($item['text']);
 				$tempTwitterObjArr['link'] = 'http://twitter.com/'.$item['user']['screen_name'];
@@ -108,7 +108,7 @@ class aggregator extends database
 				$tempTwitterObjArr['title'] = '<i class="fa fa-twitter-square" aria-hidden="true"></i> Tweet by '.$item['user']['name'];
 				if(isset($item['entities']['media'][0]['media_url']))
 				{
-					$tempTwitterObjArr['description'] .= '<img class="thumbnail" src="'.$item['entities']['media'][0]['media_url'].'" />';
+					$tempTwitterObjArr['description'] .= '<img class="thumbnail pull-left" src="'.$item['entities']['media'][0]['media_url'].'" />';
 				}			
 				$tempTwitterObjArr['description'] .= $this->turnIntoLinks($item['text']);
 				$tempTwitterObjArr['link'] = 'http://twitter.com/'.$item['user']['screen_name'];
@@ -161,7 +161,7 @@ class aggregator extends database
                 		{ 
                 			if($attr == 'url')
                 			{
-                				$tempYouTubeObjArr['description'] = '<img src="'.$value[0].'" class="thumbnail" />';
+                				$tempYouTubeObjArr['description'] = '<img src="'.$value[0].'" class="thumbnail pull-left" />';
                 			}
                         	$thumb_attrs[$index][$attr] = $value;
                         	$attrstring.= $attr . ': ' . $thumb_attrs[$index][$attr] . "| ";
@@ -194,7 +194,7 @@ class aggregator extends database
 			{
 				$tempPinArr['title'] = '<i class="fa fa-pinterest-square" aria-hidden="true"></i> '.$entry->title;
 				$tempPinArr['description'] = strip_tags($entry->description, '<p><img>');
-				$tempPinArr['description'] = str_replace('<img ', '<img class="thumbnail" ', $tempPinArr['description']);
+				$tempPinArr['description'] = str_replace('<img ', '<img class="thumbnail pull-left" ', $tempPinArr['description']);
 				$tempPinArr['link'] = $entry->link;
 				$tempPinArr['pubDate'] = $entry->pubDate;
 				$po = (object) $tempPinArr;			
