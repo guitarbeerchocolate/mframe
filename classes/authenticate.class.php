@@ -19,9 +19,8 @@ class authenticate extends database
 			$password = sha1(md5($this->pa['password']));
 			$this->query();
 			$sth = $this->prepare("SELECT id, username, password FROM users USE INDEX (content) WHERE username = :username");	
-			$sth->bindParam(':username', $username);	
+			$sth->bindParam(':username', $username);
 			$error = $this->testExecute($sth);
-			
 			if($error !== TRUE)
 			{
 				$outURL = $this->getVal('url').'login&message='.urlencode($error);

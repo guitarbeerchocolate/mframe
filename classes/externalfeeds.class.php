@@ -33,7 +33,7 @@ class externalfeeds extends database
             case 5:
                 $url = $this->convertPinterest($this->pa['location']);
                 $feedTest = simplexml_load_file($url);
-                break;
+                break;            
             default:
                 $feedTest = simplexml_load_file($this->pa['location']);
                 break;
