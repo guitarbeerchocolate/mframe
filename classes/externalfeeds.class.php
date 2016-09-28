@@ -95,7 +95,7 @@ class externalfeeds extends database
 		$this->u->move_on($this->getVal('url').'manager/externalfeeds',$message);
     }
 
-    function getResults($onlyShow = NULL)
+    function getResults($onlyShow = NULL, $feedLimit = NULL)
     {
         if(is_null($onlyShow))
         {
@@ -104,6 +104,10 @@ class externalfeeds extends database
         else
         {
             $feeds = $this->getAllByFieldValue('externalfeeds','type',$onlyShow);
+        }
+        if(!is_null($feedLimit))
+        {
+            $this->agg->feedLimit = $feedLimit;
         }
         foreach ($feeds as $feed)
         {

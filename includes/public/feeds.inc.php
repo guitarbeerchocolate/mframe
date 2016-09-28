@@ -5,5 +5,5 @@
 </div>
 <script src="modules/feedloader/feedloader.plugin.js"></script>
 <script>
-	$('#feedholder').feedloader(3);
+	$('#feedholder').feedloader();
 </script>

@@ -23,12 +23,25 @@ if(count($ef->agg->messageArr) > 0)
     }
     $db->u->echohr();
 }
+$entryCount = 0;
+$feedLimit = 1;
+if((isset($_GET['entrycount'])) && (is_numeric($_GET['entrycount'])) && (($_GET['entrycount'] > 0)))
+{
+   $feedLimit = $_GET['entrycount'];
+}
 foreach($arr as $row)
 {
-	$db->u->echoh5('<a href="'.$row->link.'" target="_blank">'.$row->title.'</a>');
-	echo $row->description;
-	echo $bs->clearfix();
-	$db->u->echop('<small><a href="'.strip_tags($row->link).'" target="_blank">'.strip_tags($row->link).'</a></small>');
-	$db->u->echohr('Posted '.date("jS F Y",strtotime($row->pubDate)).'<br />');
+    if($feedLimit > $entryCount)
+    {
+        $db->u->echoh5('<a href="'.$row->link.'" target="_blank">'.$row->title.'</a>');
+        echo $row->description;
+        echo $bs->clearfix();
+        $db->u->echop('<small><a href="'.strip_tags($row->link).'" target="_blank">'.strip_tags($row->link).'</a></small>');
+        $db->u->echohr('Posted '.date("jS F Y",strtotime($row->pubDate)).'<br />');
+    }
+    if((isset($_GET['entrycount'])) && (is_numeric($_GET['entrycount'])) && (($_GET['entrycount'] > 0)))
+    {
+       $entryCount++;
+    }
 }
 ?>

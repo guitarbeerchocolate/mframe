@@ -28,20 +28,32 @@ class aggregator extends database
 	function addRSSFeed($addr = NULL)
 	{
 		$this->addr = $addr != NULL ? $addr : $this->addr;
-		$rss = simplexml_load_file($this->addr);
-		if($rss !== FALSE)
+		$rss = simplexml_load_file($this->addr);		
+		$tempRSSobjArr = array();
+		$rssObjArr = array();
+		$entryCount = 0;		
+		if($rss == FALSE)
 		{
-			foreach ($rss->channel->item as $entry)
-			{
-				$entry->title = '<i class="fa fa-rss-square" aria-hidden="true"></i> '.$entry->title;
-			}
-			
-			$this->outArr = array_merge($this->outArr, $rss->xpath('/rss//item'));
+			array_push($this->messageArr, 'Failed to load RSS feed '.$this->addr);
 		}
 		else
 		{
-			array_push($this->messageArr, 'Failed to load RSS feed '.$this->addr);
-		}		
+			foreach($rss->channel->item as $entry)
+			{
+				if($entryCount < $this->feedLimit)
+				{
+					$tempRSSobjArr['title'] = '<i class="fa fa-rss-square" aria-hidden="true"></i> '.$entry->title;
+					$tempRSSobjArr['description'] .= $entry->description;
+					$tempRSSobjArr['link'] = $entry->link;
+					$tempRSSobjArr['pubDate'] = $entry->pubDate;
+					$to = (object) $tempRSSobjArr;
+					unset($tempRSSobjArr);
+				    array_push($rssObjArr, $to);
+				    $entryCount++;
+				}
+			}
+			$this->outArr = array_merge($this->outArr, $rssObjArr);
+		}
 	}
 
 	function addTwitterFeed($tu = NULL)
@@ -49,6 +61,7 @@ class aggregator extends database
 		$twitterjson = $this->getTwitterUserJSON($tu);
 		$tempTwitterObjArr = array();
 		$twitterObjArr = array();
+		$entryCount = 0;
 		if((empty($twitterjson)) || ($twitterjson == FALSE))
 		{
 			array_push($this->messageArr, 'Failed to load Twitter user feed '.$tu);
@@ -57,18 +70,22 @@ class aggregator extends database
 		{
 			foreach($twitterjson as $item)
 			{
-				$tempTwitterObjArr['description'] = '';
-				$tempTwitterObjArr['title'] = '<i class="fa fa-twitter-square" aria-hidden="true"></i> Tweet by '.$item['user']['name'];			
- 				if(isset($item['entities']['media'][0]['media_url']))
+				if($entryCount < $this->feedLimit)
 				{
-					$tempTwitterObjArr['description'] .= '<img class="thumbnail pull-left" src="'.$item['entities']['media'][0]['media_url'].'" />';
+					$tempTwitterObjArr['description'] = '';
+					$tempTwitterObjArr['title'] = '<i class="fa fa-twitter-square" aria-hidden="true"></i> Tweet by '.$item['user']['name'];			
+	 				if(isset($item['entities']['media'][0]['media_url']))
+					{
+						$tempTwitterObjArr['description'] .= '<img class="thumbnail pull-left" src="'.$item['entities']['media'][0]['media_url'].'" />';
+					}
+					$tempTwitterObjArr['description'] .= $this->turnIntoLinks($item['text']);
+					$tempTwitterObjArr['link'] = 'http://twitter.com/'.$item['user']['screen_name'];
+					$tempTwitterObjArr['pubDate'] = $item['created_at'];
+					$to = (object) $tempTwitterObjArr;
+					unset($tempTwitterObjArr);
+				    array_push($twitterObjArr, $to);
+				    $entryCount++;
 				}
-				$tempTwitterObjArr['description'] .= $this->turnIntoLinks($item['text']);
-				$tempTwitterObjArr['link'] = 'http://twitter.com/'.$item['user']['screen_name'];
-				$tempTwitterObjArr['pubDate'] = $item['created_at'];
-				$to = (object) $tempTwitterObjArr;
-				unset($tempTwitterObjArr);
-			    array_push($twitterObjArr, $to);
 			}
 			$this->outArr = array_merge($this->outArr, $twitterObjArr);
 		}
@@ -95,7 +112,7 @@ class aggregator extends database
 		$twitterjson = $this->getTwitterHashtagJSON($ht);
 		$tempTwitterObjArr = array();
 		$twitterObjArr = array();
-		
+		$entryCount = 0;
 		if((empty($twitterjson['statuses'])) || ($twitterjson == FALSE))
 		{
 			array_push($this->messageArr, 'Failed to load Twitter hashtag feed '.$ht);
@@ -104,18 +121,22 @@ class aggregator extends database
 		{
 			foreach($twitterjson['statuses'] as $item)
 			{
-				$tempTwitterObjArr['description'] = '';
-				$tempTwitterObjArr['title'] = '<i class="fa fa-twitter-square" aria-hidden="true"></i> Tweet by '.$item['user']['name'];
-				if(isset($item['entities']['media'][0]['media_url']))
+				if($entryCount < $this->feedLimit)
 				{
-					$tempTwitterObjArr['description'] .= '<img class="thumbnail pull-left" src="'.$item['entities']['media'][0]['media_url'].'" />';
-				}			
-				$tempTwitterObjArr['description'] .= $this->turnIntoLinks($item['text']);
-				$tempTwitterObjArr['link'] = 'http://twitter.com/'.$item['user']['screen_name'];
-				$tempTwitterObjArr['pubDate'] = $item['created_at'];
-				$to = (object) $tempTwitterObjArr;
-				unset($tempTwitterObjArr);
-			    array_push($twitterObjArr, $to);		   
+					$tempTwitterObjArr['description'] = '';
+					$tempTwitterObjArr['title'] = '<i class="fa fa-twitter-square" aria-hidden="true"></i> Tweet by '.$item['user']['name'];
+					if(isset($item['entities']['media'][0]['media_url']))
+					{
+						$tempTwitterObjArr['description'] .= '<img class="thumbnail pull-left" src="'.$item['entities']['media'][0]['media_url'].'" />';
+					}			
+					$tempTwitterObjArr['description'] .= $this->turnIntoLinks($item['text']);
+					$tempTwitterObjArr['link'] = 'http://twitter.com/'.$item['user']['screen_name'];
+					$tempTwitterObjArr['pubDate'] = $item['created_at'];
+					$to = (object) $tempTwitterObjArr;
+					unset($tempTwitterObjArr);
+				    array_push($twitterObjArr, $to);
+				    $entryCount++;
+				}
 			}
 			$this->outArr = array_merge($this->outArr, $twitterObjArr);
 		}
@@ -144,37 +165,42 @@ class aggregator extends database
 			$tempYouTubeObjArr = array();
 			$youTubeArr = array();
 			$xml = simplexml_load_file('https://www.youtube.com/feeds/videos.xml?user='.$un);
-			$namespaces=$xml->getNameSpaces(true); // access all the namespaces used in the tree
+			$namespaces=$xml->getNameSpaces(true);
 			array_unshift($namespaces,"");
+			$entryCount = 0;
 			foreach ($xml->entry as $entry)
 			{
-				$tempYouTubeObjArr['title'] = '<i class="fa fa-youtube-square" aria-hidden="true"></i> '.$entry->title;
-				$media = $entry->children('http://search.yahoo.com/mrss/');
-				$index = 0;
-				$thumbs = $media->group->thumbnail;
-				foreach ($thumbs as $thumb)
+				if($entryCount < $this->feedLimit)
 				{
-					$attrstring="";
-        			foreach ($namespaces as $ns)
-        			{
-                		foreach ($thumb->attributes($ns) as $attr => $value)
-                		{ 
-                			if($attr == 'url')
-                			{
-                				$tempYouTubeObjArr['description'] = '<img src="'.$value[0].'" class="thumbnail pull-left" />';
-                			}
-                        	$thumb_attrs[$index][$attr] = $value;
-                        	$attrstring.= $attr . ': ' . $thumb_attrs[$index][$attr] . "| ";
-                		}
-        			}        			
-        			$index++;
+					$tempYouTubeObjArr['title'] = '<i class="fa fa-youtube-square" aria-hidden="true"></i> '.$entry->title;
+					$media = $entry->children('http://search.yahoo.com/mrss/');
+					$index = 0;
+					$thumbs = $media->group->thumbnail;
+					foreach ($thumbs as $thumb)
+					{
+						$attrstring="";
+	        			foreach ($namespaces as $ns)
+	        			{
+	                		foreach ($thumb->attributes($ns) as $attr => $value)
+	                		{ 
+	                			if($attr == 'url')
+	                			{
+	                				$tempYouTubeObjArr['description'] = '<img src="'.$value[0].'" class="thumbnail pull-left" />';
+	                			}
+	                        	$thumb_attrs[$index][$attr] = $value;
+	                        	$attrstring.= $attr . ': ' . $thumb_attrs[$index][$attr] . "| ";
+	                		}
+	        			}        			
+	        			$index++;
+					}
+					$tempYouTubeObjArr['description'] .= substr($media->group->description, 0,140).'...';
+					$tempYouTubeObjArr['link'] = $entry->link['href'];
+					$tempYouTubeObjArr['pubDate'] = $entry->published;			
+					$yto = (object) $tempYouTubeObjArr;			
+					unset($tempYouTubeObjArr);			
+				    array_push($youTubeArr, $yto);
+				    $entryCount++;
 				}
-				$tempYouTubeObjArr['description'] .= substr($media->group->description, 0,140).'...';
-				$tempYouTubeObjArr['link'] = $entry->link['href'];
-				$tempYouTubeObjArr['pubDate'] = $entry->published;			
-				$yto = (object) $tempYouTubeObjArr;			
-				unset($tempYouTubeObjArr);			
-			    array_push($youTubeArr, $yto);
 			}
 			$this->outArr = array_merge($this->outArr, $youTubeArr);	
 		}
@@ -187,19 +213,24 @@ class aggregator extends database
 		$this->addr = $addr != NULL ? $addr : $this->addr;		
 		$rss = simplexml_load_file('https://www.pinterest.com/'.$this->addr.'/feed.rss');
 		$tempPinArr = array();
-		$pinArr = array();		
+		$pinArr = array();
+		$entryCount = 0;
 		if($rss !== FALSE)
 		{
 			foreach ($rss->channel->item as $entry)
 			{
-				$tempPinArr['title'] = '<i class="fa fa-pinterest-square" aria-hidden="true"></i> '.$entry->title;
-				$tempPinArr['description'] = strip_tags($entry->description, '<p><img>');
-				$tempPinArr['description'] = str_replace('<img ', '<img class="thumbnail pull-left" ', $tempPinArr['description']);
-				$tempPinArr['link'] = $entry->link;
-				$tempPinArr['pubDate'] = $entry->pubDate;
-				$po = (object) $tempPinArr;			
-				unset($tempPinArr);			
-			    array_push($pinArr, $po);
+				if($entryCount < $this->feedLimit)
+				{
+					$tempPinArr['title'] = '<i class="fa fa-pinterest-square" aria-hidden="true"></i> '.$entry->title;
+					$tempPinArr['description'] = strip_tags($entry->description, '<p><img>');
+					$tempPinArr['description'] = str_replace('<img ', '<img class="thumbnail pull-left" ', $tempPinArr['description']);
+					$tempPinArr['link'] = $entry->link;
+					$tempPinArr['pubDate'] = $entry->pubDate;
+					$po = (object) $tempPinArr;			
+					unset($tempPinArr);			
+				    array_push($pinArr, $po);
+				    $entryCount++;
+				}
 			}			
 			$this->outArr = array_merge($this->outArr, $pinArr);
 		}
