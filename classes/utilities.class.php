@@ -118,21 +118,6 @@ class utilities
 		}
 	}
 
-	function anchorblank($url = NULL, $label = NULL)
-	{
-		$outStr = '<a href="'.$url.'" target="_blank">';
-		if(!is_null($label))
-		{
-			$outStr .= $label;
-		}
-		else
-		{
-			$outStr .= $url;
-		}
-		$outStr .= '</a>';
-		echo $outStr;
-	}
-
 	function echotr($arr)
 	{
 		echo '<tr>';

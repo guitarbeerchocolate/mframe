@@ -7,17 +7,41 @@ class bootstrap
 
 	}
 
-	function hr()
+	function tag($t, $s)
 	{
-		$out = '<hr />'.PHP_EOL;
+		$out = '<'.$t.'>'.$s.'</'.$t.'>'.PHP_EOL;
 		$this->s = $out;
 		return $out;
 	}
 
-	function br()
+	function hr($s = NULL)
 	{
-		$out = '<br />'.PHP_EOL;
+		$out = $this->checkNulls($s);
+		$out .= '<hr />'.PHP_EOL;
 		$this->s = $out;
+		return $out;
+	}
+
+	function br($s = NULL)
+	{
+		$out = $this->checkNulls($s);
+		$out .= '<br />'.PHP_EOL;
+		$this->s = $out;
+		return $out;
+	}
+
+	function anchorblank($url = NULL, $label = NULL)
+	{
+		$out = '<a href="'.$url.'" target="_blank">';
+		if(!is_null($label))
+		{
+			$out .= $label;
+		}
+		else
+		{
+			$out .= $url;
+		}
+		$out .= '</a>';
 		return $out;
 	}
 
@@ -483,6 +507,7 @@ class bootstrap
 	function render()
 	{
 		echo $this->s;
+		$this->s = '';
 	}
 
 	function __destruct()
