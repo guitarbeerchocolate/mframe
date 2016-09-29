@@ -7,9 +7,11 @@ class bootstrap
 
 	}
 
-	function tag($t, $s)
+	function tag($t, $s, $classArr = NULL)
 	{
-		$out = '<'.$t.'>'.$s.'</'.$t.'>'.PHP_EOL;
+		$out = '<'.$t;
+		$out .= $this->addClasses($classArr);
+		$out .= '>'.$s.'</'.$t.'>'.PHP_EOL;
 		$this->s = $out;
 		return $out;
 	}
@@ -257,7 +259,7 @@ class bootstrap
 		$out .= '<div class="form-group">'.PHP_EOL;
 		$out .= '<label for="'.$name.'">'.$label.'</label>'.PHP_EOL;
 		$out .= '<textarea ';
-		$out .= $this->addClasses($additionalClasses);
+		$out .= $this->addFormClasses($additionalClasses);
 		$out .= ' rows="3" name="'.$name.'"';
 		if(!is_null($id)) $out .= ' id="'.$id.'"';
 		$out .= '>'.PHP_EOL;
@@ -282,7 +284,7 @@ class bootstrap
 		return $out;
 	}
 
-	function addClasses($c = array())
+	function addFormClasses($c = array())
 	{
 		$out = NULL;
 		$out .= ' class="form-control ';
@@ -304,7 +306,7 @@ class bootstrap
 		$out .= '<div class="form-group">'.PHP_EOL;
 		$out .= '<label for="'.$name.'">'.$label.'</label>'.PHP_EOL;
 		$out .= '<select ';
-		$out .= $this->addClasses($additionalClasses);
+		$out .= $this->addFormClasses($additionalClasses);
 		$out .= ' name="'.$name.'"';
 		if(!is_null($id)) $out .= ' id="'.$id.'"';
 		$out .= '>'.PHP_EOL;
@@ -478,6 +480,67 @@ class bootstrap
 		$out .= '<div class="well">'.PHP_EOL;
 		$out .= $s.PHP_EOL;
 		$out .= '</div><!-- .well -->'.PHP_EOL;
+		return $out;
+	}
+
+	function image($src, $alt)
+	{
+		return '<img src="'.$src.'" alt="'.$alt.'" class="img-responsive" />';
+	}
+
+	function carousel($imgArr = array())
+	{
+		$out = NULL;
+		$out .= '<div id="mycarousel" class="carousel slide" data-ride="carousel">'.PHP_EOL;
+		$out .= '<div class="carousel-inner">'.PHP_EOL;
+		$count = 0;
+		foreach($imgArr as $img)
+		{
+			$anImage = $this->image($img,'Gallery item');
+			if($count == 0)
+			{
+				$out .= $this->tag('div',$anImage,array('item','active'));				
+				$count++;
+			}
+			else
+			{
+				$out .= $this->tag('div',$anImage,'item');
+			}
+		}
+		$out .= '</div><!-- .carousel-inner -->'.PHP_EOL;
+		/* $out .= '<a class="left carousel-control" href="#mycarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a><a class="right carousel-control" href="#mycarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>'.PHP_EOL; */
+		$out .= '</div><!-- #mycarousel -->'.PHP_EOL;
+		return $out;
+	}
+
+	function addClasses($ca)
+	{
+		$out = NULL;
+		$isFirst = TRUE;
+		if(is_array($ca))
+		{
+			$out = ' class="';
+			foreach ($ca as $class)
+			{
+				if($isFirst == TRUE)
+				{
+					$out .= ' '.$class;
+					$isFirst == FALSE;
+				}
+				else
+				{
+					$out .= ' '.$class;
+				}
+			}
+			$out .= '"';
+		}
+		else
+		{
+			if(!is_null($ca))
+			{
+				$out = ' class="'.$ca.'"';	
+			}
+		}
 		return $out;
 	}
 

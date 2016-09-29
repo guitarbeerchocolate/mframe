@@ -1,15 +1,13 @@
-<div class="row">
-	<div class="container">
-		<header class="col-md-12">
-			<h2>About mframe</h2>
-		</header>		
-	</div><!-- .container -->
-</div><!-- .row -->
-<hr />
-<div class="row">
-	<div class="container">
-		<article class="col-md-12">
-			<p>Best things since sliced bread.</p>
-		</article>
-	</div><!-- .container -->		
-</div><!-- .row -->
+<?php
+$h2 = $bs->tag('h2','About mframe');
+$header = $bs->column($h2,12,'header');
+$hr = $bs->hr();
+$con = $bs->container($header.$hr);
+$bs->row($con);
+$bs->render();
+$p = $bs->tag('p','Best things since sliced bread.');
+$header = $bs->column($p,12,'article');
+$con = $bs->container($header);
+$bs->row($con);
+$bs->render();
+?>
