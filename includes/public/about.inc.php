@@ -1,13 +1,14 @@
 <?php
 $h2 = $bs->tag('h2','About mframe');
-$header = $bs->column($h2,12,'header');
-$hr = $bs->hr();
-$con = $bs->container($header.$hr);
-$bs->row($con);
+$col = $bs->tag(NULL,$h2,array('class'=>'col-md-12'));
+$hr = $bs->tag('hr');
+$con = $bs->tag(NULL,$col,array('class'=>'container'));
+$bs->tag(NULL,$con.$hr,array('class'=>'row'));
 $bs->render();
+
 $p = $bs->tag('p','Best things since sliced bread.');
-$header = $bs->column($p,12,'article');
-$con = $bs->container($header);
-$bs->row($con);
+$col = $bs->tag('article',$p,array('class'=>'col-md-12'));
+$con = $bs->tag(NULL,$col,array('class'=>'container'));
+$bs->tag(NULL,$con,array('class'=>'row'));
 $bs->render();
 ?>

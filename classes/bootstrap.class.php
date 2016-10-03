@@ -7,77 +7,17 @@ class bootstrap
 
 	}
 
-	function tag($t, $s, $classArr = NULL)
+	function tag($t = NULL, $s = NULL, $settingsArr = array())
 	{
+		if(is_null($t)) $t = 'div';
 		$out = '<'.$t;
-		$out .= $this->addClasses($classArr);
-		$out .= '>'.$s.'</'.$t.'>'.PHP_EOL;
+		$out .= $this->handleSettings($settingsArr);
+		$out .= '>';
+		$out .= $this->checkNulls($s).PHP_EOL;
+		$out .= '</'.$t.'><!-- '.$t.' -->'.PHP_EOL;
 		$this->s = $out;
 		return $out;
-	}
-
-	function hr($s = NULL)
-	{
-		$out = $this->checkNulls($s);
-		$out .= '<hr />'.PHP_EOL;
-		$this->s = $out;
-		return $out;
-	}
-
-	function br($s = NULL)
-	{
-		$out = $this->checkNulls($s);
-		$out .= '<br />'.PHP_EOL;
-		$this->s = $out;
-		return $out;
-	}
-
-	function anchorblank($url = NULL, $label = NULL)
-	{
-		$out = '<a href="'.$url.'" target="_blank">';
-		if(!is_null($label))
-		{
-			$out .= $label;
-		}
-		else
-		{
-			$out .= $url;
-		}
-		$out .= '</a>';
-		return $out;
-	}
-
-	function row($s = NULL, $tag = 'div', $id = NULL)
-	{
-		$out = '<'.$tag.' class="row"';
-		if(!is_null($id)) $out .= ' id="'.$id.'"';
-		$out .= '>'.PHP_EOL;
-		$out .= $this->checkNulls($s);
-		$out .= '</'.$tag.'><!-- .row -->'.PHP_EOL;
-		$this->s = $out;
-		return $out;
-	}
-
-	function container($s = NULL)
-	{
-		$out = '<div class="container">'.PHP_EOL;
-		$out .= $this->checkNulls($s);
-		$out .= '</div><!-- .container -->'.PHP_EOL;
-		$this->s = $out;
-		return $out;
-	}
-
-	function column($s, $width = 12, $tag = 'div', $ampArr = NULL, $schemaArr = NULL)
-	{
-		$out = '<'.$tag.' class="col-md-'.$width.'"';
-		$out .= $this->setAMP($ampArr);
-		$out .= $this->setSchema($schemaArr);
-		$out .= '>'.PHP_EOL;
-		$out .= $this->checkNulls($s);
-		$out .= '</'.$tag.'><!-- .col-md-'.$width.' -->'.PHP_EOL;
-		$this->s = $out;
-		return $out;
-	}
+	}	
 
 	function table($headers = array(), $rows = array(), $id = NULL)
 	{
@@ -381,43 +321,7 @@ class bootstrap
 		$out .= '</div><!-- .media -->'.PHP_EOL;
 		return $out;
 
-	}
-
-	function floatleft($s = NULL)
-	{
-		$out = NULL;
-		$out .= '<div class="pull-left">'.PHP_EOL;
-		$out .= $s.PHP_EOL;
-		$out .= '</div><!-- .pull-left -->'.PHP_EOL;
-		return $out;
-	}
-
-	function floatright($s = NULL)
-	{
-		$out = NULL;
-		$out .= '<div class="pull-right">'.PHP_EOL;
-		$out .= $s.PHP_EOL;
-		$out .= '</div><!-- .pull-right -->'.PHP_EOL;
-		return $out;
-	}
-
-	function centre($s = NULL)
-	{
-		$out = NULL;
-		$out .= '<div class="center-block">'.PHP_EOL;
-		$out .= $s.PHP_EOL;
-		$out .= '</div><!-- .center-block -->'.PHP_EOL;
-		return $out;
-	}
-
-	function clearfix($s = NULL)
-	{
-		$out = NULL;
-		$out .= '<div class="clearfix">'.PHP_EOL;
-		$out .= $s.PHP_EOL;
-		$out .= '</div><!-- .clearfix -->'.PHP_EOL;
-		return $out;
-	}
+	}	
 
 	function pageheader($s = NULL, $id = NULL)
 	{
@@ -439,54 +343,7 @@ class bootstrap
 		$out .= $s.PHP_EOL;
 		$out .= '</div><!-- .jumbotron -->'.PHP_EOL;
 		return $out;
-	}
-
-	function header($level = 1, $s, $id = NULL)
-	{
-		$out = NULL;
-		$out .= '<h'.$level.'';
-		if(!is_null($id)) $out .= ' id="'.$id.'"';
-		$out .= '>'.PHP_EOL;
-		$out .= $s.PHP_EOL;
-		$out .= '</h'.$level.'><!-- h'.$level.' -->'.PHP_EOL;
-		return $out;
-	}
-
-	function alert($s = NULL, $type = 'success')
-	{
-		$out = NULL;
-		$out .= '<div class="alert alert-'.$type.'" role="alert">'.PHP_EOL;
-		$out .= $s.PHP_EOL;
-		$out .= '</div><!-- .alert -->'.PHP_EOL;
-		return $out;
-	}
-
-	function panel($s = NULL, $header = NULL, $footer = NULL, $id = NULL)
-	{
-		$out = NULL;
-		$out .= '<div class="panel panel-default"';
-		if(!is_null($id)) $out .= ' id="'.$id.'"';
-		$out .= '>'.PHP_EOL;
-		if(!is_null($header)) $out .= '<div class="panel-heading">'.$header.'</div>'.PHP_EOL;
-		$out .= '<div class="panel-body"></div>'.PHP_EOL;
-		if(!is_null($footer)) $out .= '<div class="panel-footer">'.$footer.'</div>'.PHP_EOL;
-		$out .= '</div><!-- .panel -->'.PHP_EOL;
-		return $out;
-	}
-
-	function well($s = NULL, $id = NULL)
-	{
-		$out = NULL;
-		$out .= '<div class="well">'.PHP_EOL;
-		$out .= $s.PHP_EOL;
-		$out .= '</div><!-- .well -->'.PHP_EOL;
-		return $out;
-	}
-
-	function image($src, $alt)
-	{
-		return '<img src="'.$src.'" alt="'.$alt.'" class="img-responsive" />';
-	}
+	}	
 
 	function carousel($imgArr = array())
 	{
@@ -512,38 +369,7 @@ class bootstrap
 		$out .= '</div><!-- #mycarousel -->'.PHP_EOL;
 		return $out;
 	}
-
-	function addClasses($ca)
-	{
-		$out = NULL;
-		$isFirst = TRUE;
-		if(is_array($ca))
-		{
-			$out = ' class="';
-			foreach ($ca as $class)
-			{
-				if($isFirst == TRUE)
-				{
-					$out .= ' '.$class;
-					$isFirst == FALSE;
-				}
-				else
-				{
-					$out .= ' '.$class;
-				}
-			}
-			$out .= '"';
-		}
-		else
-		{
-			if(!is_null($ca))
-			{
-				$out = ' class="'.$ca.'"';	
-			}
-		}
-		return $out;
-	}
-
+	
 	function isAssoc($arr)
 	{
 	    return array_keys($arr) !== range(0, count($arr) - 1);
@@ -557,14 +383,59 @@ class bootstrap
 		}
 	}
 
-	function setAMP($sa)
+	function handleSettings($sarr = array())
 	{
-		
+		$out = '';
+		if(!empty($sarr))
+		{
+			foreach($sarr as $key => $value)
+			{
+				if(is_array($value))
+				{
+					$out .= ' '.$this->handleSettingArrayValues($key, $value);
+				}
+				else
+				{
+					if($key == 'itemtype')
+					{
+						$out .= ' itemscope '.$key.'="'.$value.'"';
+					}
+					else
+					{
+						$out .= ' '.$key.'="'.$value.'"';
+					}					
+				}
+			}
+		}
+		return $out;
 	}
 
-	function setSchema($sa)
+	function handleSettingArrayValues($key = NULL, $value = array())
 	{
+		$out = '';
+		switch($key)
+		{
+			case 'class':
+				$out .= $key.'="';
+				$out .= $this->handleValueArrays($value);
+				$out .= '"';
+				break;			
+			default:
+				# code...
+				break;
+		};
+		return $out;
+	}
 
+	function handleValueArrays($v = array())
+	{
+		$out = '';
+		foreach ($v as $item)
+		{
+			$out .= ' '.$item;
+		}
+		$out = ltrim($out);
+		return $out;
 	}
 
 	function render()

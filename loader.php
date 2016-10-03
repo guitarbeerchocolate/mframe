@@ -34,15 +34,15 @@ foreach($arr as $row)
 {
     if($feedLimit > $entryCount)
     {
-        $headeranchor = $bs->anchorblank($row->link, $row->title);
+        $headeranchor = $bs->tag('a', $row->title, array('href'=>$row->link, 'target'=>'_blank'));
         $h5 = $bs->tag('h5',$headeranchor);
         $articleHeader = $bs->tag('header',$h5);
-        $clearfix = $bs->clearfix();
-        $linkanchor = $bs->anchorblank(strip_tags($row->link));
+        $clearfix = $bs->tag(NULL,NULL,array('class'=>'clearfix'));
+        $linkanchor = $bs->tag('a',$row->link, array('href'=>$row->link, 'target'=>'_blank'));
         $linkanchor = $bs->tag('small',$linkanchor);
         $linkanchor = $bs->tag('p',$linkanchor);
         $articleFooter = $bs->tag('footer','Posted '.date("jS F Y",strtotime($row->pubDate)));
-        $hr = $bs->hr();
+        $hr = $bs->tag('hr');
         $bs->tag('article',$articleHeader.$row->description.$clearfix.$linkanchor.$articleFooter.$hr);
         $bs->render();
     }
