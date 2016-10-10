@@ -13,11 +13,21 @@
 <meta name="author" content="Mick Redman, mick.redman@effectivewebdesigns.co.uk">
 <meta property="og:title" content="<?php echo $liveConfig['theTitle'].' : '.$db->getVal('name'); ?>" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="<?php echo "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"; ?>" />
+<meta property="og:url" content="<?php echo $liveConfig['currentURL']; ?>" />
 <meta property="og:image" content="icon.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="400" />
 <meta property="og:image:height" content="400" />
 <meta property="og:locale" content="en_GB" />
 <meta property="og:description" content="<?php echo $liveConfig['theDescription']; ?>" />
-<meta name="ROBOTS" content="INDEX, FOLLOW">
+<?php
+if($liveConfig['status'] == 'public')
+{
+  echo '<meta name="ROBOTS" content="INDEX, FOLLOW">'.PHP_EOL;
+}
+else
+{
+  echo '<meta name="googlebot" content="noindex">'.PHP_EOL;
+  echo '<meta name="robots" content="noindex">'.PHP_EOL;
+}
+?>

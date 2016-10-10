@@ -6,6 +6,7 @@ $liveConfig['parameterValue'] = NULL;
 $liveConfig['hasInclude'] = FALSE;
 $liveConfig['theTitle'] = NULL;
 $liveConfig['paramArr'] = array();
+$liveConfig['currentURL'] = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 
 if((isset($_GET['searchterms'])) && (!empty($_GET['searchterms'])))
 {
