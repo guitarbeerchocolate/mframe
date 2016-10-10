@@ -1,6 +1,6 @@
 <?php
 $h2 = $bs->tag('h2','About mframe');
-$col = $bs->tag(NULL,$h2,array('class'=>'col-md-12'));
+$col = $bs->tag(NULL,$h2,array('class'=>'col-md-12','page-header'));
 $hr = $bs->tag('hr');
 $con = $bs->tag(NULL,$col,array('class'=>'container'));
 $bs->tag(NULL,$con.$hr,array('class'=>'row'));

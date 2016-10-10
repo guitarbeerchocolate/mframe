@@ -1,5 +1,7 @@
 <?php
 $h2 = $bs->tag('h2','Contact');
+$col = $bs->tag(NULL,$h2,array('class'=>'col-md-12','page-header'));
+$hr = $bs->tag('hr');
 $input = $bs->input('emailaddress', 'Email address');
 $textarea = $bs->textarea('details', 'Details');
 $inputArr = array($input, $textarea);

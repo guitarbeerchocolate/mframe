@@ -295,14 +295,6 @@ class bootstrap
 		return $out;
 	}
 
-	function img($src = NULL, $alt = NULL, $id = NULL)
-	{
-		$out = '<img src="'.$src.'" class="img-responsive" alt="'.$alt.'"';
-		if(!is_null($id)) $out .= ' id="'.$id.'"';
-		$out .= ' />'.PHP_EOL;		
-		return  $out;
-	}
-
 	function mediaobject($src = NULL, $alt = NULL, $href = '#', $heading = NULL, $body = NULL, $align = 'left', $id = NULL)
 	{
 		$out = NULL;
@@ -323,50 +315,28 @@ class bootstrap
 
 	}	
 
-	function pageheader($s = NULL, $id = NULL)
-	{
-		$out = NULL;
-		$out .= '<div class="page-header"';
-		if(!is_null($id)) $out .= ' id="'.$id.'"';
-		$out .= '>'.PHP_EOL;
-		$out .= $s.PHP_EOL;
-		$out .= '</div><!-- .page-header -->'.PHP_EOL;
-		return $out;
-	}
-
-	function jumbotron($s = NULL, $id = NULL)
-	{
-		$out = NULL;
-		$out .= '<div class="jumbotron"';
-		if(!is_null($id)) $out .= ' id="'.$id.'"';
-		$out .= '>'.PHP_EOL;
-		$out .= $s.PHP_EOL;
-		$out .= '</div><!-- .jumbotron -->'.PHP_EOL;
-		return $out;
-	}	
-
 	function carousel($imgArr = array())
 	{
 		$out = NULL;
+		$items = NULL;
 		$out .= '<div id="mycarousel" class="carousel slide" data-ride="carousel">'.PHP_EOL;
 		$out .= '<div class="carousel-inner">'.PHP_EOL;
 		$count = 0;
 		foreach($imgArr as $img)
 		{
-			$anImage = $this->image($img,'Gallery item');
+			$anImage = $this->tag('img',NULL,array('src'=>$img,'alt'=>'Gallery item','class'=>'img-responsive'));
 			if($count == 0)
 			{
-				$out .= $this->tag('div',$anImage,array('item','active'));				
+				$items .= $this->tag('div',$anImage,array('class'=>array('item','active')));
 				$count++;
 			}
 			else
 			{
-				$out .= $this->tag('div',$anImage,'item');
+				$items .= $this->tag('div',$anImage,array('class'=>'item'));
 			}
 		}
-		$out .= '</div><!-- .carousel-inner -->'.PHP_EOL;
-		/* $out .= '<a class="left carousel-control" href="#mycarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a><a class="right carousel-control" href="#mycarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>'.PHP_EOL; */
-		$out .= '</div><!-- #mycarousel -->'.PHP_EOL;
+		$inner = $this->tag('div',$items,array('class'=>'carousel-inner'));
+		$out = $this->tag('div',$inner,array('id'=>'mycarousel','data-ride'=>'carousel','class'=>'carousel slide'));	
 		return $out;
 	}
 	
