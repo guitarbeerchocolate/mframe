@@ -1,13 +1,18 @@
-<?php
-$h2 = $bs->tag('h2','Contact');
-$col = $bs->tag(NULL,$h2,array('class'=>'col-md-12','page-header'));
-$hr = $bs->tag('hr');
-$input = $bs->input('emailaddress', 'Email address');
-$textarea = $bs->textarea('details', 'Details');
-$inputArr = array($input, $textarea);
-$form  = $bs->form($inputArr, 'contact/send', FALSE, 'form');
-$col = $bs->tag(NULL,$h2.$form,array('class'=>'col-md-12'));	
-$con = $bs->tag(NULL,$col,array('class'=>'container'));
-$bs->tag(NULL,$con,array('class'=>'row'));
-$bs->render();
-?>
+<div class="row">
+    <div class="container">
+        <div class="col-md-12">
+            <h2>Contact</h2>
+                <form action="contact/send" method="POST" role="form">
+                    <div class="form-group">
+                        <label for="emailaddress">Email address</label>
+                        <input type="text" name="emailaddress" class="form-control"  />
+                    </div><!-- .form-group -->
+                    <div class="form-group">
+                        <label for="details">Details</label>
+                        <textarea class="form-control" rows="3" name="details"></textarea>
+                    </div><!-- .form-group -->
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+        </div><!-- .col-md-12 -->
+    </div><!-- .container -->
+</div><!-- .row -->

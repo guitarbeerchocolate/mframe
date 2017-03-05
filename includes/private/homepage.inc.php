@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="container">		
+	<div class="container">
 		<aside class="col-md-12">
 			<h3>Your profile</h3>
 			<?php
@@ -9,7 +9,7 @@
 				$name = $row['name'];
 				$content = $row['content'];
 				$photo = $row['photo'];
-				$db->u->echoh4($name);
+				$db->u->echoheader(4,$name);
 				$db->u->echobr($content);
 				if(!empty($photo))
 				{

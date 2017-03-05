@@ -128,29 +128,9 @@ class utilities
 		echo '<tr>';
 	}
 
-	function echoh1($s = NULL)
+	function echoheader($n = 1, $s = NULL)
 	{
-		echo '<h1>'.$s.'</h1>';
-	}
-
-	function echoh2($s = NULL)
-	{
-		echo '<h2>'.$s.'</h2>';
-	}
-
-	function echoh3($s = NULL)
-	{
-		echo '<h3>'.$s.'</h3>';
-	}
-
-	function echoh4($s = NULL)
-	{
-		echo '<h4>'.$s.'</h4>';
-	}
-
-	function echoh5($s = NULL)
-	{
-		echo '<h5>'.$s.'</h5>';
+		echo '<h'.$n.'>'.$s.'</h'.$n.'>';
 	}
 
 	function echop($s = NULL)
@@ -163,13 +143,12 @@ class utilities
 		$output = '<title>';
 		if((strtolower($s) == 'index.php') || (strtolower($s) == ''))
 		{
-			$output .= 'Home';
+			$output .= '';
 		}
 		else
 		{
-			$output .= ucwords($s);
+			$output .= ucwords($s).' : ';
 		}
-		$output .= ' : ';
 		$output .= $sitename;
 		$output .= '</title>';
 		echo $output;
@@ -241,25 +220,52 @@ class utilities
         if(array_key_exists($ext, $mime_types))
         {
             return $mime_types[$ext];
-        }        
+        }
         else
         {
             return 'application/octet-stream';
         }
-    }  
+    }
 
     function data_uri($file = NULL)
 	{
-		$mime = $this->get_mime_type($file);		
-		$contents = file_get_contents($file);		
-		$base64 = base64_encode($contents);				
+		$mime = $this->get_mime_type($file);
+		$contents = file_get_contents($file);
+		$base64 = base64_encode($contents);
 		echo "data:$mime;base64,$base64";
+	}
+
+	function data_uri_string($file = NULL, $mime = NULL)
+	{
+		switch ($mime)
+		{
+			case 'image/png':
+				$image = imagecreatefrompng($file);
+				break;
+			case 'image/jpeg':
+				$image = imagecreatefromjpeg($file);
+				break;
+			case 'image/gif':
+				$image = imagecreatefromgif($file);
+				break;
+			case 'image/bmp':
+				$image = imagecreatefromwbmp($file);
+				break;
+			default:
+				break;
+		}
+		$image = imagescale($image , 500);
+		ob_start();
+		imagejpeg($image);
+		$contents = ob_get_contents();
+		ob_end_clean();
+		return "data:image/jpeg;base64,".base64_encode($contents);
 	}
 
 	function data_uri_image($file = NULL, $mime = NULL, $alt = NULL)
 	{
-		$contents = file_get_contents($file);		
-		$base64 = base64_encode($contents);				
+		$contents = file_get_contents($file);
+		$base64 = base64_encode($contents);
 		echo '<img src="data:'.$mime.';base64,'.$base64.'" alt="'.$alt.'" class="img-responsive" />';
 	}
 
@@ -284,9 +290,9 @@ class utilities
 			case 'image/bmp':
 				$image = imagecreatefromwbmp($file);
 				break;
-			default:				
+			default:
 				break;
-		}		
+		}
 		$image = imagescale($image, $size);
 		ob_start();
 		switch ($mime)
@@ -294,7 +300,7 @@ class utilities
 			case 'image/png':
 				imagepng($image,$tempimage,95);
 				break;
-			case 'image/jpeg':				
+			case 'image/jpeg':
 				imagejpeg($image,$tempimage,95);
 				break;
 			case 'image/gif':
@@ -303,9 +309,9 @@ class utilities
 			case 'image/bmp':
 				imagewbmp($image,$tempimage,95);
 				break;
-			default:				
+			default:
 				break;
-		}		
+		}
 		$contents = ob_get_contents();
 		ob_end_clean();
 		return "data:".$mime.";base64,".base64_encode($contents);
@@ -324,7 +330,7 @@ class utilities
 		}
 		else
 		{
-			return 'http://';	
+			return 'http://';
 		}
 	}
 
@@ -424,7 +430,7 @@ class utilities
 		print_r($a);
 		echo "</pre>";
 		return ob_get_clean();
-	}	
+	}
 
 	function move_on($loc = NULL, $message = NULL)
 	{
@@ -439,6 +445,6 @@ class utilities
 
 	function __destruct()
 	{
-		
+
 	}
 }

@@ -5,25 +5,23 @@ require_once 'classes/bootstrap.class.php';
 $db = new database;
 $ef = new externalfeeds;
 $bs = new bootstrap;
-
 if((isset($_GET['feedtype'])) && (is_numeric($_GET['feedtype'])) && (($_GET['feedtype'] > 0) && ($_GET['feedtype'] < 6)))
 {
     $arr = $ef->getResults($_GET['feedtype']);
 }
 else
 {
-    $arr = $ef->getResults();    
+    $arr = $ef->getResults();
 }
 if(count($ef->agg->messageArr) > 0)
-{   
+{
     $bs->tag('h3','Errors');
     foreach($ef->agg->messageArr as $err)
     {
-        $bs->br($err);
+        $db->u->echobr($err);
     }
-    $bs->hr();
+     $db->u->echohr();
 }
-$bs->render();
 $entryCount = 0;
 $feedLimit = 1;
 if((isset($_GET['entrycount'])) && (is_numeric($_GET['entrycount'])) && (($_GET['entrycount'] > 0)))
@@ -32,6 +30,7 @@ if((isset($_GET['entrycount'])) && (is_numeric($_GET['entrycount'])) && (($_GET[
 }
 foreach($arr as $row)
 {
+
     if($feedLimit > $entryCount)
     {
         $headeranchor = $bs->tag('a', $row->title, array('href'=>$row->link, 'target'=>'_blank'));

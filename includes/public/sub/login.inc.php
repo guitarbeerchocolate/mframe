@@ -2,17 +2,14 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">Login</div>
 		<div class="panel-body">
-			<form method="POST" action="<?php echo $db->getVal('https_url'); ?>formhandler.php?action=authenticate/login">
-				<div class="form-group">
-					<label for="username">Email:</label>
-					<input type="email" name="username" id="username" class="form-control" placeholder="Email Address" />
-				</div><!-- .form-group -->
-				<div class="form-group">
-					<label for="password">Password:</label>
-					<input type="password" name="password" id="password" class="form-control" placeholder="Password" />
-				</div><!-- .form-group -->
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</form>
+			<?php
+			$usernameInput = $bs->input('username', 'Email:', 'email');
+			$passwordInput = $bs->input('password', 'Password:', 'password');
+			$fields = array($usernameInput,$passwordInput);
+			$action = $db->getVal('https_url').'formhandler.php?action=authenticate/login';
+			$bs->form($fields,$action,FALSE,NULL);
+			$bs->render();
+			?>
 		</div><!-- .panel-body -->
 	</div><!-- .panel -->
 </div><!-- .col-md-4 -->

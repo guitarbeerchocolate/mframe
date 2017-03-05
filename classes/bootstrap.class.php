@@ -17,7 +17,7 @@ class bootstrap
 		$out .= '</'.$t.'><!-- '.$t.' -->'.PHP_EOL;
 		$this->s = $out;
 		return $out;
-	}	
+	}
 
 	function table($headers = array(), $rows = array(), $id = NULL)
 	{
@@ -77,18 +77,18 @@ class bootstrap
 			if($this->isAssoc($rows) == TRUE)
 			{
 				$keys = array_keys($rows);
-				$out .= $this->buildHead($keys);				
+				$out .= $this->buildHead($keys);
 			}
 			elseif($this->isAssoc($rows[0]) == TRUE)
 			{
 				$keys = array_keys($rows[0]);
 				$out .= $this->buildHead($keys);
 			}
-			
+
 		}
 		elseif($this->isAssoc($rows) == TRUE)
 		{
-			
+
 			foreach($rows as $row)
 			{
 				if(is_array($row))
@@ -105,7 +105,7 @@ class bootstrap
 			}
 			$keys = array_unique($keys);
 			$out .= $this->buildHead($keys);
-		}		
+		}
 		return $out;
 	}
 
@@ -128,7 +128,7 @@ class bootstrap
 		if($upload == TRUE)
 		{
 			$out.= ' enctype="multipart/form-data"';
-		}		
+		}
 		if(!empty($additionalClasses))
 		{
 			$out .= ' class="';
@@ -138,23 +138,24 @@ class bootstrap
 			}
 			$out = trim($out);
 			$out .= '"';
-		}		
-		$out.= ' role="'.$role.'"';
+		}
+		if(!is_null($role)) $out.= ' role="'.$role.'"';
 		if(!is_null($id)) $out .= ' id="'.$id.'"';
 		$out .= '>'.PHP_EOL;
 		if(is_array($fields))
 		{
 			foreach ($fields as $field)
 			{
-				$out .= $field;		
+				$out .= $field;
 			}
 		}
 		else
 		{
 			$out .= $this->checkNulls($fields);
-		}		
+		}
 		$out .= '<button type="submit" class="btn btn-default">Submit</button>';
 		$out .= '</form>'.PHP_EOL;
+		$this->s = $out;
 		return $out;
 	}
 
@@ -184,7 +185,7 @@ class bootstrap
         $out .= '<input name="'.$name.'" type="checkbox"';
         if($value == TRUE)
         {
-        	$out .= ' CHECKED';	
+        	$out .= ' CHECKED';
         }
         $out .= ' /> '.$label.PHP_EOL;
         $out .= '</label>'.PHP_EOL;
@@ -215,7 +216,7 @@ class bootstrap
 	function hiddeninput($name = NULL, $value = NULL)
 	{
 		$out = NULL;
-		$out .= '<input type="hidden" name="'.$name;
+		$out .= '<input type="hidden" name="'.$name.'"';
 		if(!is_null($value))
 		{
 			$out .= ' value="'.$value.'"';
@@ -233,7 +234,7 @@ class bootstrap
 			foreach ($c as $ac)
 			{
 				$out .= $ac.' ';
-			}			
+			}
 		}
 		$out = trim($out);
 		$out .= '"';
@@ -269,7 +270,7 @@ class bootstrap
 					if($selected == $option) $out .= ' SELECTED';
 					$out .= '>'.$option.'</option>'.PHP_EOL;
 				}
-			}			
+			}
 		}
 		$out .= '</select>'.PHP_EOL;
 		$out .= '</div><!-- .form-group -->'.PHP_EOL;
@@ -311,9 +312,10 @@ class bootstrap
 		$out .= $body;
 		$out .= '</div><!-- .media-body -->'.PHP_EOL;
 		$out .= '</div><!-- .media -->'.PHP_EOL;
+		$this->s = $out;
 		return $out;
 
-	}	
+	}
 
 	function carousel($imgArr = array())
 	{
@@ -336,10 +338,11 @@ class bootstrap
 			}
 		}
 		$inner = $this->tag('div',$items,array('class'=>'carousel-inner'));
-		$out = $this->tag('div',$inner,array('id'=>'mycarousel','data-ride'=>'carousel','class'=>'carousel slide'));	
+		$out = $this->tag('div',$inner,array('id'=>'mycarousel','data-ride'=>'carousel','class'=>'carousel slide'));
+		$this->s = $out;
 		return $out;
 	}
-	
+
 	function isAssoc($arr)
 	{
 	    return array_keys($arr) !== range(0, count($arr) - 1);
@@ -373,7 +376,7 @@ class bootstrap
 					else
 					{
 						$out .= ' '.$key.'="'.$value.'"';
-					}					
+					}
 				}
 			}
 		}
@@ -389,7 +392,7 @@ class bootstrap
 				$out .= $key.'="';
 				$out .= $this->handleValueArrays($value);
 				$out .= '"';
-				break;			
+				break;
 			default:
 				# code...
 				break;

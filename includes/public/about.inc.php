@@ -1,14 +1,14 @@
-<?php
-$h2 = $bs->tag('h2','About mframe');
-$col = $bs->tag(NULL,$h2,array('class'=>'col-md-12','page-header'));
-$hr = $bs->tag('hr');
-$con = $bs->tag(NULL,$col,array('class'=>'container'));
-$bs->tag(NULL,$con.$hr,array('class'=>'row'));
-$bs->render();
-
-$p = $bs->tag('p','Best things since sliced bread.');
-$col = $bs->tag('article',$p,array('class'=>'col-md-12'));
-$con = $bs->tag(NULL,$col,array('class'=>'container'));
-$bs->tag(NULL,$con,array('class'=>'row'));
-$bs->render();
-?>
+<div class="row">
+    <div class="container">
+        <div class="col-md-12">
+            <h2>About mframe</h2>
+        </div><!-- .col-md-12 -->
+    </div><!-- .container -->
+</div><!-- .row -->
+<div class="row">
+    <div class="container">
+        <article class="col-md-12">
+            <p>Best things since sliced bread.</p>
+        </article><!-- article -->
+    </div><!-- .container -->
+</div><!-- .row -->

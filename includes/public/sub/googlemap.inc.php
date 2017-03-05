@@ -2,21 +2,21 @@
 <script>
 function initialize()
 {
-  var name = '<?php echo $row['name']; ?>';
-	var myLatlng = new google.maps.LatLng(<?php echo $lat; ?>,<?php echo $lng ?>);
-	var mapOptions =
-	{
-		center: myLatlng,
-		zoom:15,
-  		mapTypeId:google.maps.MapTypeId.ROADMAP
-	}
-	var map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
-	var marker = new google.maps.Marker(
-	{
-   		position: myLatlng,
-    	map: map,
-    	title: name
-	});
+    var name = '<?php echo $row['name']; ?>';
+    var myLatlng = new google.maps.LatLng(<?php echo $lat; ?>,<?php echo $lng ?>);
+    var mapOptions =
+    {
+        center: myLatlng,
+        zoom:15,
+        mapTypeId:google.maps.MapTypeId.ROADMAP
+    }
+    var map = new google.maps.Map(document.getElementById('googleMap'), mapOptions);
+    var marker = new google.maps.Marker(
+    {
+        position: myLatlng,
+        map: map,
+        title: name
+    });
 }
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>

@@ -11,15 +11,15 @@
 						</tr>
 					</thead>
 					<tbody>
-					<?php					
+					<?php
 					$rows = $db->listall('profiles','content');
 					if(count($rows) > 0)
 					{
 						foreach ($rows as $row)
 						{
 							$inputStr = '<input type="checkbox" name="id[]" ';
-							$inputStr .= 'value="'.$row['id'].'">';							
-							$u->echotr(array($inputStr,$row['name']));
+							$inputStr .= 'value="'.$row['id'].'">';
+							$db->u->echotr(array($inputStr,$row['name']));
 						}
 					}
 					else

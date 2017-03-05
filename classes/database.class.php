@@ -6,7 +6,7 @@ class database extends PDO
     public function __construct($file = 'config.ini')
     {
         $this->settings = parse_ini_file($file, TRUE);
-        $dns = $this->settings['driver'].':host=' . $this->settings['host'].((!empty($this->settings['port'])) ? (';port='.$this->settings['port']) : '').';dbname='.$this->settings['schema'];        
+        $dns = $this->settings['driver'].':host=' . $this->settings['host'].((!empty($this->settings['port'])) ? (';port='.$this->settings['port']) : '').';dbname='.$this->settings['schema'];
         parent::__construct($dns, $this->settings['username'], $this->settings['password']);
         $this->u = new utilities;
         $this->c = $this->listall('config','content');
@@ -16,7 +16,7 @@ class database extends PDO
     {
         $sql = "SELECT * FROM {$table}";
         if(!isset($index)) $sql .= " USE INDEX ({$index})";
-        $stmt = $this->query($sql); 
+        $stmt = $this->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -25,13 +25,13 @@ class database extends PDO
         $sql = "SELECT * FROM {$table}";
         if(!isset($index)) $sql .= " USE INDEX ({$index})";
         $sql .= " LIMIT {$limit}";
-        $stmt = $this->query($sql); 
+        $stmt = $this->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function performquery($q)
     {
-        $stmt = $this->query($q); 
+        $stmt = $this->query($q);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -40,13 +40,13 @@ class database extends PDO
         $sql = "SELECT * FROM {$table}";
         if(!isset($index)) $sql .= " USE INDEX ({$index})";
         $sql .= " WHERE {$field} LIKE :{$field} AND suspend <> 1 LIMIT 6";
-        $bindStr = ':'.$field;        
+        $bindStr = ':'.$field;
         $sth = $this->prepare($sql);
-        $sth->bindParam($bindStr, $value);        
+        $sth->bindParam($bindStr, $value);
         $message = $this->testExecute($sth);
         if($message == TRUE)
         {
-            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+            return $sth->fetchAll(PDO::FETCH_ASSOC);
         }
         else
         {
@@ -58,14 +58,14 @@ class database extends PDO
     {
         $sql = "SELECT * FROM {$table}";
         if(!isset($index)) $sql .= " USE INDEX ({$index})";
-        $sql .= " WHERE {$field} = :{$field}  LIMIT 1";        
-        $bindStr = ':'.$field;        
+        $sql .= " WHERE {$field} = :{$field}  LIMIT 1";
+        $bindStr = ':'.$field;
         $sth = $this->prepare($sql);
-        $sth->bindParam($bindStr, $value);        
+        $sth->bindParam($bindStr, $value);
         $message = $this->testExecute($sth);
         if($message == TRUE)
         {
-            return $sth->fetch(PDO::FETCH_ASSOC);    
+            return $sth->fetch(PDO::FETCH_ASSOC);
         }
         else
         {
@@ -77,14 +77,14 @@ class database extends PDO
     {
         $sql = "SELECT * FROM {$table}";
         if(!isset($index)) $sql .= " USE INDEX ({$index})";
-        $sql .= " WHERE {$field} = :{$field}";        
-        $bindStr = ':'.$field;        
+        $sql .= " WHERE {$field} = :{$field}";
+        $bindStr = ':'.$field;
         $sth = $this->prepare($sql);
-        $sth->bindParam($bindStr, $value);        
+        $sth->bindParam($bindStr, $value);
         $message = $this->testExecute($sth);
         if($message == TRUE)
         {
-            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+            return $sth->fetchAll(PDO::FETCH_ASSOC);
         }
         else
         {
@@ -96,14 +96,14 @@ class database extends PDO
     {
         $sql = "SELECT * FROM {$table}";
         if(!isset($index)) $sql .= " USE INDEX ({$index})";
-        $sql .= " WHERE {$field} = :{$field} LIMIT {$limit}";        
-        $bindStr = ':'.$field;        
+        $sql .= " WHERE {$field} = :{$field} LIMIT {$limit}";
+        $bindStr = ':'.$field;
         $sth = $this->prepare($sql);
-        $sth->bindParam($bindStr, $value);        
+        $sth->bindParam($bindStr, $value);
         $message = $this->testExecute($sth);
         if($message == TRUE)
         {
-            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+            return $sth->fetchAll(PDO::FETCH_ASSOC);
         }
         else
         {
@@ -115,14 +115,14 @@ class database extends PDO
     {
         $sql = "SELECT * FROM {$table}";
         if(!isset($index)) $sql .= " USE INDEX ({$index})";
-        $sql .= " WHERE {$field} LIKE :{$field}";        
-        $bindStr = ':'.$field;        
+        $sql .= " WHERE {$field} LIKE :{$field}";
+        $bindStr = ':'.$field;
         $sth = $this->prepare($sql);
-        $sth->bindParam($bindStr, $value);        
+        $sth->bindParam($bindStr, $value);
         $message = $this->testExecute($sth);
         if($message == TRUE)
         {
-            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+            return $sth->fetchAll(PDO::FETCH_ASSOC);
         }
         else
         {
@@ -134,14 +134,14 @@ class database extends PDO
     {
         $sql = "SELECT * FROM {$table}";
         if(!isset($index)) $sql .= " USE INDEX ({$index})";
-        $sql .= " WHERE {$field} LIKE :{$field} LIMIT {$limit}";        
-        $bindStr = ':'.$field;        
+        $sql .= " WHERE {$field} LIKE :{$field} LIMIT {$limit}";
+        $bindStr = ':'.$field;
         $sth = $this->prepare($sql);
-        $sth->bindParam($bindStr, $value);        
+        $sth->bindParam($bindStr, $value);
         $message = $this->testExecute($sth);
         if($message == TRUE)
         {
-            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+            return $sth->fetchAll(PDO::FETCH_ASSOC);
         }
         else
         {
@@ -153,13 +153,13 @@ class database extends PDO
     {
         $sql = "SELECT * FROM ".$table;
         if(!isset($index)) $sql .= " USE INDEX ({$index})";
-        $sql .= " WHERE id = :id LIMIT 1";               
+        $sql .= " WHERE id = :id LIMIT 1";
         $sth = $this->prepare($sql);
-        $sth->bindParam(':id', $id);        
+        $sth->bindParam(':id', $id);
         $message = $this->testExecute($sth);
         if($message == TRUE)
         {
-            return $sth->fetch(PDO::FETCH_ASSOC);    
+            return $sth->fetch(PDO::FETCH_ASSOC);
         }
         else
         {
@@ -169,22 +169,22 @@ class database extends PDO
 
     function getNextID($table)
     {
-        $sql = "SELECT * FROM ".$table." ORDER BY id DESC LIMIT 1"; 
+        $sql = "SELECT * FROM ".$table." ORDER BY id DESC LIMIT 1";
         $stmt = $this->query($sql);
-        $row = $stmt->fetch();        
+        $row = $stmt->fetch();
         return $row['id']+1;
     }
-    
+
     function listorderby($table,$orderby,$ad = "ASC", $index = NULL)
     {
         $sql = "SELECT * FROM {$table}";
         if(!isset($index)) $sql .= " USE INDEX ({$index})";
         $sql .= " ORDER BY {$orderby} {$ad}";
-        $sth = $this->prepare($sql);       
+        $sth = $this->prepare($sql);
         $message = $this->testExecute($sth);
         if($message == TRUE)
         {
-            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+            return $sth->fetchAll(PDO::FETCH_ASSOC);
         }
         else
         {
@@ -197,11 +197,11 @@ class database extends PDO
         $sql = "SELECT * FROM {$table}";
         if(!isset($index)) $sql .= " USE INDEX ({$index})";
         $sql .= " ORDER BY {$orderby} {$ad} LIMIT {$limit}";
-        $sth = $this->prepare($sql);       
+        $sth = $this->prepare($sql);
         $message = $this->testExecute($sth);
         if($message == TRUE)
         {
-            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+            return $sth->fetchAll(PDO::FETCH_ASSOC);
         }
         else
         {
@@ -220,7 +220,7 @@ class database extends PDO
         $message = $this->testExecute($sth);
         if($message == TRUE)
         {
-            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+            return $sth->fetchAll(PDO::FETCH_ASSOC);
         }
         else
         {
@@ -239,7 +239,7 @@ class database extends PDO
         $message = $this->testExecute($sth);
         if($message == TRUE)
         {
-            return $sth->fetchAll(PDO::FETCH_ASSOC);    
+            return $sth->fetchAll(PDO::FETCH_ASSOC);
         }
         else
         {
@@ -256,7 +256,7 @@ class database extends PDO
         if($stmt !== FALSE)
         {
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }        
+        }
         foreach ($rows as $row)
         {
             if(strtolower($row['COLUMN_NAME']) !== 'id')
@@ -296,16 +296,16 @@ class database extends PDO
     function testExecute($sth, $successMessage = NULL)
     {
         if($sth->execute() == TRUE)
-        { 
+        {
             if($successMessage != NULL)
             {
-                return $successMessage;    
+                return $successMessage;
             }
             else
             {
                 return TRUE;
             }
-            
+
         }
         else
         {
