@@ -367,6 +367,62 @@ class bootstrap
 		return $out;
 	}
 
+	function buttonLink($s, $href = '#', $c = 'btn-default', $target = '_self')
+	{
+		$out = NULL;
+		$out .= '<a class="btn '.$c.' role="button" href="'.$href.'" target="'.$target.'">'.$s.'</a>'.PHP_EOL;
+		$this->s = $out;
+		return $out;
+	}
+
+	function img($src = '#', $alt = NULL, $shape = NULL)
+	{
+		$out = NULL;
+		$out .= '<img src="'.$src.'" class="img-responsive" alt="'.$alt.'"';
+		if(!is_null($shape))
+		{
+			$out .= ' class="'.$shape.'"';
+		}
+		$out .= ' />'.PHP_EOL;
+		$this->s = $out;
+		return $out;
+	}
+
+	function modal($id = 'myModal', $content = NULL, $header = NULL, $c = 'btn-default')
+	{
+		$out = NULL;
+		$out .= '<div class="modal fade" id="'.$id.'" tabindex="-1" role="dialog" aria-labelledby="'.$id.'Label">'.PHP_EOL;
+		$out .= '<div class="modal-dialog" role="document">'.PHP_EOL;
+		$out .= '<div class="modal-content">'.PHP_EOL;
+		if(!is_null($header))
+		{
+			$out .= '<div class="modal-header">'.PHP_EOL;
+			$out .= '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'.PHP_EOL;
+			$out .= '<h4 class="modal-title" id="'.$id.'Label">'.$header.'</h4>'.PHP_EOL;
+			$out .= '</div><!-- .modal-header -->'.PHP_EOL;
+		}
+		$out .= '<div class="modal-body">'.PHP_EOL;
+		$out .= $content;
+		$out .= '</div><!-- .modal-body -->'.PHP_EOL;
+		$out .= '<div class="modal-footer">'.PHP_EOL;
+		$out .= '<button type="button" class="btn '.$c.'">Submit</button>'.PHP_EOL;
+		$out .= '<button type="button" class="btn '.$c.'" data-dismiss="modal">Close</button>'.PHP_EOL;
+		$out .= '</div><!-- .modal-footer -->'.PHP_EOL;
+		$out .= '</div><!-- .modal-content -->'.PHP_EOL;
+		$out .= '</div><!-- .modal-dialog -->'.PHP_EOL;
+		$out .= '</div><!-- #'.$id.' -->'.PHP_EOL;
+		$this->s = $out;
+		return $out;
+	}
+
+	function modalLink($id = NULL, $s = NULL)
+	{
+		$out = NULL;
+		$out .= '<a data-toggle="modal" data-target="#'.$id.'">'.$s.'</a>'.PHP_EOL;
+		$this->s = $out;
+		return $out;
+	}
+
 	function isAssoc($arr)
 	{
 	    return array_keys($arr) !== range(0, count($arr) - 1);
