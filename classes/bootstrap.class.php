@@ -343,6 +343,30 @@ class bootstrap
 		return $out;
 	}
 
+	function panel($content = '', $header = NULL, $footer = NULL)
+	{
+		$out = NULL;
+		$out .= '<div class="panel panel-default">'.PHP_EOL;
+		if(!is_null($header))
+  		{
+  			$out .= '<div class="panel-heading">'.PHP_EOL;
+  			$out .= '<h3 class="panel-title">'.$header.'</h3>'.PHP_EOL;
+  			$out .= '</div><!-- .panel-heading -->'.PHP_EOL;
+  		}
+  		$out .= '<div class="panel-body">'.PHP_EOL;
+  		$out .= $content.PHP_EOL;
+  		$out .= '</div><!-- .panel-body -->'.PHP_EOL;
+  		if(!is_null($footer))
+  		{
+  			$out .= '<div class="panel-footer">'.PHP_EOL;
+  			$out .= $footer;
+  			$out .= '</div><!-- .panel-footer -->'.PHP_EOL;
+  		}
+		$out .= '</div><!-- .panel -->'.PHP_EOL;
+		$this->s = $out;
+		return $out;
+	}
+
 	function isAssoc($arr)
 	{
 	    return array_keys($arr) !== range(0, count($arr) - 1);
