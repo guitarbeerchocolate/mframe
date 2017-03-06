@@ -180,15 +180,15 @@ class bootstrap
 	{
 		$out = NULL;
 		$out .= '<div class="form-group">'.PHP_EOL;
-    	$out .= '<div class="checkbox">'.PHP_EOL;
-        $out .= '<label>'.PHP_EOL;
-        $out .= '<input name="'.$name.'" type="checkbox"';
-        if($value == TRUE)
-        {
-        	$out .= ' CHECKED';
-        }
-        $out .= ' /> '.$label.PHP_EOL;
-        $out .= '</label>'.PHP_EOL;
+		$out .= '<div class="checkbox">'.PHP_EOL;
+		$out .= '<label>'.PHP_EOL;
+		$out .= '<input name="'.$name.'" type="checkbox"';
+		if($value == TRUE)
+		{
+			$out .= ' CHECKED';
+		}
+		$out .= ' /> '.$label.PHP_EOL;
+		$out .= '</label>'.PHP_EOL;
 		$out .= '</div><!-- .checkbox -->'.PHP_EOL;
 		$out .= '</div><!-- .form-group -->'.PHP_EOL;
 		return $out;

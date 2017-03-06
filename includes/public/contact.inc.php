@@ -1,18 +1,11 @@
-<div class="row">
-    <div class="container">
-        <div class="col-md-12">
-            <h2>Contact</h2>
-                <form action="contact/send" method="POST" role="form">
-                    <div class="form-group">
-                        <label for="emailaddress">Email address</label>
-                        <input type="text" name="emailaddress" class="form-control"  />
-                    </div><!-- .form-group -->
-                    <div class="form-group">
-                        <label for="details">Details</label>
-                        <textarea class="form-control" rows="3" name="details"></textarea>
-                    </div><!-- .form-group -->
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-        </div><!-- .col-md-12 -->
-    </div><!-- .container -->
-</div><!-- .row -->
+<?php
+$usernameInput = $bs->input('emailaddress', 'Email  address:', 'email');
+$detailsInput = $bs->textarea('details', 'Details:');
+$fields = array($usernameInput,$detailsInput);
+$action = $db->getVal('https_url').'contact/send';
+$form = $bs->form($fields,$action,FALSE,'form');
+$col = $bs->tag('div',$form,array('class'=>'col-md-12'));
+$con = $bs->tag('div',$col,array('class'=>'container'));
+$bs->tag('div',$con,array('class'=>'row'));
+$bs->render();
+?>
