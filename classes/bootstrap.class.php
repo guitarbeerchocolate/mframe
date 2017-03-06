@@ -153,7 +153,7 @@ class bootstrap
 		{
 			$out .= $this->checkNulls($fields);
 		}
-		$out .= '<button type="submit" class="btn btn-default">Submit</button>';
+		$out .= '<button type="submit" class="btn btn-primary">Submit</button>';
 		$out .= '</form>'.PHP_EOL;
 		$this->s = $out;
 		return $out;

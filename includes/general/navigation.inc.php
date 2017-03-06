@@ -9,12 +9,12 @@
 				<div class="input-group">
 					<input type="text" class="form-control" name="searchterms" placeholder="Search for...">
 				</div><!-- /input-group -->
-				<button class="btn btn-default" type="submit">Search</button>
-			</form> 
+				<button class="btn btn-primary" type="submit">Search</button>
+			</form>
 			<ul class="nav navbar-nav navbar-right">
 				<?php
 				include_once 'includes/public/sessionhandler.inc.php';
-				?>				
+				?>
 			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
@@ -31,7 +31,7 @@
 			{
 				$action = 'index.php';
 			}
-			?>			
+			?>
 		</div>
 	</div>
 </div>

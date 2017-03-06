@@ -13,7 +13,7 @@
 					<input type="password" name="password" id="password" class="form-control" placeholder="Password" />
 				</div><!-- .form-group -->
 				<div class="checkbox">
-					<label>						
+					<label>
 						<input type="checkbox" name="termsaccepted" > Accept the <a data-toggle="modal" data-target=".modal">Terms of use?</a>
 					</label>
 				</div>
@@ -36,7 +36,7 @@
         ?>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
