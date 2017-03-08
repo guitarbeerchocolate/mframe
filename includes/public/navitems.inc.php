@@ -1,4 +1,7 @@
-<li><a href="index.php">Home</a></li>
-<li><a href="about">About</a></li>
-<li><a href="contact">Contact</a></li>
-<li><a href="login">Login</a></li>
+<?php
+$nitems = $db->listall('navigation');
+foreach ($nitems as $nitem)
+{
+    echo '<li><a href="'.$nitem['location'].'">'.$nitem['name'].'</a></li>'.PHP_EOL;
+}
+?>

@@ -22,7 +22,10 @@
 				</li>
 				<li>
 					<a href="manager/config">Manage configuration items</a>
-				</li>				
+				</li>
+				<li>
+					<a href="manager/navigation">Manage navigation items</a>
+				</li>
 			</ul>
 		</div>
 	</div>

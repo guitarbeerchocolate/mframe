@@ -332,9 +332,23 @@ class bootstrap
 			{
 				foreach ($optionArr as $option)
 				{
-					$out .= '<option';
-					if($selected == $option) $out .= ' SELECTED';
-					$out .= '>'.$option.'</option>'.PHP_EOL;
+					if(is_array($option))
+					{
+						$tempArr = $option;
+						$keys = array_keys($tempArr);
+						foreach ($keys as $key)
+						{
+							$out .= '<option value="'.$key.'"';
+							if($selected == $key) $out .= ' SELECTED';
+							$out .= '>'.$tempArr[$key].'</option>'.PHP_EOL;
+						}
+					}
+					else
+					{
+						$out .= '<option';
+						if($selected == $option) $out .= ' SELECTED';
+						$out .= '>'.$option.'</option>'.PHP_EOL;
+					}
 				}
 			}
 		}
@@ -369,7 +383,7 @@ class bootstrap
 		if(!is_null($id)) $out .= ' id="'.$id.'"';
 		$out .= '>'.PHP_EOL;
 		$out .= '<div class="media-'.$align.'">'.PHP_EOL;
-    	$out .= '<a href="'.$href.'">'.PHP_EOL;
+    		$out .= '<a href="'.$href.'">'.PHP_EOL;
 		$out .= '<img class="media-object" src="'.$src.'" alt="'.$alt.'" />'.PHP_EOL;
 		$out .= '</a>'.PHP_EOL;
 		$out .= '</div><!-- .media-left -->'.PHP_EOL;
