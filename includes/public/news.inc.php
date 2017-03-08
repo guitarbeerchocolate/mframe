@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="container">
-		<div class="col-md-12">
+		<div class="col-md-12" class="news">
 		<h2>News item</h2>
 		<?php
 		if(isset($_GET['id']))

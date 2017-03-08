@@ -1,3 +1,4 @@
+<section class="news">
 <h3>News item</h3>
 <?php
 require_once 'classes/database.class.php';
@@ -23,3 +24,4 @@ else
 	$db->u->echop('No existing news');
 }
 ?>
+</section>
