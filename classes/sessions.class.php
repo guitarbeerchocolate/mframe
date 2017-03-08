@@ -13,7 +13,7 @@ class sessions
 		}
 		else
 		{
-			$this->sess = $sess;	
+			$this->sess = $sess;
 		}
 		if(isset($_SESSION['userid']))
 		{
@@ -25,11 +25,11 @@ class sessions
 	function logout()
 	{
 		session_start();
-	    session_unset();
-	    session_destroy();
-	    session_write_close();
-	    setcookie(session_name(),'',0,'/');
-	    session_regenerate_id(true);
+		session_unset();
+		session_destroy();
+		session_write_close();
+		setcookie(session_name(),'',0,'/');
+		session_regenerate_id(true);
 		$error = 'Logged out.';
 		$this->db->u->move_on($this->db->getVal('url'),$error);
 	}
@@ -59,15 +59,15 @@ class sessions
 		}
 		else if(!in_array($this->userid, $this->db->getManagers()))
 		{
-		  $error = 'You must be logged in as a manager access the manager section.';
-		  $this->db->u->move_on($this->db->getVal('url'),$error);
+			$error = 'You must be logged in as a manager access the manager section.';
+			$this->db->u->move_on($this->db->getVal('url'),$error);
 		}
 		else if (isset($_REQUEST['logout']) && $_REQUEST['logout'] == 'true')
 		{
-		  unset($_SESSION['userid']);
-		  session_destroy();
-		  $error = 'Logged out.';
-		  $this->db->u->move_on($this->db->getVal('url'),$error);
+			unset($_SESSION['userid']);
+			session_destroy();
+			$error = 'Logged out.';
+			$this->db->u->move_on($this->db->getVal('url'),$error);
 		}
 	}
 }

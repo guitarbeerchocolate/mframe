@@ -10,9 +10,7 @@ foreach ($photoset as $photo)
 	array_push($imgArr, $url);
 }
 $carousel = $bs->carousel($imgArr);
-$col = $bs->tag(NULL,$h2.$carousel,array('class'=>'col-md-12'));	
-$con = $bs->tag(NULL,$col,array('class'=>'container'));
-$bs->tag(NULL,$con,array('class'=>'row'));
+$bs->singleRow(NULL,$h2.$carousel);
 $bs->render();
 ?>
 

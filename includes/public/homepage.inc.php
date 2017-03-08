@@ -1,28 +1,10 @@
 <?php
 $inc = $db->u->include_to_string('includes/general/homepage-carousel.inc.php');
-$col1 = $bs->tag('article','<i class="fa fa-envira" aria-hidden="true"></i>', array('class'=>'col-md-6'));
-$col2 = $bs->tag('aside',$inc, array('class'=>'col-md-6'));
-$con = $bs->tag(NULL,$col1.$col2,array('class'=>'container'));
-$bs->tag(NULL,$con,array('class'=>'row'));
+$col1 = '<i class="fa fa-envira" aria-hidden="true"></i>';
+$bs->twoHalves(NULL,$col1, $inc);
 $bs->render();
-
-
-/* $inc = $db->u->include_to_string('includes/public/sub/news.inc.php'); */
-/*
-include_once 'includes/public/sub/news.inc.php';
-$col1 = $bs->tag(NULL,$inc, array('class'=>'col-md-6'));
-$inc = $db->u->include_to_string('includes/public/sub/twitter.inc.php');
-$col2 = $bs->tag(NULL,$inc, array('class'=>'col-md-6'));
-$con = $bs->tag(NULL,$col1.$col2,array('class'=>'container'));
-$bs->tag(NULL,$con,array('class'=>'row'));
+$news = $db->u->include_to_string('includes/public/sub/news.inc.php');
+$twitter = $db->u->include_to_string('includes/public/sub/twitter.inc.php');
+$bs->twoHalves(NULL,$news, $twitter);
 $bs->render();
-*/
 ?>
-<div class="row">
-    <div class="container">
-        <?php
-        include_once 'includes/public/sub/news.inc.php';
-        include_once 'includes/public/sub/twitter.inc.php';
-        ?>
-    </div>
-</div>

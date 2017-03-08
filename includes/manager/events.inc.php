@@ -1,71 +1,48 @@
-<div class="row">
-	<div class="container">
-		<div class="col-md-12">
-			<br /><a href="manager" class="btn btn-primary">Back</a>
-			<h2>Manage events</h2>
-			<?php
-			if(isset($_GET['id']))
-			{
-				$id = $_GET['id'];
-				$row = $db->getOneByID('events',$id,'content');
-				if(!isset($row['id']))
-				{
-					$error = 'The ID does not exist';
-					$db->u->move_on($this->getVal('url').'manager/events',$error);
-				}	
-				$name = $row['name'];
-				$content = $row['content'];
-				$datestart = $row['datestart'];
-				$dateend = $row['dateend'];
-				$action = 'events/updateevents';
-			}
-			else
-			{
-				$id = $db->getNextID('events');	
-				$name = '';
-				$content = '';
-				$datestart = '';
-				$dateend = '';
-				$action = 'events/addevents';
-			}
-			?>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="container">
-		<div class="col-md-12">
-			<form action="<?php echo $action; ?>" method="POST" role="form">
-				<input type="hidden" name="id" value="<?php echo $id; ?>" />
-				<div class="form-group">
-					<label for="name">Name of event</label>
-					<input type="text" name="name" class="form-control" value="<?php echo $name; ?>" required />
-				</div><!-- .form-group -->
-				<div class="form-group">
-					<label for="datestart">Start Date</label>
-					<input type="date" name="datestart" class="form-control datepicker" value="<?php echo $datestart; ?>" />
-				</div><!-- .form-group -->
-				<div class="form-group">
-					<label for="dateend">End Date</label>
-					<input type="date" name="dateend" class="form-control datepicker" value="<?php echo $dateend; ?>" />
-				</div><!-- .form-group -->
-				<div class="form-group">
-					<label for="content">Page content</label>
-					<textarea name="content" id="content" cols="30" rows="10" class="tinymce form-control"><?php echo $content; ?></textarea>
-				</div><!-- .form-group -->
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</form><br />
-		</div>
-	</div>
-</div>
 <?php
+$back = $bs->buttonLink('Back', 'manager');
+$h2 = $bs->tag('h2','Manage events');
+if(isset($_GET['id']))
+{
+	$id = $_GET['id'];
+	$row = $db->getOneByID('events',$id,'content');
+	if(!isset($row['id']))
+	{
+		$error = 'The ID does not exist';
+		$db->u->move_on($this->getVal('url').'manager/events',$error);
+	}
+	$name = $row['name'];
+	$content = $row['content'];
+	$datestart = $row['datestart'];
+	$dateend = $row['dateend'];
+	$action = 'events/updateevents';
+}
+else
+{
+	$id = $db->getNextID('events');
+	$name = '';
+	$content = '';
+	$datestart = '';
+	$dateend = '';
+	$action = 'events/addevents';
+}
+$bs->singleRow(NULL, $back.$h2);
+$bs->render();
+
+$hiddenID = $bs->hiddeninput('id', $id);
+$eventName = $bs->input('name','Name of event', NULL, $name);
+$startDate = $bs->input('datestart','Start date', 'date', $datestart);
+$endtDate = $bs->input('dateend','End date', 'date', $datestart);
+$pageContent = $bs->textarea('content', 'Page content', $content, $additionalClasses = array('tinymce'), 'content');
+$form = $bs->form(array($hiddenID,$eventName,$startDate,$endtDate,$pageContent), $action);
+$bs->singleRow(NULL, $form);
+$bs->render();
 include_once 'uploadedimages.inc.php';
 ?>
 <div class="row">
 	<div class="container">
 		<div class="col-md-12">
 			<h3>Existing events</h3>
-			<form method="post" action="events/deleteevents" role="form">	
+			<form method="post" action="events/deleteevents" role="form">
 				<table class="table">
 					<thead>
 						<tr>
@@ -73,8 +50,8 @@ include_once 'uploadedimages.inc.php';
 						</tr>
 					</thead>
 					<tbody>
-					<?php					
-					$rows = $db->listall('events','content');
+					<?php
+					$rows = $db->listorderby('events','created','DESC', 'content');
 					if(count($rows) > 0)
 					{
 						foreach ($rows as $row)

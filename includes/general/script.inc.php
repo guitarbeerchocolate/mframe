@@ -7,14 +7,14 @@ if($liveConfig['status'] == 'manager')
 <script>
 (function()
 {
-	if($(this).hasClass('tinymce'))
+    if($(this).hasClass('tinymce'))
     {
-      tinyMCE.triggerSave();
+        tinyMCE.triggerSave();
     }
-	$('.datepicker').datepicker(
-	{
-		format:'yyyy-mm-dd'
-	});
+    $('.datepicker').datepicker(
+    {
+        format:'yyyy-mm-dd'
+    });
 })();
 </script>
 <?php

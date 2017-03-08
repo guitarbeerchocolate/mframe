@@ -8,7 +8,7 @@ if((isset($_GET['setuid'])) && (isset($_GET['secret'])))
     {
         $_SESSION['userid'] = $id;
         $outURL = $db->getVal('url').'private';
-        $db->u->move_on($outURL);    
+        $db->u->move_on($outURL);
     }
     else
     {

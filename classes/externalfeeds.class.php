@@ -3,7 +3,7 @@ require_once 'database.class.php';
 require_once 'aggregator.class.php';
 class externalfeeds extends database
 {
-	private $pa;
+    private $pa;
     public $name, $location, $agg;
     public function __construct($postArray = array())
     {
@@ -33,7 +33,7 @@ class externalfeeds extends database
             case 5:
                 $url = $this->convertPinterest($this->pa['location']);
                 $feedTest = simplexml_load_file($url);
-                break;            
+                break;
             default:
                 $feedTest = simplexml_load_file($this->pa['location']);
                 break;
@@ -50,7 +50,7 @@ class externalfeeds extends database
             $sth->bindParam(':type', $this->pa['type']);
             $message = $this->testExecute($sth, 'Record added');
         }
-		$this->u->move_on($this->getVal('url').'manager/externalfeeds',$message);
+        $this->u->move_on($this->getVal('url').'manager/externalfeeds',$message);
     }
 
     function updateexternalfeed()
@@ -69,7 +69,7 @@ class externalfeeds extends database
                 break;
             case 4:
                 $url = $this->convertYT($this->pa['location']);
-                $feedTest = simplexml_load_file($this->pa['location']);
+                $feedTest = simplexml_load_file($url);
                 break;
             case 5:
                 $url = $this->convertPinterest($this->pa['location']);
@@ -85,14 +85,14 @@ class externalfeeds extends database
         }
         else
         {
-        	$sth = $this->prepare("UPDATE externalfeeds SET name = :name, location = :location, type = :type WHERE id = :id");
-        	$sth->bindParam(':id', $this->pa['id']);
-    		$sth->bindParam(':name', $this->pa['name']);
-    		$sth->bindParam(':location', $this->pa['location']);
-            $sth->bindParam(':type', $this->pa['type']);	
-    		$message = $this->testExecute($sth, 'Record updated');
+            $sth = $this->prepare("UPDATE externalfeeds SET name = :name, location = :location, type = :type WHERE id = :id");
+            $sth->bindParam(':id', $this->pa['id']);
+            $sth->bindParam(':name', $this->pa['name']);
+            $sth->bindParam(':location', $this->pa['location']);
+            $sth->bindParam(':type', $this->pa['type']);
+            $message = $this->testExecute($sth, 'Record updated');
         }
-		$this->u->move_on($this->getVal('url').'manager/externalfeeds',$message);
+        $this->u->move_on($this->getVal('url').'manager/externalfeeds',$message);
     }
 
     function getResults($onlyShow = NULL, $feedLimit = NULL)
@@ -111,7 +111,7 @@ class externalfeeds extends database
         }
         foreach ($feeds as $feed)
         {
-            switch($feed['type']) 
+            switch($feed['type'])
             {
                 case 1:
                     $this->agg->addRSSFeed($feed['location']);
@@ -144,7 +144,7 @@ class externalfeeds extends database
             $sth = $this->prepare("DELETE FROM externalfeeds WHERE id = :id");
             $sth->bindParam(':id', $checked);
             $sth->execute();
-        }        
+        }
         $message = 'Records deleted';
         $this->u->move_on($this->getVal('url').'manager/externalfeeds',$message);
     }
@@ -152,7 +152,7 @@ class externalfeeds extends database
     function getexternalfeed($id)
     {
         $externalfeeds = $this->getOneByID('externalfeeds',$id,'content');
-        $this->name = $externalfeeds['name'];        
+        $this->name = $externalfeeds['name'];
         $this->location = $externalfeeds['location'];
     }
 

@@ -19,7 +19,7 @@ if((isset($_GET['params'])) && (!empty($_GET['params'])))
   switch(count($liveConfig['paramArr']))
   {
     case 0:
-      $liveConfig['includeFile'] .= 'public/homepage.inc.php'; 
+      $liveConfig['includeFile'] .= 'public/homepage.inc.php';
       break;
     case 1:
       if(($liveConfig['paramArr'][0] == 'private') || ($liveConfig['paramArr'][0] == 'manager'))
@@ -83,11 +83,11 @@ if((isset($_GET['params'])) && (!empty($_GET['params'])))
     default:
       $liveConfig['includeFile'] .= 'public/homepage.inc.php';
       break;
-  }  
+  }
 }
 else
 {
-  $liveConfig['includeFile'] .= 'public/homepage.inc.php'; 
+  $liveConfig['includeFile'] .= 'public/homepage.inc.php';
 }
 
 $liveConfig['theDescription'] = $db->getVal('meta_description');

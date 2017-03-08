@@ -22,8 +22,6 @@ else
 {
 	$events = $bs->tag('p','No ID requested');
 }
-$col = $bs->tag(NULL,$h2.$events,array('class'=>'col-md-12'));	
-$con = $bs->tag(NULL,$col,array('class'=>'container'));
-$bs->tag(NULL,$con,array('class'=>'row'));
+$bs->singleRow(NULL,$h2.$events);
 $bs->render();
 ?>

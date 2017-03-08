@@ -19,6 +19,72 @@ class bootstrap
 		return $out;
 	}
 
+	function singleRow($t = NULL, $s = NULL, $settingsArr = array('class'=>'col-md-12'))
+	{
+		$out = '<div class="row">'.PHP_EOL;
+		$out .= '<div class="container">'.PHP_EOL;
+		if(is_null($t)) $t = 'div';
+		$out .= '<'.$t;
+		$out .= $this->handleSettings($settingsArr);
+		$out .= '>';
+		$out .= $this->checkNulls($s).PHP_EOL;
+		$out .= '</'.$t.'><!-- '.$t.' -->'.PHP_EOL;
+		$out .= '</div><!-- .container -->'.PHP_EOL;
+		$out .= '</div><!-- .row -->'.PHP_EOL;
+		$this->s = $out;
+		return $out;
+	}
+
+	function twoHalves($t = NULL, $s1 = NULL, $s2 = NULL, $settingsArr = array('class'=>'col-md-6'))
+	{
+		$out = '<div class="row">'.PHP_EOL;
+		$out .= '<div class="container">'.PHP_EOL;
+		if(is_null($t)) $t = 'div';
+		$out .= '<'.$t;
+		$out .= $this->handleSettings($settingsArr);
+		$out .= '>';
+		$out .= $this->checkNulls($s1).PHP_EOL;
+		$out .= '</'.$t.'><!-- '.$t.' -->'.PHP_EOL;
+		if(is_null($t)) $t = 'div';
+		$out .= '<'.$t;
+		$out .= $this->handleSettings($settingsArr);
+		$out .= '>';
+		$out .= $this->checkNulls($s2).PHP_EOL;
+		$out .= '</'.$t.'><!-- '.$t.' -->'.PHP_EOL;
+		$out .= '</div><!-- .container -->'.PHP_EOL;
+		$out .= '</div><!-- .row -->'.PHP_EOL;
+		$this->s = $out;
+		return $out;
+	}
+
+	function threeThirds($t = NULL, $s1 = NULL, $s2 = NULL, $s3 = NULL, $settingsArr = array('class'=>'col-md-4'))
+	{
+		$out = '<div class="row">'.PHP_EOL;
+		$out .= '<div class="container">'.PHP_EOL;
+		if(is_null($t)) $t = 'div';
+		$out .= '<'.$t;
+		$out .= $this->handleSettings($settingsArr);
+		$out .= '>';
+		$out .= $this->checkNulls($s1).PHP_EOL;
+		$out .= '</'.$t.'><!-- '.$t.' -->'.PHP_EOL;
+		if(is_null($t)) $t = 'div';
+		$out .= '<'.$t;
+		$out .= $this->handleSettings($settingsArr);
+		$out .= '>';
+		$out .= $this->checkNulls($s2).PHP_EOL;
+		$out .= '</'.$t.'><!-- '.$t.' -->'.PHP_EOL;
+		if(is_null($t)) $t = 'div';
+		$out .= '<'.$t;
+		$out .= $this->handleSettings($settingsArr);
+		$out .= '>';
+		$out .= $this->checkNulls($s3).PHP_EOL;
+		$out .= '</'.$t.'><!-- '.$t.' -->'.PHP_EOL;
+		$out .= '</div><!-- .container -->'.PHP_EOL;
+		$out .= '</div><!-- .row -->'.PHP_EOL;
+		$this->s = $out;
+		return $out;
+	}
+
 	function table($headers = array(), $rows = array(), $id = NULL)
 	{
 		$out = '<table class="table table-striped table-condensed table-responsive"';
@@ -285,10 +351,10 @@ class bootstrap
 		{
 			$out .= '<div class="radio">'.PHP_EOL;
 			$out .= '<label>'.PHP_EOL;
-			$out .= '<input type="radio" name="'.$name.'" value="'.$value.'"';
+			$out .= '<input type="radio" name="'.$name.'" value="'.$value.'" id="'.$name.$value.'"';
 			if($selected == $value) $out .= ' CHECKED';
 			$out .= ' />'.PHP_EOL;
-    		$out .= $label.PHP_EOL;
+    			$out .= $label.PHP_EOL;
 			$out .= '</label>'.PHP_EOL;
 			$out .= '</div><!-- .radio -->'.PHP_EOL;
 		}
@@ -367,10 +433,10 @@ class bootstrap
 		return $out;
 	}
 
-	function buttonLink($s, $href = '#', $c = 'btn-default', $target = '_self')
+	function buttonLink($s, $href = '#', $c = 'btn-primary', $target = '_self')
 	{
 		$out = NULL;
-		$out .= '<a class="btn '.$c.' role="button" href="'.$href.'" target="'.$target.'">'.$s.'</a>'.PHP_EOL;
+		$out .= '<a class="btn '.$c.'" role="button" href="'.$href.'" target="'.$target.'">'.$s.'</a>'.PHP_EOL;
 		$this->s = $out;
 		return $out;
 	}
@@ -419,6 +485,17 @@ class bootstrap
 	{
 		$out = NULL;
 		$out .= '<a data-toggle="modal" data-target="#'.$id.'">'.$s.'</a>'.PHP_EOL;
+		$this->s = $out;
+		return $out;
+	}
+
+	function alert($content, $type = 'warning')
+	{
+		$out = NULL;
+		$out .= '<div class="alert alert-';
+		$out .= $type.'" role="alert">';
+		$out .= $content.PHP_EOL;
+		$out .= '</div><!-- .alert -->'.PHP_EOL;
 		$this->s = $out;
 		return $out;
 	}

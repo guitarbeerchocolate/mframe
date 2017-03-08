@@ -1,14 +1,8 @@
-<div class="row">
-    <div class="container">
-        <div class="col-md-12">
-            <h2>About mframe</h2>
-        </div><!-- .col-md-12 -->
-    </div><!-- .container -->
-</div><!-- .row -->
-<div class="row">
-    <div class="container">
-        <article class="col-md-12">
-            <p>Best things since sliced bread.</p>
-        </article><!-- article -->
-    </div><!-- .container -->
-</div><!-- .row -->
+<?php
+$h2 = $bs->tag('h2','About mframe');
+$bs->singleRow(NULL,$h2);
+$bs->render();
+$p = $bs->tag('p','Best things since sliced bread.');
+$bs->singleRow(NULL,$p);
+$bs->render();
+?>
