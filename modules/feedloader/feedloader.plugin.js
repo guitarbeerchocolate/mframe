@@ -4,8 +4,8 @@
     {
         feedloader:function(feedtype, entrycount)
         {
-            var target = this;            
-            var loaderStr = 'loader.php';
+            var target = this;
+            var loaderStr = 'loader';
             var hasFeedType = false;
             target.append('<img src="img/loading.gif" />');
             if((feedtype != null) || (feedtype != undefined))
