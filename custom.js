@@ -1,5 +1,5 @@
 (function()
 {
-	console.log('Success!');
-	$('form[role="search"] > .form-group > input').focus();
+    $('form[role="search"] > .form-group > input').focus();
+    console.log('Success');
 })();

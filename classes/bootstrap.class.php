@@ -564,7 +564,25 @@ class bootstrap
 		$out = NULL;
 		require_once 'database.class.php';
 		$db = new database;
-		$out = '<div class="g-recaptcha" data-sitekey="'.$db->getVal('recaptcha-sitekey').'"></div>'.PHP_EOL;
+		$out .= '<div class="g-recaptcha" data-sitekey="'.$db->getVal('recaptcha-sitekey').'"></div>'.PHP_EOL;
+		return $out;
+	}
+
+	function dateField($name = 'date', $label = 'Date', $dateToAdd = NULL)
+	{
+		$out = NULL;
+		if(is_null($dateToAdd))
+		{
+			$todaysDate = date("Y-m-d");
+		}
+		else
+		{
+			$todaysDate = $dateToAdd;
+		}
+		$out .= '<div class="form-group">'.PHP_EOL;
+		$out .= '<label for="'.$name.'">'.$label.'</label>'.PHP_EOL;
+		$out .= '<input id="'.$name.'" name="'.$name.'" class="datepicker form-control"  data-date-format="yyyy-mm-dd" value="'.$todaysDate.'" />'.PHP_EOL;
+		$out .= '</div><!-- .form-group -->'.PHP_EOL;
 		return $out;
 	}
 

@@ -168,9 +168,9 @@ class utilities
 	}
 
 	function rootPath()
-    {
-    	return $this->addTrailingSlash($this->getServer().$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']));
-    }
+	{
+		return $this->addTrailingSlash($this->getServer().$_SERVER['HTTP_HOST'].dirname($_SERVER['PHP_SELF']));
+	}
 
 	function getServer()
 	{
@@ -200,16 +200,17 @@ class utilities
 	{
 		$fileArr = array();
 		$moduleDirArr = $this->getModuleDirs($moduleDir);
+		$exceptionArr = array('.','..');
 		foreach($moduleDirArr as $module)
 		{
 			if($handle = opendir($module))
 			{
 		    	while(false !== ($entry = readdir($handle)))
 		    	{
-		        	if(($entry != ".") && ($entry != "..") && (pathinfo($entry, PATHINFO_EXTENSION) == $ext))
-		        	{
-		        		array_push($fileArr, $module.'/'.$entry);
-		        	}
+			        	if((!in_array($entry, $exceptionArr)) && (pathinfo($entry, PATHINFO_EXTENSION) == $ext))
+			        	{
+			        		array_push($fileArr, $module.'/'.$entry);
+			        	}
 		    	}
 		    	closedir($handle);
 			}

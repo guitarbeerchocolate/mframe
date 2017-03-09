@@ -12,25 +12,25 @@ class events extends database
 
     function addevents()
     {
-    	$sth = $this->prepare("INSERT INTO events (name,datestart,dateend,content) VALUES (:name,:datestart,:dateend,:content)");
-		$sth->bindParam(':name', $this->pa['name']);
-		$sth->bindParam(':content', $this->pa['content']);	
-        $sth->bindParam(':datestart', $this->pa['datestart']);
-        $sth->bindParam(':dateend', $this->pa['dateend']);
-        $message = $this->testExecute($sth, 'Record added');
-        $this->u->move_on($this->getVal('url').'manager/events',$message);
+            $sth = $this->prepare("INSERT INTO events (name,datestart,dateend,content) VALUES (:name,:datestart,:dateend,:content)");
+            $sth->bindParam(':name', $this->pa['name']);
+            $sth->bindParam(':content', $this->pa['content']);
+            $sth->bindParam(':datestart', $this->pa['datestart']);
+            $sth->bindParam(':dateend', $this->pa['dateend']);
+            $message = $this->testExecute($sth, 'Record added');
+            $this->u->move_on($this->getVal('url').'manager/events',$message);
     }
 
     function updateevents()
     {
-    	$sth = $this->prepare("UPDATE events SET name = :name, content = :content, datestart = :datestart, dateend = :dateend WHERE id = :id");
-    	$sth->bindParam(':id', $this->pa['id']);
-		$sth->bindParam(':name', $this->pa['name']);
-		$sth->bindParam(':content', $this->pa['content']);
+        $sth = $this->prepare("UPDATE events SET name = :name, content = :content, datestart = :datestart, dateend = :dateend WHERE id = :id");
+        $sth->bindParam(':id', $this->pa['id']);
+        $sth->bindParam(':name', $this->pa['name']);
+        $sth->bindParam(':content', $this->pa['content']);
         $sth->bindParam(':datestart', $this->pa['datestart']);
         $sth->bindParam(':dateend', $this->pa['dateend']);
-		$message = $this->testExecute($sth, 'Record updated');
-		$this->u->move_on($this->getVal('url').'manager/events',$message);
+        $message = $this->testExecute($sth, 'Record updated');
+        $this->u->move_on($this->getVal('url').'manager/events',$message);
     }
 
     function deleteevents()
@@ -40,7 +40,7 @@ class events extends database
             $sth = $this->prepare("DELETE FROM events WHERE id = :id");
             $sth->bindParam(':id', $checked);
             $sth->execute();
-        }        
+        }
         $message = 'Records deleted';
         $this->u->move_on($this->getVal('url').'manager/events',$message);
     }
@@ -48,16 +48,16 @@ class events extends database
     function getevents($id)
     {
         $events = $this->getOneByID('events',$id,'content');
-        $this->name = $events['name'];        
+        $this->name = $events['name'];
         $this->content = $events['content'];
-        $this->datestart = $events['datestart'];        
+        $this->datestart = $events['datestart'];
         $this->dateend = $events['dateend'];
     }
 
     function listevents()
     {
-        $sql = "SELECT * FROM events USE INDEX (content) ORDER BY datestart ASC"; 
-        $stmt = $this->query($sql); 
+        $sql = "SELECT * FROM events USE INDEX (content) ORDER BY datestart ASC";
+        $stmt = $this->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

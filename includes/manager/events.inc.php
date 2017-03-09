@@ -21,8 +21,8 @@ else
 	$id = $db->getNextID('events');
 	$name = '';
 	$content = '';
-	$datestart = '';
-	$dateend = '';
+	$datestart = NULL;
+	$dateend = NULL;
 	$action = 'events/addevents';
 }
 $bs->singleRow(NULL, $back.$h2);
@@ -30,8 +30,8 @@ $bs->render();
 
 $hiddenID = $bs->hiddeninput('id', $id);
 $eventName = $bs->input('name','Name of event', NULL, $name);
-$startDate = $bs->input('datestart','Start date', 'date', $datestart);
-$endtDate = $bs->input('dateend','End date', 'date', $datestart);
+$startDate = $bs->dateField('datestart','Start date',$datestart);
+$endtDate = $bs->dateField('dateend','End date',$dateend);
 $pageContent = $bs->textarea('content', 'Page content', $content, $additionalClasses = array('tinymce'), 'content');
 $form = $bs->form(array($hiddenID,$eventName,$startDate,$endtDate,$pageContent), $action);
 $bs->singleRow(NULL, $form);
@@ -62,3 +62,10 @@ $form = $bs->form($table, $action);
 $bs->singleRow(NULL, $h3.$form);
 $bs->render();
 ?>
+<script src="modules/datepicker/js/bootstrap-datepicker.js"></script>
+<script>
+	$('.datepicker').datepicker({
+		format:'yyyy-mm-dd',
+		autoclose:true
+	});
+</script>

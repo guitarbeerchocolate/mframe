@@ -7,7 +7,7 @@
             var target = this;
             var loaderStr = 'loader';
             var hasFeedType = false;
-            target.append('<img src="img/loading.gif" />');
+            target.append('<i class="fa fa-spinner fa-spin fa-5x fa-fw"></i><span class="sr-only">Loading...</span>');
             if((feedtype != null) || (feedtype != undefined))
             {
                 loaderStr += '?feedtype='+feedtype;
