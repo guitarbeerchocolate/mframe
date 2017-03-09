@@ -21,7 +21,8 @@ if(count($rows) > 0)
 }
 else
 {
-	$db->u->echop('No existing news');
+	$bs->echop('No existing news');
+	$bs->render();
 }
 ?>
 </section>

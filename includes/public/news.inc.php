@@ -10,17 +10,20 @@
 			$p->getnews($_GET['id']);
 			if(isset($p->name))
 			{
-				$db->u->echoheader(3,$p->name);
-				$db->u->echop($p->content);
+				$bs->echoheader(3,$p->name);
+				$bs->echop($p->content);
+				$bs->render();
 			}
 			else
 			{
-				$db->u->echop('Not a valid ID');
+				$bs->echop('Not a valid ID');
+				$bs->render();
 			}
 		}
 		else
 		{
-			$db->u->echop('No ID requested');
+			$bs->echop('No ID requested');
+			$bs->render();
 		}
 		?>
 		</div>

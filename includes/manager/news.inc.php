@@ -31,41 +31,28 @@ $form = $bs->form(array($hiddenID,$newsName,$pageContent), $action);
 $bs->singleRow(NULL, $form);
 $bs->render();
 include_once 'uploadedimages.inc.php';
+
+$action = 'news/deletenews';
+$h3 = $bs->tag('h3','Existing news');
+$rowArr = array();
+$rows = $db->listorderby('news','created','DESC', 'content');
+if(count($rows) > 0)
+{
+	foreach ($rows as $row)
+	{
+		$inputStr = '<input type="checkbox" name="id[]" ';
+		$inputStr .= 'value="'.$row['id'].'">';
+		$editStr = '<a href="manager/news&id='.$row['id'].'">Edit</a>';
+		$previewLink = '<a href="news&id='.$row['id'].'" target="_blank">Preview</a>';
+		array_push($rowArr, array($inputStr,$row['name'],$editStr,$previewLink));
+	}
+}
+else
+{
+	array_push($rowArr, array('No existing news'));
+}
+$table = $bs->table(array('','Name','Action',''),$rowArr);
+$form = $bs->form($table, $action);
+$bs->singleRow(NULL, $h3.$form);
+$bs->render();
 ?>
-<div class="row">
-	<div class="container">
-		<div class="col-md-12">
-			<h3>Existing news</h3>
-			<form method="post" action="news/deletenews" role="form">
-				<table class="table">
-					<thead>
-						<tr>
-							<td></td><td>Name</td><td>Action</td><td></td>
-						</tr>
-					</thead>
-					<tbody>
-					<?php
-					$rows = $db->listorderby('news','created','DESC', 'content');
-					if(count($rows) > 0)
-					{
-						foreach ($rows as $row)
-						{
-							$inputStr = '<input type="checkbox" name="id[]" ';
-							$inputStr .= 'value="'.$row['id'].'">';
-							$editStr = '<a href="manager/news&id='.$row['id'].'">Edit</a>';
-							$previewLink = '<a href="news&id='.$row['id'].'" target="_blank">Preview</a>';
-							$db->u->echotr(array($inputStr,$row['name'],$editStr,$previewLink));
-						}
-					}
-					else
-					{
-						$db->u->echotr(array('No existing news'));
-					}
-					?>
-					</tbody>
-				</table>
-				<button type="submit" class="btn btn-primary">Delete</button>
-			</form>
-		</div>
-	</div>
-</div>

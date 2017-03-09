@@ -5,14 +5,14 @@ date_default_timezone_set("Europe/London");
 class aggregator extends database
 {
 	public $addr = NULL, $feedLimit, $messageArr, $tweeter;
-	private $outArr = Array(), $twittersettings;	
+	private $outArr = Array(), $twittersettings;
 	function __construct($addr = NULL)
 	{
 		parent::__construct();
 		$this->addr = $addr != NULL ? $addr : $this->addr;
 		if($this->addr)
 		{
-			return $this->addRSSfeed();	
+			return $this->addRSSfeed();
 		}
 		$this->feedLimit = 10;
 		$this->messageArr = array();
@@ -28,10 +28,10 @@ class aggregator extends database
 	function addRSSFeed($addr = NULL)
 	{
 		$this->addr = $addr != NULL ? $addr : $this->addr;
-		$rss = simplexml_load_file($this->addr);		
+		$rss = simplexml_load_file($this->addr);
 		$tempRSSobjArr = array();
 		$rssObjArr = array();
-		$entryCount = 0;		
+		$entryCount = 0;
 		if($rss == FALSE)
 		{
 			array_push($this->messageArr, 'Failed to load RSS feed '.$this->addr);
@@ -43,13 +43,16 @@ class aggregator extends database
 				if($entryCount < $this->feedLimit)
 				{
 					$tempRSSobjArr['title'] = '<i class="fa fa-rss-square" aria-hidden="true"></i> '.$entry->title;
-					$tempRSSobjArr['description'] .= $entry->description;
+					if((isset($entry->description)) && (isset($tempRSSobjArr['description'])))
+					{
+						$tempRSSobjArr['description'] .= $entry->description;
+					}
 					$tempRSSobjArr['link'] = $entry->link;
 					$tempRSSobjArr['pubDate'] = $entry->pubDate;
 					$to = (object) $tempRSSobjArr;
 					unset($tempRSSobjArr);
-				    array_push($rssObjArr, $to);
-				    $entryCount++;
+					array_push($rssObjArr, $to);
+					$entryCount++;
 				}
 			}
 			$this->outArr = array_merge($this->outArr, $rssObjArr);
@@ -73,7 +76,7 @@ class aggregator extends database
 				if($entryCount < $this->feedLimit)
 				{
 					$tempTwitterObjArr['description'] = '';
-					$tempTwitterObjArr['title'] = '<i class="fa fa-twitter-square" aria-hidden="true"></i> Tweet by '.$item['user']['name'];			
+					$tempTwitterObjArr['title'] = '<i class="fa fa-twitter-square" aria-hidden="true"></i> Tweet by '.$item['user']['name'];
 	 				if(isset($item['entities']['media'][0]['media_url']))
 					{
 						$tempTwitterObjArr['description'] .= '<img class="thumbnail pull-left" src="'.$item['entities']['media'][0]['media_url'].'" />';
@@ -104,7 +107,7 @@ class aggregator extends database
 		else
 		{
 			return $decodedJSON;
-		}		
+		}
 	}
 
 	function addTwitterHashtagFeed($ht = NULL)
@@ -128,7 +131,7 @@ class aggregator extends database
 					if(isset($item['entities']['media'][0]['media_url']))
 					{
 						$tempTwitterObjArr['description'] .= '<img class="thumbnail pull-left" src="'.$item['entities']['media'][0]['media_url'].'" />';
-					}			
+					}
 					$tempTwitterObjArr['description'] .= $this->turnIntoLinks($item['text']);
 					$tempTwitterObjArr['link'] = 'http://twitter.com/'.$item['user']['screen_name'];
 					$tempTwitterObjArr['pubDate'] = $item['created_at'];
@@ -146,7 +149,7 @@ class aggregator extends database
 	{
 		$twitterurl = 'https://api.twitter.com/1.1/search/tweets.json';
 		$twittergetfield = '?q=#'.$ht.'&result_type=recent&count=10';
-		$twitterrequestMethod = 'GET';	
+		$twitterrequestMethod = 'GET';
 		$decodedJSON = json_decode($this->tweeter->setGetfield($twittergetfield)->buildOauth($twitterurl, $twitterrequestMethod)->performRequest(),TRUE);
 		if((JSON_ERROR_NONE !== 0) || (isset($decodedJSON['errors'])))
 		{
@@ -182,7 +185,7 @@ class aggregator extends database
 	        			foreach ($namespaces as $ns)
 	        			{
 	                		foreach ($thumb->attributes($ns) as $attr => $value)
-	                		{ 
+	                		{
 	                			if($attr == 'url')
 	                			{
 	                				$tempYouTubeObjArr['description'] = '<img src="'.$value[0].'" class="thumbnail pull-left" />';
@@ -190,27 +193,27 @@ class aggregator extends database
 	                        	$thumb_attrs[$index][$attr] = $value;
 	                        	$attrstring.= $attr . ': ' . $thumb_attrs[$index][$attr] . "| ";
 	                		}
-	        			}        			
+	        			}
 	        			$index++;
 					}
 					$tempYouTubeObjArr['description'] .= substr($media->group->description, 0,140).'...';
 					$tempYouTubeObjArr['link'] = $entry->link['href'];
-					$tempYouTubeObjArr['pubDate'] = $entry->published;			
-					$yto = (object) $tempYouTubeObjArr;			
-					unset($tempYouTubeObjArr);			
+					$tempYouTubeObjArr['pubDate'] = $entry->published;
+					$yto = (object) $tempYouTubeObjArr;
+					unset($tempYouTubeObjArr);
 				    array_push($youTubeArr, $yto);
 				    $entryCount++;
 				}
 			}
-			$this->outArr = array_merge($this->outArr, $youTubeArr);	
+			$this->outArr = array_merge($this->outArr, $youTubeArr);
 		}
-		
+
 	}
 
 
 	function addPinterestFeed($addr)
 	{
-		$this->addr = $addr != NULL ? $addr : $this->addr;		
+		$this->addr = $addr != NULL ? $addr : $this->addr;
 		$rss = simplexml_load_file('https://www.pinterest.com/'.$this->addr.'/feed.rss');
 		$tempPinArr = array();
 		$pinArr = array();
@@ -226,12 +229,12 @@ class aggregator extends database
 					$tempPinArr['description'] = str_replace('<img ', '<img class="thumbnail pull-left" ', $tempPinArr['description']);
 					$tempPinArr['link'] = $entry->link;
 					$tempPinArr['pubDate'] = $entry->pubDate;
-					$po = (object) $tempPinArr;			
-					unset($tempPinArr);			
+					$po = (object) $tempPinArr;
+					unset($tempPinArr);
 				    array_push($pinArr, $po);
 				    $entryCount++;
 				}
-			}			
+			}
 			$this->outArr = array_merge($this->outArr, $pinArr);
 		}
 	}
@@ -254,7 +257,7 @@ class aggregator extends database
 			$this->outArr = $this->getStringFilteredFeed($input);
 		}
 		return $this->outArr;
-	}	
+	}
 
 	private function getStringFilteredFeed($s)
 	{
@@ -274,7 +277,7 @@ class aggregator extends database
 		$tempArr = Array();
 		foreach($this->outArr as $row)
 		{
-			foreach ($arr as $key) 
+			foreach ($arr as $key)
 			{
 				if(stristr($row->title,$key) || stristr($row->description,$key))
 				{
@@ -317,7 +320,7 @@ class aggregator extends database
 
 	public function getShorterDate($sDate)
 	{
-	    $expDate = explode(' ',$sDate);    
+	    $expDate = explode(' ',$sDate);
 	    $retDate = $expDate[0].' '.$expDate[1].' '.$expDate[2].' ';
 	    $justMinutes = explode(':',$expDate[3]);
 	    $retDate .= $justMinutes[0].':'.$justMinutes[1];

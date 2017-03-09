@@ -18,19 +18,20 @@ if(count($ef->agg->messageArr) > 0)
     $bs->tag('h3','Errors');
     foreach($ef->agg->messageArr as $err)
     {
-        $db->u->echobr($err);
+        $bs->echobr($err);
     }
-     $db->u->echohr();
+     $bs->echohr();
 }
+$bs->render();
 $entryCount = 0;
 $feedLimit = 1;
 if((isset($_GET['entrycount'])) && (is_numeric($_GET['entrycount'])) && (($_GET['entrycount'] > 0)))
 {
    $feedLimit = $_GET['entrycount'];
 }
+$description = NULL;
 foreach($arr as $row)
 {
-
     if($feedLimit > $entryCount)
     {
         $headeranchor = $bs->tag('a', $row->title, array('href'=>$row->link, 'target'=>'_blank'));
@@ -42,7 +43,15 @@ foreach($arr as $row)
         $linkanchor = $bs->tag('p',$linkanchor);
         $articleFooter = $bs->tag('footer','Posted '.date("jS F Y",strtotime($row->pubDate)));
         $hr = $bs->tag('hr');
-        $bs->tag('article',$articleHeader.$row->description.$clearfix.$linkanchor.$articleFooter.$hr);
+        if(isset($row->description))
+        {
+            $description = $row->description;
+        }
+        else
+        {
+            $description = NULL;
+        }
+        $bs->tag('article',$articleHeader.$description.$clearfix.$linkanchor.$articleFooter.$hr);
         $bs->render();
     }
     if((isset($_GET['entrycount'])) && (is_numeric($_GET['entrycount'])) && (($_GET['entrycount'] > 0)))

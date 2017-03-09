@@ -37,41 +37,28 @@ $form = $bs->form(array($hiddenID,$eventName,$startDate,$endtDate,$pageContent),
 $bs->singleRow(NULL, $form);
 $bs->render();
 include_once 'uploadedimages.inc.php';
+
+$action = 'events/deleteevents';
+$h3 = $bs->tag('h3','Existing events');
+$rowArr = array();
+$rows = $db->listorderby('events','datestart','DESC', 'content');
+if(count($rows) > 0)
+{
+	foreach ($rows as $row)
+	{
+		$inputStr = '<input type="checkbox" name="id[]" ';
+		$inputStr .= 'value="'.$row['id'].'">';
+		$editStr = '<a href="manager/events&id='.$row['id'].'">Edit</a>';
+		$previewLink = '<a href="events&id='.$row['id'].'" target="_blank">Preview</a>';
+		array_push($rowArr, array($inputStr,$row['name'],$editStr,$previewLink));
+	}
+}
+else
+{
+	array_push($rowArr, array('No existing events'));
+}
+$table = $bs->table(array('','Name','Action',''),$rowArr);
+$form = $bs->form($table, $action);
+$bs->singleRow(NULL, $h3.$form);
+$bs->render();
 ?>
-<div class="row">
-	<div class="container">
-		<div class="col-md-12">
-			<h3>Existing events</h3>
-			<form method="post" action="events/deleteevents" role="form">
-				<table class="table">
-					<thead>
-						<tr>
-							<td></td><td>Name</td><td>Action</td><td></td>
-						</tr>
-					</thead>
-					<tbody>
-					<?php
-					$rows = $db->listorderby('events','created','DESC', 'content');
-					if(count($rows) > 0)
-					{
-						foreach ($rows as $row)
-						{
-							$inputStr = '<input type="checkbox" name="id[]" ';
-							$inputStr .= 'value="'.$row['id'].'">';
-							$editStr = '<a href="manager/events&id='.$row['id'].'">Edit</a>';
-							$previewLink = '<a href="events&id='.$row['id'].'" target="_blank">Preview</a>';
-							$db->u->echotr(array($inputStr,$row['name'],$editStr,$previewLink));
-						}
-					}
-					else
-					{
-						$db->u->echotr(array('No existing events'));
-					}
-					?>
-					</tbody>
-				</table>
-				<button type="submit" class="btn btn-primary">Delete</button>
-			</form>
-		</div>
-	</div>
-</div>

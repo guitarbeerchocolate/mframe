@@ -62,40 +62,27 @@ $feed = $bs->input('location','Feed', NULL, $location);
 $form = $bs->form(array($hiddenID,$feedName,$feedType,$feed), $action);
 $bs->singleRow(NULL, $form);
 $bs->render();
+
+$action = 'externalfeeds/deleteexternalfeeds';
+$h3 = $bs->tag('h3','Existing external feeds');
+$rowArr = array();
+$rows = $db->listall('externalfeeds','content');
+if(count($rows) > 0)
+{
+	foreach ($rows as $row)
+	{
+		$inputStr = '<input type="checkbox" name="id[]" ';
+		$inputStr .= 'value="'.$row['id'].'">';
+		$editStr = '<a href="manager/externalfeeds&id='.$row['id'].'">Edit</a>';
+		array_push($rowArr, array($inputStr,$row['name'],$editStr));
+	}
+}
+else
+{
+	array_push($rowArr, array('No existing external feeds'));
+}
+$table = $bs->table(array('','Name','Action'),$rowArr);
+$form = $bs->form($table, $action);
+$bs->singleRow(NULL, $h3.$form);
+$bs->render();
 ?>
-<div class="row">
-	<div class="container">
-		<div class="col-md-12">
-			<h4>Existing external feeds</h4>
-			<form method="post" action="externalfeeds/deleteexternalfeeds" role="form">
-				<table class="table">
-					<thead>
-						<tr>
-							<td></td><td>Name</td><td>Action</td>
-						</tr>
-					</thead>
-					<tbody>
-					<?php
-					$rows = $db->listall('externalfeeds','content');
-					if(count($rows) > 0)
-					{
-						foreach ($rows as $row)
-						{
-							$inputStr = '<input type="checkbox" name="id[]" ';
-							$inputStr .= 'value="'.$row['id'].'">';
-							$editStr = '<a href="manager/externalfeeds&id='.$row['id'].'">Edit</a>';
-							$db->u->echotr(array($inputStr,$row['name'],$editStr));
-						}
-					}
-					else
-					{
-						$db->u->echotr(array('No existing external feeds'));
-					}
-					?>
-					</tbody>
-				</table>
-				<button type="submit" class="btn btn-primary">Delete</button>
-			</form>
-		</div>
-	</div>
-</div>

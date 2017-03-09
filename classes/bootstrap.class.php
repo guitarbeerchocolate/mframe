@@ -19,6 +19,189 @@ class bootstrap
 		return $out;
 	}
 
+	function echobr($s = NULL)
+	{
+		$out = $s.'<br />';
+		$this->s = $out;
+		return $out;
+	}
+
+	function echohr($s = NULL)
+	{
+		$out = $s.'<hr />';
+		$this->s = $out;
+		return $out;
+	}
+
+	function brecho($s = NULL)
+	{
+		$out = '<br />'.$s;
+		$this->s = $out;
+		return $out;
+	}
+
+	function hrecho($s = NULL)
+	{
+		$out = '<hr />'.$s;
+		$this->s = $out;
+		return $out;
+	}
+
+	function echon($s = NULL)
+	{
+		$out = $s."\n";
+		$this->s = $out;
+		return $out;
+	}
+
+	function necho($s = NULL)
+	{
+		$out = "\n".$s;
+		$this->s = $out;
+		return $out;
+	}
+
+	function echoeol($s = NULL)
+	{
+		$out = $s.PHP_EOL;
+		$this->s = $out;
+		return $out;
+	}
+
+	function eolecho($s = NULL)
+	{
+		$out = PHP_EOL.$s;
+		$this->s = $out;
+		return $out;
+	}
+
+	function testbr($s = NULL)
+	{
+		try
+		{
+			eval($s);
+		}
+		catch(Exception $e)
+		{
+    			$out = 'Caught exception: '.$e->getMessage().'<br />';
+    			$this->s = $out;
+			return $out;
+		}
+	}
+
+	function brtest($s = NULL)
+	{
+		try
+		{
+			eval($s);
+		}
+		catch(Exception $e)
+		{
+    			$out = '<br />Caught exception: '.$e->getMessage();
+    			$this->s = $out;
+			return $out;
+		}
+	}
+
+	function testn($s = NULL)
+	{
+		try
+		{
+			eval($s);
+		}
+		catch(Exception $e)
+		{
+    			$out = 'Caught exception: '.$e->getMessage()."\n";
+    			$this->s = $out;
+			return $out;
+		}
+	}
+
+	function ntest($s = NULL)
+	{
+		try
+		{
+			eval($s);
+		}
+		catch(Exception $e)
+		{
+    			$out = "\n".'Caught exception: '.$e->getMessage();
+    			$this->s = $out;
+			return $out;
+		}
+	}
+
+	function testeol($s = NULL)
+	{
+		try
+		{
+			eval($s);
+		}
+		catch(Exception $e)
+		{
+    			$out = 'Caught exception: '.$e->getMessage().PHP_EOL;
+    			$this->s = $out;
+			return $out;
+		}
+	}
+
+	function eoltest($s = NULL)
+	{
+		try
+		{
+			eval($s);
+		}
+		catch(Exception $e)
+		{
+    			$out = PHP_EOL.'Caught exception: '.$e->getMessage();
+    			$this->s = $out;
+			return $out;
+		}
+	}
+
+	function echotr($arr)
+	{
+		$out = '<tr>';
+		foreach ($arr as $item)
+		{
+			$out .= '<td>'.$item.'</td>';
+		}
+		$out .= '<tr>';
+		$this->s = $out;
+		return $out;
+	}
+
+	function echoheader($n = 1, $s = NULL)
+	{
+		$out = '<h'.$n.'>'.$s.'</h'.$n.'>';
+		$this->s = $out;
+		return $out;
+	}
+
+	function echop($s = NULL)
+	{
+		$out = '<p>'.$s.'</p>';
+		$this->s = $out;
+		return $out;
+	}
+
+	function title($s = NULL, $sitename = NULL)
+	{
+		$out = '<title>';
+		if((strtolower($s) == 'index.php') || (strtolower($s) == ''))
+		{
+			$out .= '';
+		}
+		else
+		{
+			$out .= ucwords($s).' : ';
+		}
+		$out .= $sitename;
+		$out .= '</title>';
+		$this->s = $out;
+		return $out;
+	}
+
 	function singleRow($t = NULL, $s = NULL, $settingsArr = array('class'=>'col-md-12'))
 	{
 		$out = '<div class="row">'.PHP_EOL;
@@ -376,6 +559,15 @@ class bootstrap
 		return $out;
 	}
 
+	function reCAPTCHA()
+	{
+		$out = NULL;
+		require_once 'database.class.php';
+		$db = new database;
+		$out = '<div class="g-recaptcha" data-sitekey="'.$db->getVal('recaptcha-sitekey').'"></div>'.PHP_EOL;
+		return $out;
+	}
+
 	function mediaobject($src = NULL, $alt = NULL, $href = '#', $heading = NULL, $body = NULL, $align = 'left', $id = NULL)
 	{
 		$out = NULL;
@@ -468,7 +660,7 @@ class bootstrap
 		return $out;
 	}
 
-	function modal($id = 'myModal', $content = NULL, $header = NULL, $c = 'btn-default')
+	function modal($id = 'myModal', $content = NULL, $header = NULL, $c = 'btn-default', $showSubmit = FALSE)
 	{
 		$out = NULL;
 		$out .= '<div class="modal fade" id="'.$id.'" tabindex="-1" role="dialog" aria-labelledby="'.$id.'Label">'.PHP_EOL;
@@ -485,7 +677,7 @@ class bootstrap
 		$out .= $content;
 		$out .= '</div><!-- .modal-body -->'.PHP_EOL;
 		$out .= '<div class="modal-footer">'.PHP_EOL;
-		$out .= '<button type="button" class="btn '.$c.'">Submit</button>'.PHP_EOL;
+		if($showSubmit == TRUE) $out .= '<button type="button" class="btn '.$c.'">Submit</button>'.PHP_EOL;
 		$out .= '<button type="button" class="btn '.$c.'" data-dismiss="modal">Close</button>'.PHP_EOL;
 		$out .= '</div><!-- .modal-footer -->'.PHP_EOL;
 		$out .= '</div><!-- .modal-content -->'.PHP_EOL;

@@ -30,40 +30,27 @@ $itemValue = $bs->input('value','Value of item', NULL, $value);
 $form = $bs->form(array($hiddenID,$itemName,$itemValue), $action);
 $bs->singleRow(NULL, $form);
 $bs->render();
+
+$action = 'config/deleteitems';
+$h3 = $bs->tag('h3','Existing configuration items');
+$rowArr = array();
+$rows = $db->listall('config','content');
+if(count($rows) > 0)
+{
+	foreach ($rows as $row)
+	{
+		$inputStr = '<input type="checkbox" name="id[]" ';
+		$inputStr .= 'value="'.$row['id'].'">';
+		$editStr = '<a href="manager/config&id='.$row['id'].'">Edit</a>';
+		array_push($rowArr, array($inputStr,$row['name'],$row['value'],$editStr));
+	}
+}
+else
+{
+	array_push($rowArr, array('No existing config'));
+}
+$table = $bs->table(array('','Name','Value','Action'),$rowArr);
+$form = $bs->form($table, $action);
+$bs->singleRow(NULL, $h3.$form);
+$bs->render();
 ?>
-<div class="row">
-	<div class="container">
-		<div class="col-md-12">
-			<h3>Existing configuration items</h3>
-			<form method="post" action="config/deleteconfig" role="form">
-				<table class="table">
-					<thead>
-						<tr>
-							<td></td><td>Name</td><td>Value</td><td>Action</td>
-						</tr>
-					</thead>
-					<tbody>
-					<?php
-					$rows = $db->listall('config','content');
-					if(count($rows) > 0)
-					{
-						foreach ($rows as $row)
-						{
-							$inputStr = '<input type="checkbox" name="id[]" ';
-							$inputStr .= 'value="'.$row['id'].'">';
-							$editStr = '<a href="manager/config&id='.$row['id'].'">Edit</a>';
-							$db->u->echotr(array($inputStr,$row['name'],$row['value'],$editStr));
-						}
-					}
-					else
-					{
-						$db->u->echotr(array('No existing config'));
-					}
-					?>
-					</tbody>
-				</table>
-				<button type="submit" class="btn btn-primary">Delete</button>
-			</form>
-		</div>
-	</div>
-</div>
