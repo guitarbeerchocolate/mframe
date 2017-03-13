@@ -25,4 +25,7 @@ if($liveConfig['status'] == 'manager')
 ?>
 <link rel="stylesheet" href="css-cache.php" />
 <script src="https://use.fontawesome.com/<?php echo $db->getVal('font_awesome_id'); ?>.js"></script>
+<?php
+$bs->echoeol();
+?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>

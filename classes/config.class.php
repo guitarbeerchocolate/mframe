@@ -23,7 +23,7 @@ class config extends database
                 $sth->bindParam(':name', $this->pa['name']);
                 $sth->bindParam(':value', $this->pa['value']);
                 $message = $this->testExecute($sth, 'Record added');
-                $this->u->move_on($this->getVal('url').'manager/config&',$message);
+                $this->u->move_on($this->getVal('url').'manager/config',$message);
             }
 
             function updateitem()
@@ -33,7 +33,7 @@ class config extends database
                 $sth->bindParam(':name', $this->pa['name']);
                 $sth->bindParam(':value', $this->pa['value']);
                 $message = $this->testExecute($sth, 'Record updated');
-                $this->u->move_on($this->getVal('url').'manager/config&',$message);
+                $this->u->move_on($this->getVal('url').'manager/config',$message);
             }
 
             function deleteitems()
@@ -45,7 +45,7 @@ class config extends database
                     $sth->execute();
                 }
                 $message = 'Records deleted';
-                $this->u->move_on($this->getVal('url').'manager/config&',$message);
+                $this->u->move_on($this->getVal('url').'manager/config',$message);
             }
 
 	function __destruct()
