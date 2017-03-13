@@ -4,19 +4,20 @@ var setOfAnchors = $('ul.nav > li > a');
 var anchorFound = false;
 $(setOfAnchors).each(function()
 {
-	if($(this).attr('href') == sn)
-	{
-		$(this).parent().addClass('active');
+    if($(this).attr('href') == sn)
+    {
+        $(this).parent().addClass('active');
         anchorFound = true;
-	}
+    }
 });
+
 if(anchorFound == false)
 {
     $(setOfAnchors).each(function()
     {
-        if(($(this).attr('href') == 'index.php') || ($(this).attr('href') == 'index.html') || ($(this).attr('') == 'index.html'))
+        if(($(this).attr('href') == 'index.php') || ($(this).attr('href') == 'index.html') || ($(this).attr('href') == 'homepage'))
         {
-            $(this).parent().addClass('active');                       
+            $(this).parent().addClass('active');
         }
     });
 }

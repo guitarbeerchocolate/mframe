@@ -12,6 +12,9 @@
 					<a href="manager/news">Manage news</a>
 				</li>
 				<li>
+					<a href="manager/draftpages">Manage draft pages</a>
+				</li>
+				<li>
 					<a href="manager/pages">Manage pages</a>
 				</li>
 				<li>
