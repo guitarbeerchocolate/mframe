@@ -1,5 +1,17 @@
 <?php
-$liveConfig['status'] = 'public';
+if(in_array($s->userid, $db->getManagers()))
+{
+  $liveConfig['status'] = 'manager';
+}
+elseif(!is_null($s->userid))
+{
+  $liveConfig['status'] = 'private';
+}
+else
+{
+  $liveConfig['status'] = 'public';
+}
+
 $liveConfig['includeFile'] = 'includes/';
 $liveConfig['parameterName'] = NULL;
 $liveConfig['parameterValue'] = NULL;

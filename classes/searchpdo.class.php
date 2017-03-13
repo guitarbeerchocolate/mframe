@@ -3,15 +3,30 @@ require_once 'database.class.php';
 class searchpdo extends database
 {
 	private $tableArr, $fieldArr;
-	function __construct($tableArr, $fieldArr = NULL, $q = NULL)
+	function __construct()
 	{
 		parent::__construct();
+
+	}
+
+
+	function publicSearch($tableArr, $fieldArr = NULL, $q = NULL)
+	{
+		echo 'Public search';
 		$this->tableArr = $tableArr;
 		$this->fieldArr = $fieldArr;
 		$this->formatAndReturn($q);
 	}
 
-	function formatAndReturn($q)
+	function managerSearch($tableArr, $fieldArr = NULL, $q = NULL)
+	{
+		echo 'Manager search';
+		$this->tableArr = $tableArr;
+		$this->fieldArr = $fieldArr;
+		$this->formatAndReturn($q, TRUE);
+	}
+
+	function formatAndReturn($q, $managerSearch = FALSE)
 	{
 		$sArr = explode(' ', $q);
 		$boolean = $this->checkForBool($sArr);
@@ -19,15 +34,15 @@ class searchpdo extends database
 		$sArr = array_diff($sArr, array($boolean));
 		if($boolean == "OR")
 		{
-			$this->createORstring($sArr);
+			$this->createORstring($sArr, $managerSearch);
 		}
 		elseif($boolean == "AND")
 		{
-			$this->createANDstring($sArr);
+			$this->createANDstring($sArr, $managerSearch);
 		}
 		else
 		{
-			$this->createNormalstring($q);
+			$this->createNormalstring($q, $managerSearch);
 		}
 	}
 
@@ -44,7 +59,7 @@ class searchpdo extends database
 		return $boolean;
 	}
 
-	function createNormalstring($q)
+	function createNormalstring($q, $managerSearch)
 	{
 		$colArr = array();
 		foreach ($this->tableArr as $table)
@@ -60,11 +75,18 @@ class searchpdo extends database
 			$ss = rtrim($ss," OR ");
 			$rows = $this->query($ss);
 			echo '<br />Searching in table "'.$table.'" for "'.$q.'"';
-			$this->buildTable($rows, $colArr);
+			if($managerSearch == FALSE)
+			{
+				$this->buildTable($rows, $colArr);
+			}
+			else
+			{
+				$this->buildManagerTable($rows, $colArr, $table);
+			}
 		}
 	}
 
-	function createORstring($sArr)
+	function createORstring($sArr, $managerSearch)
 	{
 		$colArr = array();
 		foreach ($this->tableArr as $table)
@@ -82,11 +104,18 @@ class searchpdo extends database
 			$ss = rtrim($ss," OR ");
 			$rows = $this->query($ss);
 			echo '<br />Searching in table "'.$table.'" for "'.$q.'"';
-			$this->buildTable($rows, $colArr);
+			if($managerSearch == FALSE)
+			{
+				$this->buildTable($rows, $colArr);
+			}
+			else
+			{
+				$this->buildManagerTable($rows, $colArr);
+			}
 		}
 	}
 
-	function createANDstring($sArr)
+	function createANDstring($sArr, $managerSearch)
 	{
 		$colArr = array();
 		foreach ($this->tableArr as $table)
@@ -106,7 +135,14 @@ class searchpdo extends database
 			$ss = rtrim($ss," OR ");
 			$rows = $this->query($ss);
 			echo '<br />Searching in table "'.$table.'" for "'.$q.'"';
-			$this->buildTable($rows, $colArr);
+			if($managerSearch == FALSE)
+			{
+				$this->buildTable($rows, $colArr);
+			}
+			else
+			{
+				$this->buildManagerTable($rows, $colArr);
+			}
 		}
 	}
 
@@ -155,6 +191,36 @@ class searchpdo extends database
 		}
 	}
 
+	function buildManagerHead($colArr)
+	{
+		foreach ($colArr as $col)
+		{
+			if(!is_null($this->fieldArr))
+			{
+				if($this->isAssoc($this->fieldArr) == TRUE)
+				{
+					$key = array_search($col, $this->fieldArr);
+					if(!empty($key))
+					{
+						echo '<th>'.strtoupper($key).'</th>';
+					}
+				}
+				else
+				{
+					if(in_array($col, $this->fieldArr))
+					{
+						echo '<th>'.strtoupper($col).'</th>';
+					}
+				}
+			}
+			else
+			{
+				echo '<th>'.strtoupper($col).'</th>';
+			}
+		}
+		echo '<th></th>';
+	}
+
 	function buildBody($rows, $colArr)
 	{
 		foreach ($rows as $row)
@@ -179,6 +245,32 @@ class searchpdo extends database
 		}
 	}
 
+	function buildManagerBody($rows, $colArr, $table)
+	{
+		foreach ($rows as $row)
+		{
+			echo '<tr>';
+			foreach ($colArr as $col)
+			{
+				if(!is_null($this->fieldArr))
+				{
+					if(in_array($col, $this->fieldArr))
+					{
+						echo '<td>'.$row[$col].'</td>';
+						/* echo '<td>'.$row->{$col}.'</td>'; */
+					}
+				}
+				else
+				{
+					echo '<td>'.$row[$col].'</td>';
+				}
+			}
+			echo '<td><a href="manager/'.$table.'&id='.$row['id'].'">Edit</a></td>';
+			echo 'Table is '.$table;
+			echo '</tr>'.PHP_EOL;
+		}
+	}
+
 	function buildTable($rows, $colArr)
 	{
 		if(count($rows) > 0)
@@ -189,6 +281,21 @@ class searchpdo extends database
 			$this->buildHead($colArr);
 			echo '</tr></thead><tbody class="searchresults">'.PHP_EOL;
 			$this->buildBody($rows, $colArr);
+			echo '</tbody></table>'.PHP_EOL;
+			echo '</div>'.PHP_EOL;
+		}
+	}
+
+	function buildManagerTable($rows, $colArr, $table)
+	{
+		if(count($rows) > 0)
+		{
+			echo '<div class="table-responsive">';
+			echo '<table class="table table-condensed">'.PHP_EOL;
+			echo '<thead><tr>';
+			$this->buildManagerHead($colArr);
+			echo '</tr></thead><tbody class="searchresults">'.PHP_EOL;
+			$this->buildManagerBody($rows, $colArr, $table);
 			echo '</tbody></table>'.PHP_EOL;
 			echo '</div>'.PHP_EOL;
 		}
