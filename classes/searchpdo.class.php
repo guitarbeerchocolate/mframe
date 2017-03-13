@@ -13,10 +13,10 @@ class searchpdo extends database
 
 	function formatAndReturn($q)
 	{
-		$sArr = explode(' ', $q);	
+		$sArr = explode(' ', $q);
 		$boolean = $this->checkForBool($sArr);
 		$s = NULL;
-		$sArr = array_diff($sArr, array($boolean));		
+		$sArr = array_diff($sArr, array($boolean));
 		if($boolean == "OR")
 		{
 			$this->createORstring($sArr);
@@ -39,7 +39,7 @@ class searchpdo extends database
 			if(($searchwords == "OR") || ($searchwords == "AND"))
 			{
 				$boolean = $searchwords;
-			}			
+			}
 		}
 		return $boolean;
 	}
@@ -57,7 +57,7 @@ class searchpdo extends database
 				// This is the area of concentration
 				$ss .= "`".$col."` LIKE '%$q%' OR ";
 			}
-			$ss = rtrim($ss," OR ");						
+			$ss = rtrim($ss," OR ");
 			$rows = $this->query($ss);
 			echo '<br />Searching in table "'.$table.'" for "'.$q.'"';
 			$this->buildTable($rows, $colArr);
@@ -71,15 +71,15 @@ class searchpdo extends database
 		{
 			$ss = NULL;
 			$ss = "SELECT * FROM `".$table."` USE INDEX (content) WHERE ";
-			$colArr = $this->getFieldsFromTable($table);			
+			$colArr = $this->getFieldsFromTable($table);
 			foreach ($colArr as $col)
 			{
 				foreach ($sArr as $q)
 				{
 					$ss .= "`".$col."` LIKE '%$q%' OR ";
-				}				
+				}
 			}
-			$ss = rtrim($ss," OR ");			
+			$ss = rtrim($ss," OR ");
 			$rows = $this->query($ss);
 			echo '<br />Searching in table "'.$table.'" for "'.$q.'"';
 			$this->buildTable($rows, $colArr);
@@ -93,7 +93,7 @@ class searchpdo extends database
 		{
 			$ss = NULL;
 			$ss = "SELECT * FROM `".$table."` USE INDEX (content) WHERE ";
-			$colArr = $this->getFieldsFromTable($table);			
+			$colArr = $this->getFieldsFromTable($table);
 			foreach ($colArr as $col)
 			{
 				foreach ($sArr as $q)
@@ -137,21 +137,21 @@ class searchpdo extends database
 					$key = array_search($col, $this->fieldArr);
 					if(!empty($key))
 					{
-						echo '<th>'.strtoupper($key).'</th>';	
+						echo '<th>'.strtoupper($key).'</th>';
 					}
 				}
 				else
 				{
 					if(in_array($col, $this->fieldArr))
 					{
-						echo '<th>'.strtoupper($col).'</th>';	
+						echo '<th>'.strtoupper($col).'</th>';
 					}
 				}
 			}
 			else
 			{
-				echo '<th>'.strtoupper($col).'</th>';	
-			}					
+				echo '<th>'.strtoupper($col).'</th>';
+			}
 		}
 	}
 
@@ -172,10 +172,10 @@ class searchpdo extends database
 				}
 				else
 				{
-					echo '<td>'.$row[$col].'</td>';	
-				}						
+					echo '<td>'.$row[$col].'</td>';
+				}
 			}
-			echo '</tr>'.PHP_EOL;		
+			echo '</tr>'.PHP_EOL;
 		}
 	}
 
@@ -187,7 +187,7 @@ class searchpdo extends database
 			echo '<table class="table table-condensed">'.PHP_EOL;
 			echo '<thead><tr>';
 			$this->buildHead($colArr);
-			echo '</tr></thead><tbody>'.PHP_EOL;
+			echo '</tr></thead><tbody class="searchresults">'.PHP_EOL;
 			$this->buildBody($rows, $colArr);
 			echo '</tbody></table>'.PHP_EOL;
 			echo '</div>'.PHP_EOL;
