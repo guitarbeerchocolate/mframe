@@ -70,7 +70,7 @@ $bs->render();
                 <div class="form-group">
                     <label for="liveselection">Make live as existing page</label>
                     <select class="form-control" name="liveselection">
-                        <option>Select</option>
+                        <option value="">Select</option>
                         <?php
                         $pagerows = $db->listall('pages');
                         foreach ($pagerows as $page)
