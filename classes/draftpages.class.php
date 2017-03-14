@@ -10,6 +10,21 @@ class draftpages extends database
         $this->pa = $postArray;
     }
 
+    /*
+    Tests should be
+    1
+    1,2
+    1,3
+    4 after 1
+    4 after 1,2
+    4 after 1,3
+    4,5 after 1
+    4,5 after 1,2
+    4,5 after 1,3
+    4,6 after 1
+    4,6 after 1,2
+    4,6 after 1,3
+    */
     function adddraftpage()
     {
         $message = '';
@@ -19,7 +34,7 @@ class draftpages extends database
         $sth->bindParam(':layout', $this->pa['layout']);
         $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
         $sth->bindParam(':issubpage', $this->pa['issubpage']);
-        $message .= $this->testExecute($sth, 'Draft page created added.');
+        $message .= $this->testExecute($sth, 'Draft page created added 1.');
 
         if(!is_null($this->pa['liveselection']))
         {
@@ -30,7 +45,7 @@ class draftpages extends database
             $sth->bindParam(':layout', $this->pa['layout']);
             $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
             $sth->bindParam(':issubpage', $this->pa['issubpage']);
-            $message .= $this->testExecute($sth, ' Existing page updated.');
+            $message .= $this->testExecute($sth, ' Existing page updated 2.');
         }
         elseif($this->pa['justmakelive'] == 'on')
         {
@@ -40,7 +55,7 @@ class draftpages extends database
             $sth->bindParam(':layout', $this->pa['layout']);
             $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
             $sth->bindParam(':issubpage', $this->pa['issubpage']);
-            $message .= $this->testExecute($sth, ' Draft page made live.');
+            $message .= $this->testExecute($sth, ' Draft page made live 3.');
         }
         $this->u->move_on($this->getVal('url').'manager/draftpages',$message);
     }
@@ -55,7 +70,7 @@ class draftpages extends database
         $sth->bindParam(':layout', $this->pa['layout']);
         $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
         $sth->bindParam(':issubpage', $this->pa['issubpage']);
-        $message .= $this->testExecute($sth, 'Draft page created updated.');
+        $message .= $this->testExecute($sth, 'Draft page created updated 4.');
 
         if(!is_null($this->pa['liveselection']))
         {
@@ -66,7 +81,7 @@ class draftpages extends database
             $sth->bindParam(':layout', $this->pa['layout']);
             $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
             $sth->bindParam(':issubpage', $this->pa['issubpage']);
-            $message .= $this->testExecute($sth, ' Existing page updated.');
+            $message .= $this->testExecute($sth, ' Existing page updated 5.');
         }
         elseif($this->pa['justmakelive'] == 'on')
         {
@@ -76,7 +91,7 @@ class draftpages extends database
             $sth->bindParam(':layout', $this->pa['layout']);
             $sth->bindParam(':secondarycontent', $this->pa['secondarycontent']);
             $sth->bindParam(':issubpage', $this->pa['issubpage']);
-            $message .= $this->testExecute($sth, ' Draft page made live.');
+            $message .= $this->testExecute($sth, ' Draft page made live 6.');
         }
 
 
