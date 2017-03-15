@@ -62,7 +62,6 @@ $form = $bs->form($table, $action);
 $bs->singleRow(NULL, $h3.$form);
 $bs->render();
 ?>
-<script src="modules/datepicker/js/bootstrap-datepicker.js"></script>
 <script>
 	$('.datepicker').datepicker({
 		format:'yyyy-mm-dd',
