@@ -22,7 +22,8 @@ else
 	$photo = '';
 	$action = 'profiles/addprofiles';
 }
-$bs->singleRow(NULL, $h3.$h4.$content.$img);
+$bs->singleRow(NULL, $h3);
+$bs->twoHalves(NULL, $h4.$content, $img);
 $bs->render();
 include 'sub/profileform.inc.php';
 ?>

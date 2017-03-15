@@ -20,6 +20,7 @@ class profiles extends database
         $sth->bindParam(':content', $this->pa['content']);
         if(isset($_FILES) && (!empty($_FILES['photo']['name'])))
         {
+            $filename = $_FILES['photo']['tmp_name'];
             $mime = $_FILES['photo']['type'];
             $uploadResult = $this->u->data_uri_string($filename, $mime);
             if($uploadResult == "data:image/jpeg;base64,")

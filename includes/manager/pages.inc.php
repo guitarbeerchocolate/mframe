@@ -43,33 +43,47 @@ $bs->render();
 					<label for="content">Page content</label>
 					<textarea name="content" id="content" cols="30" rows="10" class="tinymce form-control"><?php echo $content; ?></textarea>
 				</div><!-- .form-group -->
-				<div class="form-group" id="layoutholder">
-					<h4>Choose your layout</h4>
-					<label class="radio-inline">
-						<input type="radio" name="layout" id="layout1" value="1" <?php if(($layout == 1) || ($layout == 0)) echo 'checked'; ?>> <img src="img/layouts/full.png" alt="Full screen">
-					</label>
-					<label class="radio-inline">
-						<input type="radio" name="layout" id="layout2" value="2" <?php if($layout == 2) echo 'checked'; ?>> <img src="img/layouts/half.png" alt="Half screen">
-					</label>
-					<label class="radio-inline">
-						<input type="radio" name="layout" id="layout3" value="3" <?php if($layout == 3) echo 'checked'; ?>> <img src="img/layouts/goldenvertical.png" alt="Golden vertical">
-					</label>
-				</div>
-				<?php
-				include_once 'secondarycontent.inc.php';
-				?>
-				<div class="form-group" id="issubpageholder">
-					<h4>Is this content a sub-page</h4>
-					<label class="radio-inline">
-						<input type="radio" name="issubpage" id="issubpage0" value="0" <?php if($issubpage == 0) echo 'checked'; ?>> No
-					</label>
-					<label class="radio-inline">
-						<input type="radio" name="issubpage" id="issubpage1" value="1" <?php if($issubpage == 1) echo 'checked'; ?>> Yes
-					</label>
-				</div>
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</form><br />
 		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="container">
+		<div class="col-md-6">
+			<div class="form-group" id="layoutholder">
+				<h4>Choose your layout</h4>
+				<label class="radio-inline">
+					<input type="radio" name="layout" id="layout1" value="1" <?php if(($layout == 1) || ($layout == 0)) echo 'checked'; ?>> <img src="img/layouts/full.png" alt="Full screen">
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="layout" id="layout2" value="2" <?php if($layout == 2) echo 'checked'; ?>> <img src="img/layouts/half.png" alt="Half screen">
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="layout" id="layout3" value="3" <?php if($layout == 3) echo 'checked'; ?>> <img src="img/layouts/goldenvertical.png" alt="Golden vertical">
+				</label>
+			</div>
+			<?php
+			include_once 'secondarycontent.inc.php';
+			?>
+		</div><!-- .col-md-6 -->
+		<div class="col-md-6">
+			<div class="form-group" id="issubpageholder">
+				<h4>Is this content a sub-page</h4>
+				<label class="radio-inline">
+					<input type="radio" name="issubpage" id="issubpage0" value="0" <?php if($issubpage == 0) echo 'checked'; ?>> No
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="issubpage" id="issubpage1" value="1" <?php if($issubpage == 1) echo 'checked'; ?>> Yes
+				</label>
+			</div>
+		</div><!-- .col-md-6 -->
+	</div>
+</div>
+<div class="row">
+	<div class="container">
+		<div class="col-md-12">
+			<button type="submit" class="btn btn-primary">Submit</button>
+			</form><br />
+		</div><!-- .col-md-12 -->
 	</div>
 </div>
 <?php

@@ -35,14 +35,20 @@ $bs->render();
         <div class="col-md-12">
             <form action="<?php echo $action; ?>" method="POST" role="form">
                 <input type="hidden" name="id" value="<?php echo $id; ?>" />
-                <div class="form-group">
-                    <label for="name">Name of page</label>
-                    <input type="text" name="name" class="form-control" value="<?php echo $name; ?>" required />
-                </div><!-- .form-group -->
-                <div class="form-group">
-                    <label for="content">Page content</label>
-                    <textarea name="content" id="content" cols="30" rows="10" class="tinymce form-control"><?php echo $content; ?></textarea>
-                </div><!-- .form-group -->
+                    <div class="form-group">
+                        <label for="name">Name of page</label>
+                        <input type="text" name="name" class="form-control" value="<?php echo $name; ?>" required />
+                    </div><!-- .form-group -->
+                    <div class="form-group">
+                        <label for="content">Page content</label>
+                        <textarea name="content" id="content" cols="30" rows="10" class="tinymce form-control"><?php echo $content; ?></textarea>
+                    </div><!-- .form-group -->
+            </div>
+    </div>
+</div>
+<div class="row">
+    <div class="container">
+        <div class="col-md-6">
                 <div class="form-group" id="layoutholder">
                     <h4>Choose your layout</h4>
                     <label class="radio-inline">
@@ -58,35 +64,43 @@ $bs->render();
                 <?php
                 include_once 'secondarycontent.inc.php';
                 ?>
-                <div class="form-group" id="issubpageholder">
-                    <h4>Is this content a sub-page</h4>
-                    <label class="radio-inline">
-                        <input type="radio" name="issubpage" id="issubpage0" value="0" <?php if($issubpage == 0) echo 'checked'; ?>> No
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="issubpage" id="issubpage1" value="1" <?php if($issubpage == 1) echo 'checked'; ?>> Yes
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label for="liveselection">Make live as existing page</label>
-                    <select class="form-control" name="liveselection">
-                        <option value="">Select</option>
-                        <?php
-                        $pagerows = $db->listall('pages');
-                        foreach ($pagerows as $page)
-                        {
-                            echo '<option value="'.$page['id'].'">'.$page['name'].'</option>';
-                        }
-                        ?>
-                        </select>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="justmakelive"> Or just make live as a new page
+            </div><!-- .col-md-6 -->
+             <div class="col-md-6">
+                    <div class="form-group" id="issubpageholder">
+                        <h4>Is this content a sub-page</h4>
+                        <label class="radio-inline">
+                            <input type="radio" name="issubpage" id="issubpage0" value="0" <?php if($issubpage == 0) echo 'checked'; ?>> No
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="issubpage" id="issubpage1" value="1" <?php if($issubpage == 1) echo 'checked'; ?>> Yes
                         </label>
                     </div>
+                    <div class="form-group">
+                        <label for="liveselection">Make live as existing page</label>
+                        <select class="form-control" name="liveselection">
+                            <option value="">Select</option>
+                            <?php
+                            $pagerows = $db->listall('pages');
+                            foreach ($pagerows as $page)
+                            {
+                                echo '<option value="'.$page['id'].'">'.$page['name'].'</option>';
+                            }
+                            ?>
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="justmakelive"> Or just make live as a new page
+                            </label>
+                        </div>
+                    </div>
                 </div>
+    </div>
+</div>
+<div class="row">
+    <div class="container">
+        <div class="col-md-12">
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form><br />
         </div>
