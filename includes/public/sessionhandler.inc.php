@@ -1,8 +1,11 @@
 <?php
 if(!is_null($s->userid))
 {
-	$anchor = $bs->tag('a','Logout',array('href'=>'formhandler.php?action=sessions/logout'));
-	$bs->tag('li',$anchor,array('class'=>'active'));
+	$anchor1 = $bs->tag('a','Logout',array('href'=>'formhandler.php?action=sessions/logout'));
+	$bs->tag('li',$anchor1,array('class'=>'active'));
+	$bs->render();
+	$anchor2 = $bs->tag('a','Blog',array('href'=>'private/blog'));
+	$bs->tag('li',$anchor2);
 	$bs->render();
 	if(in_array($s->userid, $db->getManagers()))
 	{

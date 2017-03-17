@@ -26,7 +26,7 @@ $bs->render();
 
 $hiddenID = $bs->hiddeninput('id', $id);
 $newsName = $bs->input('name','Name of news', NULL, $name);
-$pageContent = $bs->textarea('content', 'Page content', $content, $additionalClasses = array('tinymce'), 'content');
+$pageContent = $bs->textarea('content', 'News content', $content, $additionalClasses = array('tinymce'), 'content');
 $form = $bs->form(array($hiddenID,$newsName,$pageContent), $action);
 $bs->singleRow(NULL, $form);
 $bs->render();

@@ -8,14 +8,14 @@
 			$sclass = new searchpdo;
 			if($liveConfig['status'] == 'manager')
 			{
-				$tableArr = array('config','events','externalfeeds','navigation','news','pages','profiles');
+				$tableArr = array('config','events','externalfeeds','navigation','news','pages','profiles','blog');
 				$fieldArr = array('Name'=>'name');
 				$sclass = new searchpdo;
 				$spdo = $sclass->managerSearch($tableArr, $fieldArr, $_GET['searchterms']);
 			}
 			else
 			{
-				$tableArr = array('events','news');
+				$tableArr = array('events','news','blog','pages');
 				$fieldArr = array('Title'=>'name','Description'=>'content');
 				$sclass = new searchpdo;
 				$spdo = $sclass->publicSearch($tableArr, $fieldArr, $_GET['searchterms']);

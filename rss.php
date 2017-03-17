@@ -22,6 +22,7 @@ $writer->endElement();
 
 $news = $db->listorderby('news','created','DESC', 'content');
 $events = $db->listorderby('events','created','DESC', 'content');
+$blogs = $db->listorderby('blog','created','DESC', 'content');
 $allData = array();
 $tempArray = array();
 foreach ($news as $newsitem)
@@ -53,6 +54,20 @@ foreach ($events as $eventitem)
     $objDate = new DateTime($eventitem['created']);
     $tempArray['pubDate'] = $objDate->format(DateTime::RSS);
     array_push($allData, $tempArray);
+}
+
+foreach ($blogs as $blogitem)
+{
+    if($blogitem['responseid'] == 0)
+    {
+        $tempArray['title'] = htmlspecialchars($blogitem['name']);
+        $tempArray['link'] = htmlspecialchars($db->getVal('url').'blog');
+        $tempArray['description'] = htmlspecialchars($blogitem['content']);
+        $tempArray['guid'] = htmlspecialchars($db->getVal('url').'blog&id='.$blogitem['id']);
+        $objDate = new DateTime($blogitem['created']);
+        $tempArray['pubDate'] = $objDate->format(DateTime::RSS);
+        array_push($allData, $tempArray);
+    }
 }
 
 usort($allData, function($a, $b)

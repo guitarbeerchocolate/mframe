@@ -29,6 +29,9 @@
 				<li>
 					<a href="manager/navigation">Manage navigation items</a>
 				</li>
+				<li>
+					<a href="manager/blog">Manage blog items</a>
+				</li>
 			</ul>
 		</div>
 	</div>
