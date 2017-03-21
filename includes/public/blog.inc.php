@@ -3,19 +3,16 @@
         <div class="col-md-12" class="blog">
         <h2>Blog</h2>
         <?php
-        require_once 'classes/blog.class.php';
         if(!is_null($liveConfig['id']))
         {
             $id = $liveConfig['id'];
             $c = NULL;
             $n = NULL;
-
-            $b = new blog;
-            $b->getblog($liveConfig['id']);
-            if(isset($b->name))
+            $b = $blog->getdata($liveConfig['id']);
+            if(isset($b['name']))
             {
-                $h = $bs->tag('h3',$b->name);
-                $c = $h.$b->content;
+                $h = $bs->tag('h3',$b['name']);
+                $c = $h.$b['content'];
                 $responses = $db->getAllByFieldValue('blog','responseid',$id, 'content');
                 if(count($responses) > 0)
                 {

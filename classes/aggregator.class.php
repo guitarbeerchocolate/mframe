@@ -28,7 +28,7 @@ class aggregator extends database
 	function addRSSFeed($addr = NULL)
 	{
 		$this->addr = $addr != NULL ? $addr : $this->addr;
-		$rss = simplexml_load_file($this->addr);
+		$rss = @simplexml_load_file($this->addr);
 		$tempRSSobjArr = array();
 		$rssObjArr = array();
 		$entryCount = 0;

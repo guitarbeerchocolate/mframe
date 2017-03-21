@@ -3,7 +3,6 @@ require_once 'database.class.php';
 class profiles extends database
 {
     private $pa;
-    public $name, $content, $photo;
     public function __construct($postArray = array())
     {
         parent::__construct();
@@ -79,12 +78,9 @@ class profiles extends database
         $this->u->move_on($this->c->getVal('url').'manager/profiles',$message);
     }
 
-    function getprofiles($id)
+   function getdata($id)
     {
-        $profiles = $this->getOneByID('profiles',$id,'content');
-        $this->name = $profiles['name'];
-        $this->content = $profiles['content'];
-        $this->photo = $profiles['photo'];
+        return $this->getOneByID('profiles',$id,'content');
     }
 
     function __destruct()

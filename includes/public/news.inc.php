@@ -5,13 +5,11 @@
 		<?php
 		if(!is_null($liveConfig['id']))
 		{
-			require_once 'classes/news.class.php';
-			$p = new news;
-			$p->getnews($liveConfig['id']);
-			if(isset($p->name))
+			$n = $news->getdata($liveConfig['id']);
+			if(isset($n['name']))
 			{
-				$bs->echoheader(3,$p->name);
-				$bs->echop($p->content);
+				$bs->echoheader(3,$n['name']);
+				$bs->echop($n['content']);
 				$bs->render();
 			}
 			else

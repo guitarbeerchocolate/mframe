@@ -2,9 +2,7 @@
 if(!is_null($liveConfig['id']))
 {
 	$error = FALSE;
-	require_once 'classes/pages.class.php';
-	$p = new pages;
-	$p->getpage($liveConfig['id']);
+	$p = $pages->getdata($liveConfig['id']);
 }
 else
 {
@@ -12,10 +10,10 @@ else
 	$content = '<p>No ID requested</p>';
 	$error = TRUE;
 }
-if(isset($p->name))
+if(isset($p['name']))
 {
-    $h3 = $p->name;
-    $content = $p->content;
+    $h3 = $p['name'];
+    $content = $p['content'];
 }
 else
 {
@@ -23,11 +21,11 @@ else
     $content = '<p>Not a valid ID</p>';
     $error = TRUE;
 }
-if(isset($p->secondarycontent))
+if(isset($p['secondarycontent']))
 {
-	if(($p->secondarycontent != NULL) || ($p->secondarycontent != ''))
+	if(($p['secondarycontent'] != NULL) || ($p['secondarycontent'] != ''))
 	{
-	    $secondarycontent = $p->secondarycontent;
+	    $secondarycontent = $p['secondarycontent'];
 	}
 	else
 	{
@@ -40,12 +38,11 @@ if(isset($secondarycontent))
 {
 	if((is_numeric($secondarycontent)) && ($secondarycontent != 0))
 	{
-		$sp = new pages;
-		$sp->getpage($secondarycontent);
+		$sp = $pages->getdata($secondarycontent);
 		$sc = TRUE;
 	}
 }
-if(($error == TRUE) || ($p->layout == 1) || ($p->layout == 0))
+if(($error == TRUE) || ($p['layout'] == 1) || ($p['layout'] == 0))
 {
 	$headName = $bs->tag('h3',$h3);
 	$header = $bs->tag('header',$headName);
@@ -59,9 +56,9 @@ elseif($p->layout == 2)
 	$s1 = $header.$content;
 	if($sc == TRUE)
 	{
-		$headName = $bs->tag('h3',$sp->name);
+		$headName = $bs->tag('h3',$sp['name']);
 		$header = $bs->tag('header',$headName);
-		$s2 = $header.$sp->content;
+		$s2 = $header.$sp['content'];
 	}
 	else
 	{
@@ -70,16 +67,16 @@ elseif($p->layout == 2)
 	$bs->twoHalves(NULL, $s1, $s2);
 	$bs->render();
 }
-elseif($p->layout == 3)
+elseif($p['layout'] == 3)
 {
 	$headName = $bs->tag('h3',$h3);
 	$header = $bs->tag('header',$headName);
 	$s1 = $header.$content;
 	if($sc == TRUE)
 	{
-		 $headName = $bs->tag('h3',$sp->name);
+		 $headName = $bs->tag('h3',$sp['name']);
 	                $header = $bs->tag('header',$headName);
-	                $s2 = $header.$sp->content;
+	                $s2 = $header.$sp['content'];
 	}
 	else
 	{

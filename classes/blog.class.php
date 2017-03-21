@@ -3,7 +3,6 @@ require_once 'database.class.php';
 class blog extends database
 {
     private $pa;
-    public $name, $content;
     public function __construct($postArray = array())
     {
         parent::__construct();
@@ -64,13 +63,9 @@ class blog extends database
         $this->u->move_on($this->getVal('url').'manager/blog',$message);
     }
 
-    function getblog($id)
+    function getdata($id)
     {
-        $blog = $this->getOneByID('blog',$id,'content');
-        $this->responseid = $blog['responseid'];
-        $this->userid = $blog['userid'];
-        $this->name = $blog['name'];
-        $this->content = $blog['content'];
+        return $this->getOneByID('blog',$id,'content');
     }
 
     function __destruct()

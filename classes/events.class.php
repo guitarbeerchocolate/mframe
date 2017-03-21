@@ -2,8 +2,7 @@
 require_once 'database.class.php';
 class events extends database
 {
-	private $pa;
-    public $name, $content, $datestart, $dateend;
+    private $pa;
     public function __construct($postArray = array())
     {
         parent::__construct();
@@ -45,13 +44,9 @@ class events extends database
         $this->u->move_on($this->getVal('url').'manager/events',$message);
     }
 
-    function getevents($id)
+    function getdata($id)
     {
-        $events = $this->getOneByID('events',$id,'content');
-        $this->name = $events['name'];
-        $this->content = $events['content'];
-        $this->datestart = $events['datestart'];
-        $this->dateend = $events['dateend'];
+        return $this->getOneByID('events',$id,'content');
     }
 
     function listevents()

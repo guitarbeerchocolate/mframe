@@ -9,6 +9,7 @@ include_once 'includes/general/loginhandler.inc.php';
 $s = new sessions($_SESSION);
 include_once 'includes/general/urlhandler.inc.php';
 include_once 'includes/general/userlevelhandler.inc.php';
+include_once 'includes/general/loaddata.inc.php';
 require_once 'classes/bootstrap.class.php';
 $bs = new bootstrap;
 ?>

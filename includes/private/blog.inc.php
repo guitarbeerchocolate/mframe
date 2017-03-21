@@ -5,12 +5,12 @@ if(!is_null($liveConfig['id']))
     $id = $liveConfig['id'];
     $c = NULL;
     $n = NULL;
-    $b = new blog;
-    $b->getblog($liveConfig['id']);
-    if(isset($b->name))
+    $blog = new blog;
+    $b = $blog->getdata($id);
+    if(isset($b['name']))
     {
-        $h = $bs->tag('h3',$b->name);
-        $c = $h.$b->content;
+        $h = $bs->tag('h3',$b['name']);
+        $c = $h.$b['content'];
         $responses = $db->getAllByFieldValue('blog','responseid',$id, 'content');
         if(count($responses) > 0)
         {
@@ -34,8 +34,8 @@ elseif(isset($_GET['responseid']))
 {
     $blogc = new blog;
     $id = $db->getNextID('blog');
-    $blogc->getblog($_GET['responseid']);
-    $entryTitle = 'Add a response entry : '.$blogc->name;
+    $bc = $blogc->getdata($_GET['responseid']);
+    $entryTitle = 'Add a response entry : '.$bc['name'];
     $h2 = $bs->tag('h2',$entryTitle);
     $responseid = $_GET['responseid'];
     $userid = $s->userid;

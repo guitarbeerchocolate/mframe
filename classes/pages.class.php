@@ -3,7 +3,6 @@ require_once 'database.class.php';
 class pages extends database
 {
     private $pa;
-    public $name, $content, $layout, $secondarycontent, $issubpage;
     public function __construct($postArray = array())
     {
         parent::__construct();
@@ -47,14 +46,9 @@ class pages extends database
         $this->u->move_on($this->getVal('url').'manager/pages',$message);
     }
 
-    function getpage($id)
+   function getdata($id)
     {
-        $page = $this->getOneByID('pages',$id,'content');
-        $this->name = $page['name'];
-        $this->content = $page['content'];
-        $this->layout = $page['layout'];
-        $this->secondarycontent = $page['secondarycontent'];
-        $this->issubpage = $page['issubpage'];
+        return $this->getOneByID('pages',$id,'content');
     }
 
     function __destruct()

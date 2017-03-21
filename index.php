@@ -13,6 +13,7 @@ include_once 'includes/general/head.inc.php';
 </head>
 <body itemscope itemtype="http://schema.org/Organization">
 <?php
+// print_r($liveConfig);
 include_once 'includes/general/body.inc.php';
 ?>
 </body>

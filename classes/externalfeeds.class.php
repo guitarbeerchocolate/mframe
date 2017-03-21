@@ -4,7 +4,7 @@ require_once 'aggregator.class.php';
 class externalfeeds extends database
 {
     private $pa;
-    public $name, $location, $agg;
+    public $agg;
     public function __construct($postArray = array())
     {
         parent::__construct();
@@ -149,11 +149,9 @@ class externalfeeds extends database
         $this->u->move_on($this->getVal('url').'manager/externalfeeds',$message);
     }
 
-    function getexternalfeed($id)
+    function getdata($id)
     {
-        $externalfeeds = $this->getOneByID('externalfeeds',$id,'content');
-        $this->name = $externalfeeds['name'];
-        $this->location = $externalfeeds['location'];
+        return $this->getOneByID('externalfeeds',$id,'content');
     }
 
     function convertYT($u)
