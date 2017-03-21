@@ -1,9 +1,9 @@
 <?php
 $back = $bs->buttonLink('Back', 'manager');
 $h2 = $bs->tag('h2','Manage news');
-if(isset($_GET['id']))
+if(!is_null($liveConfig['id']))
 {
-	$id = $_GET['id'];
+	$id = $liveConfig['id'];
 	$row = $db->getOneByID('news',$id,'content');
 	if(!isset($row['id']))
 	{

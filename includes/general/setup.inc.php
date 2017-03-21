@@ -1,7 +1,7 @@
 <?php
 include_once 'includes/general/showerrors.inc.php';
 include_once 'includes/general/exceptions.inc.php';
-$liveConfig = array();
+include_once 'includes/general/liveconfig.inc.php';
 require_once 'classes/sessions.class.php';
 require_once 'classes/database.class.php';
 $db = new database;

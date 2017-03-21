@@ -1,12 +1,12 @@
 <?php
 require_once 'classes/blog.class.php';
-if(isset($_GET['id']))
+if(!is_null($liveConfig['id']))
 {
+    $id = $liveConfig['id'];
     $c = NULL;
     $n = NULL;
-    $id = $_GET['id'];
     $b = new blog;
-    $b->getblog($_GET['id']);
+    $b->getblog($liveConfig['id']);
     if(isset($b->name))
     {
         $h = $bs->tag('h3',$b->name);
@@ -110,5 +110,4 @@ else
     $bs->singleRow(NULL, $entries);
     $bs->render();
 }
-
 ?>

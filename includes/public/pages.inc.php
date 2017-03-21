@@ -1,10 +1,10 @@
 <?php
-if(isset($_GET['id']))
+if(!is_null($liveConfig['id']))
 {
 	$error = FALSE;
 	require_once 'classes/pages.class.php';
 	$p = new pages;
-	$p->getpage($_GET['id']);
+	$p->getpage($liveConfig['id']);
 }
 else
 {

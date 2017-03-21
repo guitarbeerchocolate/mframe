@@ -3,11 +3,11 @@
 		<div class="col-md-12" class="news">
 		<h2>News item</h2>
 		<?php
-		if(isset($_GET['id']))
+		if(!is_null($liveConfig['id']))
 		{
 			require_once 'classes/news.class.php';
 			$p = new news;
-			$p->getnews($_GET['id']);
+			$p->getnews($liveConfig['id']);
 			if(isset($p->name))
 			{
 				$bs->echoheader(3,$p->name);

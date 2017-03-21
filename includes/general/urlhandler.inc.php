@@ -104,7 +104,7 @@ else
 
 $liveConfig['theDescription'] = $db->getVal('meta_description');
 
-if(($liveConfig['theTitle'] == 'service') && (isset($_GET['id'])))
+if(($liveConfig['theTitle'] == 'service') && (!is_null($liveConfig['id'])))
 {
   $id = $_GET['id'];
   $titleRow = $db->getOneByID($liveConfig['theTitle'],$id,'content');

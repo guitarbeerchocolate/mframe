@@ -2,9 +2,9 @@
 $back = $bs->buttonLink('Back', 'manager');
 $h2 = $bs->tag('h2','Manage navigation');
 $id = NULL;
-if(isset($_GET['id']))
+if(!is_null($liveConfig['id']))
 {
-    $id = $_GET['id'];
+    $id = $liveConfig['id'];
     $row = $db->getOneByID('navigation',$id,'content');
     if(!isset($row['id']))
     {

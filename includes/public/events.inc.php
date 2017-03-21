@@ -1,11 +1,11 @@
 <?php
 $h2 = $bs->tag('h2','Events');
 $events = '';
-if(isset($_GET['id']))
+if(!is_null($liveConfig['id']))
 {
 	require_once 'classes/events.class.php';
 	$p = new events;
-	$p->getevents($_GET['id']);
+	$p->getevents($liveConfig['id']);
 	if(isset($p->name))
 	{
 		$header = $bs->tag('h3',$p->name);
