@@ -14,7 +14,16 @@ if($liveConfig['status'] == 'public')
     if((isset($metaData)) && (!empty($metaData)))
     {
         $liveConfig['theDescription'] = trim(substr(strip_tags($metaData['content']),0,200));
+        if($metaData['name'] == NULL)
+        {
+            $liveConfig['titleString'] = $db->getVal('name');
+        }
+        else
+        {
+            $liveConfig['titleString'] = $metaData['name'].' : '.$db->getVal('name');
+        }
     ?>
+    <title></title>
     <meta name="description" content="<?php echo $liveConfig['theDescription']; ?>" />
     <meta name="keywords" content="<?php echo $db->getVal('meta_keywords'); ?>" />
     <meta name="author" content="Mick Redman, mick.redman@effectivewebdesigns.co.uk">
@@ -24,7 +33,7 @@ if($liveConfig['status'] == 'public')
     <meta itemprop="image" content="<?php echo $db->getVal('url'); ?>icon.png">
 
     <meta name="dc.language" content="en">
-    <meta name="dc.title" content="<?php echo $metaData['name'].' : '.$db->getVal('name'); ?>">
+    <meta name="dc.title" content="<?php echo $liveConfig['titleString']; ?>">
     <meta name="dc.description" content="<?php echo $liveConfig['theDescription']; ?>">
     <?php
     if($db->getVal('twitter_handle') !== '')
@@ -39,7 +48,7 @@ if($liveConfig['status'] == 'public')
     <?php
     }
     ?>
-    <meta property="og:title" content="<?php echo $liveConfig['theTitle'].' : '.$db->getVal('name'); ?>" />
+    <meta property="og:title" content="<?php echo $liveConfig['titleString']; ?>" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="<?php echo $liveConfig['currentURL']; ?>" />
     <meta property="og:image" content="<?php echo $db->getVal('url'); ?>icon.png" />
@@ -53,17 +62,25 @@ if($liveConfig['status'] == 'public')
     }
     else
     {
+        if($liveConfig['theTitle'] == NULL)
+        {
+            $liveConfig['titleString'] = $db->getVal('name');
+        }
+        else
+        {
+            $liveConfig['titleString'] = $liveConfig['theTitle'].' : '.$db->getVal('name');
+        }
     ?>
     <meta name="description" content="<?php echo $liveConfig['theDescription']; ?>" />
     <meta name="keywords" content="<?php echo $db->getVal('meta_keywords'); ?>" />
     <meta name="author" content="Mick Redman, mick.redman@effectivewebdesigns.co.uk">
 
-    <meta itemprop="name" content="<?php echo $metaData['name']; ?>">
+    <meta itemprop="name" content="<?php echo $liveConfig['titleString']; ?>">
     <meta itemprop="description" content="<?php echo $liveConfig['theDescription']; ?>">
     <meta itemprop="image" content="<?php echo $db->getVal('url'); ?>icon.png">
 
     <meta name="dc.language" content="en">
-    <meta name="dc.title" content="<?php echo $liveConfig['theTitle'].' : '.$db->getVal('name'); ?>">
+    <meta name="dc.title" content="<?php echo $liveConfig['titleString']; ?>">
     <meta name="dc.description" content="<?php echo $liveConfig['theDescription']; ?>">
     <?php
     if($db->getVal('twitter_handle') !== '')
@@ -71,14 +88,14 @@ if($liveConfig['status'] == 'public')
     ?>
     <meta name="twitter:card" content="organization">
     <meta name="twitter:site" content="@<?php echo $db->getVal('twitter_handle'); ?>">
-    <meta name="twitter:title" content="<?php echo $liveConfig['theTitle']; ?>">
+    <meta name="twitter:title" content="<?php echo $liveConfig['titleString']; ?>">
     <meta name="twitter:description" content="<?php echo $liveConfig['theDescription']; ?>">
     <meta name="twitter:creator" content="@<?php echo $db->getVal('twitter_handle'); ?>">
     <meta name="twitter:image" content="<?php echo $db->getVal('url'); ?>icon.png">
     <?php
     }
     ?>
-    <meta property="og:title" content="<?php echo $liveConfig['theTitle'].' : '.$db->getVal('name'); ?>" />
+    <meta property="og:title" content="<?php echo $liveConfig['titleString']; ?>" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="<?php echo $liveConfig['currentURL']; ?>" />
     <meta property="og:image" content="<?php echo $db->getVal('url'); ?>icon.png" />
