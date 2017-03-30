@@ -1,11 +1,9 @@
 <?php
-require_once 'classes/blog.class.php';
 if(!is_null($liveConfig['id']))
 {
     $id = $liveConfig['id'];
     $c = NULL;
     $n = NULL;
-    $blog = new blog;
     $b = $blog->getdata($id);
     if(isset($b['name']))
     {
