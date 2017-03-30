@@ -33,7 +33,7 @@ if(!is_null($liveConfig['id']))
 elseif(isset($_GET['responseid']))
 {
     $blogc = new blog;
-    $id = $db->getNextID('blog');
+    $id = NULL;
     $bc = $blogc->getdata($_GET['responseid']);
     $entryTitle = 'Add a response entry : '.$bc['name'];
     $h2 = $bs->tag('h2',$entryTitle);

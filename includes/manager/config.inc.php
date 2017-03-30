@@ -16,7 +16,7 @@ if(!is_null($liveConfig['id']))
 }
 else
 {
-	$id = $db->getNextID('config');
+	$id = NULL;
 	$name = '';
 	$value = '';
 	$action = 'config/additem';

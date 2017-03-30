@@ -17,7 +17,7 @@ if(!is_null($liveConfig['id']))
 }
 else
 {
-	$id = $db->getNextID('externalfeeds');
+	$id = NULL;
 	$name = '';
 	$location = '';
 	$type = 1;

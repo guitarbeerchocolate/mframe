@@ -18,7 +18,7 @@ if(!is_null($liveConfig['id']))
 }
 else
 {
-	$id = $db->getNextID('events');
+	$id = NULL;
 	$name = '';
 	$content = '';
 	$datestart = NULL;

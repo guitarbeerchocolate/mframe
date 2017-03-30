@@ -17,7 +17,7 @@ if(!is_null($liveConfig['id']))
 }
 else
 {
-    $id = $db->getNextID('navigation');
+    $id = NULL;
     $name = '';
     $location = '';
     $action = 'navigation/additem';

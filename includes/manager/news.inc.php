@@ -16,7 +16,7 @@ if(!is_null($liveConfig['id']))
 }
 else
 {
-	$id = $db->getNextID('news');
+	$id = NULL;
 	$name = '';
 	$content = '';
 	$action = 'news/addnews';

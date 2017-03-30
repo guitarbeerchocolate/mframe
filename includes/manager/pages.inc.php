@@ -19,7 +19,7 @@ if(!is_null($liveConfig['id']))
 }
 else
 {
-	$id = $db->getNextID('pages');
+	$id = NULL;
 	$name = '';
 	$content = '';
 	$layout = '1';
