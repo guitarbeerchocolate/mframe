@@ -2,3 +2,4 @@ User-agent: *
 Disallow: /classes/
 Disallow: /includes/private/
 Disallow: /includes/manager/
+Sitemap: http://localhost/git/mframe/sitemap.php
