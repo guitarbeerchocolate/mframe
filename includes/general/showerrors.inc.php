@@ -1,5 +1,6 @@
 <?php
-ini_set('display_errors',1);
-ini_set('display_startup_errors',1);
+ini_set('log_errors', 1);
+$logfile = 'logs/php-'.date('d-m-Y');
+ini_set('error_log', $logfile);
 error_reporting(-1);
 ?>
