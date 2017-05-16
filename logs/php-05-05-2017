@@ -1,0 +1,36 @@
+[05-May-2017 11:00:26 Europe/London] PHP Warning:  simplexml_load_file(https://www.youtube.com/feeds/videos.xml?user=patcondell): failed to open stream: HTTP request failed! HTTP/1.0 500 Internal Server Error
+ in /var/www/html/git/mframe/classes/aggregator.class.php on line 170
+[05-May-2017 11:00:26 Europe/London] PHP Stack trace:
+[05-May-2017 11:00:26 Europe/London] PHP   1. {main}() /var/www/html/git/mframe/index.php:0
+[05-May-2017 11:00:26 Europe/London] PHP   2. include_once() /var/www/html/git/mframe/index.php:5
+[05-May-2017 11:00:26 Europe/London] PHP   3. include_once() /var/www/html/git/mframe/includes/general/setup.inc.php:3
+[05-May-2017 11:00:26 Europe/London] PHP   4. include_once() /var/www/html/git/mframe/includes/general/exceptions.inc.php:4
+[05-May-2017 11:00:26 Europe/London] PHP   5. externalfeeds->getResults() /var/www/html/git/mframe/includes/public/loader.inc.php:14
+[05-May-2017 11:00:26 Europe/London] PHP   6. aggregator->addYouTubeFeed() /var/www/html/git/mframe/classes/externalfeeds.class.php:126
+[05-May-2017 11:00:26 Europe/London] PHP   7. simplexml_load_file() /var/www/html/git/mframe/classes/aggregator.class.php:170
+[05-May-2017 11:00:26 Europe/London] PHP Warning:  simplexml_load_file(): I/O warning : failed to load external entity &quot;https://www.youtube.com/feeds/videos.xml?user=patcondell&quot; in /var/www/html/git/mframe/classes/aggregator.class.php on line 170
+[05-May-2017 11:00:26 Europe/London] PHP Stack trace:
+[05-May-2017 11:00:26 Europe/London] PHP   1. {main}() /var/www/html/git/mframe/index.php:0
+[05-May-2017 11:00:26 Europe/London] PHP   2. include_once() /var/www/html/git/mframe/index.php:5
+[05-May-2017 11:00:26 Europe/London] PHP   3. include_once() /var/www/html/git/mframe/includes/general/setup.inc.php:3
+[05-May-2017 11:00:26 Europe/London] PHP   4. include_once() /var/www/html/git/mframe/includes/general/exceptions.inc.php:4
+[05-May-2017 11:00:26 Europe/London] PHP   5. externalfeeds->getResults() /var/www/html/git/mframe/includes/public/loader.inc.php:14
+[05-May-2017 11:00:26 Europe/London] PHP   6. aggregator->addYouTubeFeed() /var/www/html/git/mframe/classes/externalfeeds.class.php:126
+[05-May-2017 11:00:26 Europe/London] PHP   7. simplexml_load_file() /var/www/html/git/mframe/classes/aggregator.class.php:170
+[05-May-2017 11:00:26 Europe/London] PHP Error:  Call to a member function getNameSpaces() on boolean in /var/www/html/git/mframe/classes/aggregator.class.php on line 171
+[05-May-2017 11:00:26 Europe/London] PHP Stack trace:
+[05-May-2017 11:00:26 Europe/London] PHP   1. {main}() /var/www/html/git/mframe/index.php:0
+[05-May-2017 11:00:26 Europe/London] PHP   2. include_once() /var/www/html/git/mframe/index.php:5
+[05-May-2017 11:00:26 Europe/London] PHP   3. include_once() /var/www/html/git/mframe/includes/general/setup.inc.php:3
+[05-May-2017 11:00:26 Europe/London] PHP   4. include_once() /var/www/html/git/mframe/includes/general/exceptions.inc.php:4
+[05-May-2017 11:00:26 Europe/London] PHP   5. externalfeeds->getResults() /var/www/html/git/mframe/includes/public/loader.inc.php:14
+[05-May-2017 11:00:26 Europe/London] PHP   6. aggregator->addYouTubeFeed() /var/www/html/git/mframe/classes/externalfeeds.class.php:126
+[05-May-2017 11:00:26 Europe/London] PHP Fatal error:  Uncaught Error: Call to a member function getNameSpaces() on boolean in /var/www/html/git/mframe/classes/aggregator.class.php:171
+Stack trace:
+#0 /var/www/html/git/mframe/classes/externalfeeds.class.php(126): aggregator->addYouTubeFeed('patcondell')
+#1 /var/www/html/git/mframe/includes/public/loader.inc.php(14): externalfeeds->getResults()
+#2 /var/www/html/git/mframe/includes/general/exceptions.inc.php(4): include_once('/var/www/html/g...')
+#3 /var/www/html/git/mframe/includes/general/setup.inc.php(3): include_once('/var/www/html/g...')
+#4 /var/www/html/git/mframe/index.php(5): include_once('/var/www/html/g...')
+#5 {main}
+  thrown in /var/www/html/git/mframe/classes/aggregator.class.php on line 171
