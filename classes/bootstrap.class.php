@@ -187,14 +187,14 @@ class bootstrap
 
 	function title($s = NULL, $sitename = NULL)
 	{
-		$out = '<title>';
+		$out = '<title itemprop="name">';
 		if((strtolower($s) == 'index.php') || (strtolower($s) == ''))
 		{
 			$out .= '';
 		}
 		else
 		{
-			$out .= ucwords($s).' : ';
+			$out .= ucwords($s);
 		}
 		$out .= $sitename;
 		$out .= '</title>';
