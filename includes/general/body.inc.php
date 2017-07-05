@@ -1,6 +1,8 @@
 <?php
 include_once 'includes/general/googletracker.inc.php';
 $bs->echoeol();
+include_once 'includes/general/social.inc.php';
+$bs->echoeol();
 include_once 'includes/general/navigation.inc.php';
 $bs->echoeol();
 include_once 'includes/general/message.inc.php';

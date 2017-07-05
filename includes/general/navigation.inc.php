@@ -7,8 +7,8 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<form action="<?php echo $db->getVal('url'); ?>index.php" method="GET" class="navbar-form navbar-right" role="search" id="searchbox">
 				<div class="input-group">
-					<input type="text" class="form-control" name="searchterms" placeholder="Search for...">
-				</div><!-- /input-group -->
+					<input type="text" class="form-control" name="searchterms" placeholder="Search for..." />
+				</div>
 				<button class="btn btn-primary" type="submit">Search</button>
 			</form>
 			<ul class="nav navbar-nav navbar-right">
