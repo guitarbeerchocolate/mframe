@@ -7,3 +7,6 @@
 <meta property="og:image:height" content="250" />
 <meta property="og:locale" content="en_GB" />
 <meta property="og:description" content="<?php echo $liveConfig['theDescription']; ?>" />
+<?php
+echo PHP_EOL;
+?>

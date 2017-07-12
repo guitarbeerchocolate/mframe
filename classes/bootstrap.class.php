@@ -197,7 +197,7 @@ class bootstrap
 			$out .= ucwords($s);
 		}
 		$out .= $sitename;
-		$out .= '</title>';
+		$out .= '</title>'.PHP_EOL;
 		$this->s = $out;
 		return $out;
 	}
