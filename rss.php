@@ -12,6 +12,8 @@ $writer->startElement('rss');
 $writer->writeAttribute('version', '2.0');
 $writer->writeAttribute('xmlns:atom', 'http://www.w3.org/2005/Atom');
 $writer->startElement("channel");
+$s = PHP_EOL.'<atom:link href="'.$db->getVal('url').'rss.php" rel="self" type="application/rss+xml" />'.PHP_EOL;
+$writer->writeRaw($s);
 $feedTitle = 'News and events from '.$db->getVal('name');
 $writer->writeElement('title', $feedTitle);
 $feedDescription = 'These are the latest '.$feedTitle;
