@@ -32,7 +32,3 @@ $bs->echoeol();
 <?php
 $bs->echoeol();
 ?>
-<script src="https://raw.githubusercontent.com/less/less.js/v2.7.2/dist/less.min.js"></script>
-<?php
-$bs->echoeol();
-?>
