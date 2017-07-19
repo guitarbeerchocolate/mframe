@@ -9,7 +9,7 @@ if(!is_null($liveConfig['id']))
     if(!isset($row['id']))
     {
         $error = 'The ID does not exist';
-        $db->u->move_on($this->getVal('url').'manager/navigation',$error);
+        $db->u->move_on($liveConfig['url'].'manager/navigation',$error);
     }
     $name = $row['name'];
     $location = $row['location'];

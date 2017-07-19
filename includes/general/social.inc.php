@@ -1,6 +1,4 @@
 <?php
-$liveConfig['facebook_page'] = $db->getVal('facebook_page');
-$liveConfig['twitter_page'] = $db->getVal('twitter_page');
 if((isset($liveConfig['facebook_page'])) || (isset($liveConfig['twitter_page'])))
 {
 ?>

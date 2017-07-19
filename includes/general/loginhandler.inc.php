@@ -7,13 +7,13 @@ if((isset($_GET['setuid'])) && (isset($_GET['secret'])))
     if($row['password'] == $secret)
     {
         $_SESSION['userid'] = $id;
-        $outURL = $db->getVal('url').'private';
+        $outURL = $liveConfig['url'].'private';
         $db->u->move_on($outURL);
     }
     else
     {
         $error = 'Hack attempt failed';
-        $outURL = $db->getVal('url');
+        $outURL = $liveConfig['url'];
         $db->u->move_on($outURL, $error);
     }
 }

@@ -102,27 +102,14 @@ else
   $liveConfig['includeFile'] .= 'public/homepage.inc.php';
 }
 
-$liveConfig['theDescription'] = $db->getVal('meta_description');
-
-if(($liveConfig['theTitle'] == 'service') && (!is_null($liveConfig['id'])))
+if(strlen($liveConfig['meta_description']) < 150)
 {
-  $id = $_GET['id'];
-  $titleRow = $db->getOneByID($liveConfig['theTitle'],$id,'content');
-  $liveConfig['theTitle'] = $titleRow['name'];
-
-  if(strlen($titleRow['description']) < 150)
-  {
-    $positionOfLastFullStop = strrpos($titleRow['description'],'.');
-    $liveConfig['theDescription'] = substr($titleRow['description'], 0, $positionOfLastFullStop);
-  }
-  else
-  {
-    $liveConfig['theDescription'] = $titleRow['description'];
-  }
+  $positionOfLastFullStop = strrpos($liveConfig['meta_description'],'.');
+  $liveConfig['meta_description'] = substr($liveConfig['meta_description'], 0, $positionOfLastFullStop);
 }
 
 if(!file_exists($liveConfig['includeFile']))
 {
   $error = 'Include does not exist.';
-  $db->u->move_on($db->getVal('url'),$error);
+  $db->u->move_on($liveConfig['url'],$error);
 }

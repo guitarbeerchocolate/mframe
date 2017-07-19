@@ -8,7 +8,7 @@ if(!is_null($liveConfig['id']))
 	if(!isset($row['id']))
 	{
 		$error = 'The ID does not exist';
-		$db->u->move_on($this->getVal('url').'manager/config',$error);
+		$db->u->move_on($liveConfig['url'].'manager/config',$error);
 	}
 	$name = $row['name'];
 	$value = $row['value'];

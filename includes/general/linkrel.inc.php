@@ -1,16 +1,16 @@
 <?php
 if($liveConfig['status'] == 'public')
 {
-	$liveConfig['baseURL'] = $db->getVal('url');
+	$liveConfig['baseURL'] = $liveConfig['url'];
 }
 else
 {
-	$liveConfig['baseURL'] = $db->getVal('url').$liveConfig['status'];
+	$liveConfig['baseURL'] = $liveConfig['url'].$liveConfig['status'];
 }
 ?>
 <base href="<?php echo $liveConfig['baseURL']; ?>">
 <link rel="canonical" href="<?php echo $liveConfig['currentURL']; ?>"  itemprop="url" />
-<link type="text/plain" rel="author" href="<?php echo $db->getVal('url'); ?>humans.txt" />
+<link type="text/plain" rel="author" href="<?php echo $liveConfig['url']; ?>humans.txt" />
 <link rel="alternate" type="text/directory" title="vCard" href="vcard.vcf" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <!--[if lt IE 9]>
@@ -24,8 +24,15 @@ if($liveConfig['status'] == 'manager')
 }
 ?>
 <link rel="stylesheet" href="css-cache.php" />
-<script src="https://use.fontawesome.com/<?php echo $db->getVal('font_awesome_id'); ?>.js"></script>
+<script src="https://use.fontawesome.com/<?php echo $liveConfig['font_awesome_id']; ?>.js"></script>
 <?php
 $bs->echoeol();
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<?php
+$bs->echoeol();
+?>
+<script src="https://raw.githubusercontent.com/less/less.js/v2.7.2/dist/less.min.js"></script>
+<?php
+$bs->echoeol();
+?>

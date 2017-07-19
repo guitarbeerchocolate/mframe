@@ -1,1 +1,1 @@
-<link rel="alternate" type="application/atom+xml" title="News and events from <?php echo $db->getVal('name'); ?>" href="rss.php" />
+<link rel="alternate" type="application/atom+xml" title="News and events from <?php echo $liveConfig['name']; ?>" href="rss.php" />

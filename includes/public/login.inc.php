@@ -12,7 +12,7 @@ if(isset($_GET['username']) && isset($_GET['password']))
     if(($row === false) && ($sth->rowCount() == 0))
     {
         $error = 'Invalid email or password. Please try again.';
-        $db->u->move_on($c->getVal('url'), $error);
+        $db->u->move_on($liveConfig['url'], $error);
     }
     else
     {

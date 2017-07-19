@@ -5,7 +5,7 @@ $termsAnchor = 'Accept the <a data-toggle="modal" data-target="#terms">Terms of 
 $acceptTerms = $bs->checkbox('termsaccepted', $termsAnchor);
 $reCaptcha = $bs->reCAPTCHA();
 $fields = array($usernameInput,$passwordInput,$acceptTerms,$reCaptcha);
-$action = $db->getVal('https_url').'formhandler.php?action=authenticate/register';
+$action = $liveConfig['https_url'].'formhandler.php?action=authenticate/register';
 $form = $bs->form($fields,$action,FALSE,NULL);
 $panel = $bs->panel($form,'Register');
 $bs->tag('div',$panel,array('class'=>'col-md-4 authenticate'));

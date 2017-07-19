@@ -10,49 +10,25 @@ if($liveConfig['status'] == 'public')
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <?php
-    if((isset($metaData)) && (!empty($metaData)))
+    $liveConfig['meta_description'] = trim(substr(strip_tags($liveConfig['meta_description']),0,200));
+    if($liveConfig['theTitle'] == NULL)
     {
-        $liveConfig['theDescription'] = trim(substr(strip_tags($metaData['content']),0,200));
-        if($metaData['name'] == NULL)
-        {
-            $liveConfig['titleString'] = $db->getVal('name');
-        }
-        else
-        {
-            $liveConfig['titleString'] = $metaData['name'].' : '.$db->getVal('name');
-        }
-        include 'includes/general/basic-meta.inc.php';
-        include 'includes/general/itemprop-meta.inc.php';
-        include 'includes/general/dc-meta.inc.php';
-        if($db->getVal('twitter_handle') !== '')
-        {
-            include 'includes/general/twitter-meta.inc.php';
-        }
-        include 'includes/general/og-meta.inc.php';
-        include 'includes/general/robots-meta.inc.php';
-        echo $bs->title($liveConfig['titleString']);
+        $liveConfig['titleString'] = $liveConfig['name'];
     }
     else
     {
-        if($liveConfig['theTitle'] == NULL)
-        {
-            $liveConfig['titleString'] = $db->getVal('name');
-        }
-        else
-        {
-            $liveConfig['titleString'] = $liveConfig['theTitle'].' : '.$db->getVal('name');
-        }
-        include 'includes/general/basic-meta.inc.php';
-        include 'includes/general/itemprop-meta.inc.php';
-        include 'includes/general/dc-meta.inc.php';
-        if($db->getVal('twitter_handle') !== '')
-        {
-            include 'includes/general/twitter-meta.inc.php';
-        }
-        include 'includes/general/og-meta.inc.php';
-        include 'includes/general/robots-meta.inc.php';
-        echo $bs->title($liveConfig['titleString']);
+        $liveConfig['titleString'] = $liveConfig['theTitle'].' : '.$liveConfig['name'];
     }
+    include 'includes/general/basic-meta.inc.php';
+    include 'includes/general/itemprop-meta.inc.php';
+    include 'includes/general/dc-meta.inc.php';
+    if($liveConfig['twitter_handle'] !== '')
+    {
+        include 'includes/general/twitter-meta.inc.php';
+    }
+    include 'includes/general/og-meta.inc.php';
+    include 'includes/general/robots-meta.inc.php';
+    echo $bs->title($liveConfig['titleString']);
 }
 else
 {

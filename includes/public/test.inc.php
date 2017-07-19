@@ -1,14 +1,17 @@
 <div class="row">
 	<div class="container">
 		<div class="col-md-12">
-			<h2>Test page</h2>			
+			<h2>Test page</h2>
 			<?php
+			$db->u->print_array_structure($liveConfig)
 			// $bs->tag('h2','Hello world!', array('class'=>array('red', 'green', 'blue')));
 			// $bs->tag('h2','Hello world!', array('class'=>array('red')));
 			// $bs->tag('h2','Hello world!', array('id'=>'orange'));
+			/*
 			$bs->tag('h2','Hello world!', array('class'=>array('red', 'green', 'blue'),
 			'id'=>'orange', 'itemtype'=>'http://schema.org/Organization'));
 			$bs->render();
+			*/
 			/*
 			$rows = $db->performquery('SELECT * FROM news USE INDEX (content)');
 			foreach ($rows as $row)

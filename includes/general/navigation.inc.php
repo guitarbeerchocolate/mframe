@@ -2,10 +2,10 @@
 	<div class="container">
 		<div class="navbar-header" itemscope itemtype="http://schema.org/Organization">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">MENU</button>
-			<a href="index.php" class="navbar-brand" itemprop="url"><img src="img/smalllogo.png" alt="logo" itemprop="logo" id="logo" /><h1 itemprop="name"><?php echo $db->getVal('name'); ?></h1></a>
+			<a href="index.php" class="navbar-brand" itemprop="url"><img src="img/smalllogo.png" alt="logo" itemprop="logo" id="logo" /><h1 itemprop="name"><?php echo $liveConfig['name']; ?></h1></a>
 		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			<form action="<?php echo $db->getVal('url'); ?>index.php" method="GET" class="navbar-form navbar-right" role="search" id="searchbox">
+			<form action="<?php echo $liveConfig['url']; ?>index.php" method="GET" class="navbar-form navbar-right" role="search" id="searchbox">
 				<div class="input-group">
 					<input type="text" class="form-control" name="searchterms" placeholder="Search for..." />
 				</div>

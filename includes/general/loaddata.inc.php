@@ -8,14 +8,6 @@ if(file_exists($requireStr))
     {
         $evalStr = '$'.$class.' = new '.$class.';';
         eval($evalStr);
-        $metaData = NULL;
-        $id = $liveConfig['id'];
-        $method = 'getdata';
-        if(method_exists($class, $method))
-        {
-            $evalStr = '$metaData = $'.$class.'->'.$method.'($id);';
-            eval($evalStr);
-        }
     }
 }
 ?>
